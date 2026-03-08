@@ -22,6 +22,19 @@
 
 ---
 
+## SCREENSHOTS
+
+### Command Center — Normal Operations
+![Dashboard Normal](docs/screenshot-dashboard.png)
+
+### Condition Red — Emergency Mode
+![Dashboard Emergency](docs/screenshot-emergency.png)
+
+### System Dialog — Override Confirmation
+![System Dialog](docs/screenshot-dialog.png)
+
+---
+
 ## SYSTEM OVERVIEW
 
 EvaUI is a React component library that faithfully recreates the aesthetic of the NERV headquarters interfaces from Neon Genesis Evangelion. Every component follows strict design rules:
@@ -54,8 +67,8 @@ EvaUI is a React component library that faithfully recreates the aesthetic of th
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/eva-ui.git
-cd eva-ui
+git clone https://github.com/MattLoyeD/neon-genesis-evangelion.git
+cd neon-genesis-evangelion
 
 # Install dependencies
 npm install
