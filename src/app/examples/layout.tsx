@@ -18,7 +18,7 @@ export default function ExamplesLayout({
           >
             &larr; COMMAND CENTER
           </Link>
-          <span className="text-eva-mid-gray/30">|</span>
+          <span className="text-eva-white/30">|</span>
           <Link
             href="/docs"
             className="text-eva-cyan hover:text-eva-orange transition-colors text-xs uppercase tracking-[0.2em]"
@@ -30,28 +30,28 @@ export default function ExamplesLayout({
         <div className="flex items-center gap-4">
           <Link
             href="/examples/realtime"
-            className="text-eva-mid-gray hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
+            className="text-eva-white/70 hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
             REAL-TIME
           </Link>
           <Link
             href="/examples/form"
-            className="text-eva-mid-gray hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
+            className="text-eva-white/70 hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
             FORM
           </Link>
           <Link
             href="/examples/blog"
-            className="text-eva-mid-gray hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
+            className="text-eva-white/70 hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
             BLOG
           </Link>
           <Link
             href="/examples/saas"
-            className="text-eva-mid-gray hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
+            className="text-eva-white/70 hover:text-eva-orange transition-colors text-[10px] uppercase tracking-[0.15em]"
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
             SAAS

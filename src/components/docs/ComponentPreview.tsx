@@ -49,7 +49,7 @@ export function ComponentPreview({
               ${
                 activeTab === tab.id
                   ? "text-eva-orange border-eva-orange bg-eva-black"
-                  : "text-eva-mid-gray border-transparent hover:text-eva-orange"
+                  : "text-eva-white/60 border-transparent hover:text-eva-orange"
               }
             `}
             style={{ fontFamily: "var(--font-eva-display)" }}

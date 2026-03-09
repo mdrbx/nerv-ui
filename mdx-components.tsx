@@ -31,14 +31,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         className="text-lg font-bold uppercase tracking-[0.1em] text-eva-green mb-3 mt-8"
         style={{ fontFamily: "var(--font-eva-display)" }}
       >
-        <span className="text-eva-mid-gray mr-2">//</span>
+        <span className="text-eva-orange/40 mr-2">//</span>
         {children}
       </h3>
     ),
 
     p: ({ children }) => (
       <p
-        className="text-eva-white leading-relaxed mb-4 text-sm"
+        className="text-eva-white leading-relaxed mb-4 text-[13px]"
         style={{ fontFamily: "var(--font-eva-body)" }}
       >
         {children}
@@ -96,7 +96,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
 
     td: ({ children }) => (
-      <td className="px-3 py-2 text-eva-white border-b border-eva-mid-gray/50 text-xs font-mono">
+      <td className="px-3 py-2 text-eva-white border-b border-eva-mid-gray/40 text-xs font-mono">
         {children}
       </td>
     ),
@@ -113,7 +113,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     li: ({ children }) => (
       <li
-        className="text-eva-white text-sm flex items-start gap-2"
+        className="text-eva-white text-[13px] flex items-start gap-2"
         style={{ fontFamily: "var(--font-eva-body)" }}
       >
         <span className="text-eva-orange mt-1.5 text-[8px]">&#9654;</span>
@@ -122,7 +122,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
 
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-eva-orange bg-eva-dark-gray/50 pl-4 py-2 mb-4 text-eva-white/80 italic">
+      <blockquote className="border-l-2 border-eva-orange bg-eva-dark-gray/50 pl-4 py-2 mb-4 text-eva-white italic">
         {children}
       </blockquote>
     ),

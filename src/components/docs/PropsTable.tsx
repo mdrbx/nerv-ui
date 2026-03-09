@@ -46,7 +46,7 @@ export function PropsTable({ props }: PropsTableProps) {
           {props.map((prop) => (
             <tr
               key={prop.name}
-              className="border-b border-eva-mid-gray/30 hover:bg-eva-dark-gray/50 transition-colors"
+              className="border-b border-eva-mid-gray/40 hover:bg-eva-dark-gray/50 transition-colors"
             >
               <td className="px-3 py-2 font-mono text-eva-cyan whitespace-nowrap">
                 {prop.name}

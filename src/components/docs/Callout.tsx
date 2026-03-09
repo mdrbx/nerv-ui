@@ -41,7 +41,7 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
         </div>
       )}
       <div
-        className="text-eva-white text-sm"
+        className="text-eva-white text-[13px]"
         style={{ fontFamily: "var(--font-eva-body)" }}
       >
         {children}

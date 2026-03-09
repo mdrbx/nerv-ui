@@ -11,7 +11,7 @@ const evaTheme: PrismTheme = {
   styles: [
     {
       types: ["comment", "prolog", "doctype", "cdata"],
-      style: { color: "#555555" },
+      style: { color: "#777777" },
     },
     { types: ["punctuation"], style: { color: "#FF9900" } },
     {
@@ -75,7 +75,7 @@ export function CodeBlock({ code, language, filename }: CodeBlockProps) {
         </span>
         <button
           onClick={handleCopy}
-          className="text-[10px] uppercase tracking-wider text-eva-mid-gray hover:text-eva-cyan transition-colors cursor-pointer"
+          className="text-[10px] uppercase tracking-wider text-eva-white/40 hover:text-eva-cyan transition-colors cursor-pointer"
           style={{ fontFamily: "var(--font-eva-mono)" }}
         >
           {copied ? "COPIED ✓" : "COPY"}
@@ -91,7 +91,7 @@ export function CodeBlock({ code, language, filename }: CodeBlockProps) {
           >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
-                <span className="inline-block w-8 text-right mr-4 text-eva-mid-gray select-none text-[10px]">
+                <span className="inline-block w-8 text-right mr-4 text-eva-white/30 select-none text-[10px]">
                   {i + 1}
                 </span>
                 {line.map((token, key) => (
