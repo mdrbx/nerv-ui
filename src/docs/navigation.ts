@@ -36,6 +36,9 @@ export const docsNavigation: NavSection[] = [
       { title: "SEELE MONOLITH", href: "/docs/components/seele-monolith" },
       { title: "CLASSIFIED OVERLAY", href: "/docs/components/classified-overlay" },
       { title: "TOAST NOTIFICATIONS", href: "/docs/components/toast" },
+      { title: "WIREFRAME LOADER", href: "/docs/components/wireframe-loader" },
+      { title: "EVA CARD", href: "/docs/components/eva-card" },
+      { title: "EVA ACCORDION", href: "/docs/components/eva-accordion" },
     ],
   },
   {

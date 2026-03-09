@@ -62,3 +62,13 @@ export type {
   ToastContextValue,
   AddToastPayload,
 } from "./Toast";
+
+// Phase 3 — Loader & Layout Primitives
+export { WireframeLoader } from "./WireframeLoader";
+export type { WireframeLoaderProps } from "./WireframeLoader";
+
+export { EvaCard } from "./EvaCard";
+export type { EvaCardProps } from "./EvaCard";
+
+export { EvaAccordion, EvaAccordionItem } from "./EvaAccordion";
+export type { EvaAccordionProps, EvaAccordionItemProps } from "./EvaAccordion";

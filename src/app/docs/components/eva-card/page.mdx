@@ -1,0 +1,91 @@
+import { EvaCard } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Eva Card
+
+Brutalist armour-plate card container with CSS `clip-path` corner cut. Used for grouping status displays, forms, and data readouts. Two variants: default (green tactical) and alert (red emergency).
+
+```tsx
+import { EvaCard } from "@/components";
+```
+
+## Default Variant
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`<EvaCard title="PILOT STATUS">
+  <div className="text-xs font-mono text-eva-white/80 space-y-1">
+    <div>Name: IKARI, SHINJI</div>
+    <div>Unit: EVA-01 TEST TYPE</div>
+    <div>Sync Rate: 41.3%</div>
+    <div>Status: STANDBY</div>
+  </div>
+</EvaCard>`}
+>
+  <EvaCard title="PILOT STATUS">
+    <div className="text-xs font-mono text-eva-white/80 space-y-1">
+      <div>Name: IKARI, SHINJI</div>
+      <div>Unit: EVA-01 TEST TYPE</div>
+      <div>Sync Rate: 41.3%</div>
+      <div>Status: STANDBY</div>
+    </div>
+  </EvaCard>
+</ComponentPreview>
+
+## Alert Variant
+
+<ComponentPreview
+  title="ALERT"
+  code={`<EvaCard title="CRITICAL ALERT" variant="alert"
+  footer="TIMESTAMP: 2015-06-22T14:22:07Z">
+  <div className="text-xs font-mono text-eva-red space-y-1">
+    <div>PATTERN BLUE CONFIRMED</div>
+    <div>Target designation: 5th ANGEL</div>
+    <div>Codename: RAMIEL</div>
+    <div>A.T. Field strength: IMMEASURABLE</div>
+  </div>
+</EvaCard>`}
+>
+  <EvaCard title="CRITICAL ALERT" variant="alert" footer="TIMESTAMP: 2015-06-22T14:22:07Z">
+    <div className="text-xs font-mono text-eva-red space-y-1">
+      <div>PATTERN BLUE CONFIRMED</div>
+      <div>Target designation: 5th ANGEL</div>
+      <div>Codename: RAMIEL</div>
+      <div>A.T. Field strength: IMMEASURABLE</div>
+    </div>
+  </EvaCard>
+</ComponentPreview>
+
+## Without Title
+
+<ComponentPreview
+  title="NO HEADER"
+  code={`<EvaCard>
+  <div className="text-sm text-eva-cyan font-mono">
+    Minimal card — no header, no footer.
+  </div>
+</EvaCard>`}
+>
+  <EvaCard>
+    <div className="text-sm text-eva-cyan font-mono">
+      Minimal card — no header, no footer.
+    </div>
+  </EvaCard>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "title", type: "string", description: "Card header title (displayed uppercase)" },
+    { name: "children", type: "ReactNode", description: "Main content", required: true },
+    { name: "footer", type: "ReactNode", description: "Footer content" },
+    { name: "variant", type: '"default" | "alert"', default: '"default"', description: "Visual variant — green or red border + glow" },
+    { name: "cutSize", type: "number", default: "20", description: "Corner cut size in pixels" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="ARMOUR PLATE DESIGN">
+  The top-right corner cut uses `clip-path: polygon(...)` to break the perfect rectangle, giving each card an armour-plate aesthetic inspired by NERV hardware panels.
+</Callout>
