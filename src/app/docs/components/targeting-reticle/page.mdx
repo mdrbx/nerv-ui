@@ -1,0 +1,74 @@
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { TargetingReticle } from "@/components/TargetingReticle";
+
+# Targeting Reticle
+
+SVG-based targeting HUD display inspired by NERV's EVA combat targeting system. Features diamond frame, rotating outer ring, inner lock circle, crosshair, tick marks, and data readouts.
+
+<Callout type="info" title="ANIME REFERENCE">
+  Based on the "MODE:SHOOT" targeting interface used during EVA combat sequences, with the diamond-shaped targeting frame, rotating dashed circle, and coordinate readouts.
+</Callout>
+
+## Default Reticle
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 flex justify-center">
+    <TargetingReticle size={300} />
+  </div>
+</ComponentPreview>
+
+## With Coordinates & Readouts
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 flex justify-center">
+    <TargetingReticle
+      size={350}
+      mode="MODE:SHOOT"
+      targetLabel="TARGET-A"
+      coordinates={{ x: "035.221", y: "088.445", z: "012.003" }}
+      readouts={[
+        { label: "DIST", value: "2400m" },
+        { label: "VEL", value: "320m/s" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Locked State
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 flex justify-center">
+    <TargetingReticle
+      size={300}
+      locked
+      targetLabel="5th ANGEL"
+      coordinates={{ x: "000.000", y: "000.000" }}
+    />
+  </div>
+</ComponentPreview>
+
+## Color Variants
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 flex flex-wrap justify-center gap-4">
+    <TargetingReticle size={200} color="red" mode="ENGAGE" />
+    <TargetingReticle size={200} color="green" mode="TRACK" />
+    <TargetingReticle size={200} color="cyan" mode="SCAN" />
+    <TargetingReticle size={200} color="orange" mode="STANDBY" />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "mode", type: "string", default: "'MODE:SHOOT'", description: "Current targeting mode label" },
+    { name: "locked", type: "boolean", default: "false", description: "Whether the target is locked (inner circle turns red)" },
+    { name: "coordinates", type: "{ x: string; y: string; z?: string }", description: "Coordinate readout values" },
+    { name: "readouts", type: "{ label: string; value: string }[]", description: "Additional data readouts" },
+    { name: "color", type: "'red' | 'green' | 'cyan' | 'orange'", default: "'red'", description: "Color theme" },
+    { name: "size", type: "number", default: "400", description: "Size of the component in pixels" },
+    { name: "animated", type: "boolean", default: "true", description: "Enable rotating outer ring animation" },
+    { name: "targetLabel", type: "string", description: "Label text for the target (shows 'LOCKED' when locked)" },
+  ]}
+/>

@@ -42,6 +42,12 @@ export const docsNavigation: NavSection[] = [
       { title: "EVA BAR CHART", href: "/docs/components/eva-bar-chart" },
       { title: "EVA GAUGE", href: "/docs/components/eva-gauge" },
       { title: "EVA PIE CHART", href: "/docs/components/eva-pie-chart" },
+      { title: "EVA STATUS STAMP", href: "/docs/components/eva-status-stamp" },
+      { title: "SEGMENT DISPLAY", href: "/docs/components/segment-display" },
+      { title: "SURVEILLANCE GRID", href: "/docs/components/surveillance-grid" },
+      { title: "PATTERN ALERT", href: "/docs/components/pattern-alert" },
+      { title: "TARGETING RETICLE", href: "/docs/components/targeting-reticle" },
+      { title: "PILOT CARD", href: "/docs/components/pilot-card" },
     ],
   },
   {

@@ -1,0 +1,140 @@
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { PilotCard } from "@/components/PilotCard";
+
+# Pilot Card
+
+Pilot status card inspired by NERV's pilot monitoring displays. Shows designation, name, unit assignment, status fields, and check status with color-coded indicators.
+
+<Callout type="info" title="ANIME REFERENCE">
+  Based on the pilot status cards displayed during sync tests showing "FIRST.C REI AYANAMI", "THIRD.C SHINJI IKARI", and "SECOND.C S.ASUKA LANGLEY" with their respective EVA unit assignments.
+</Callout>
+
+## Default Card
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 max-w-xs mx-auto">
+    <PilotCard
+      designation="THIRD.C"
+      name="SHINJI IKARI"
+      unit="EVA-01"
+      plugNumber="01"
+      fields={[
+        { label: "SYNC RATE", value: "41.3%", status: "ok" },
+        { label: "MENTAL", value: "STABLE", status: "ok" },
+        { label: "NERVE LINK", value: "NOMINAL", status: "ok" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## All Three Pilots
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 grid grid-cols-3 gap-3">
+    <PilotCard
+      designation="FIRST.C"
+      name="REI AYANAMI"
+      unit="EVA-00"
+      color="cyan"
+      plugNumber="00"
+      checkStatus="O.K."
+      fields={[
+        { label: "SYNC RATE", value: "68.2%", status: "ok" },
+        { label: "MENTAL", value: "STABLE", status: "ok" },
+      ]}
+    />
+    <PilotCard
+      designation="THIRD.C"
+      name="SHINJI IKARI"
+      unit="EVA-01"
+      color="green"
+      plugNumber="01"
+      checkStatus="SYNC"
+      fields={[
+        { label: "SYNC RATE", value: "41.3%", status: "warning" },
+        { label: "MENTAL", value: "UNSTABLE", status: "warning" },
+      ]}
+    />
+    <PilotCard
+      designation="SECOND.C"
+      name="S.ASUKA LANGLEY"
+      unit="EVA-02"
+      color="red"
+      plugNumber="02"
+      checkStatus="O.K."
+      fields={[
+        { label: "SYNC RATE", value: "78.8%", status: "ok" },
+        { label: "MENTAL", value: "AGGRESSIVE", status: "warning" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Status Variants
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 grid grid-cols-2 gap-3 max-w-lg mx-auto">
+    <PilotCard
+      designation="PILOT-A"
+      name="OPERATIVE"
+      color="green"
+      checkStatus="O.K."
+      fields={[
+        { label: "STATUS", value: "NOMINAL", status: "ok" },
+      ]}
+    />
+    <PilotCard
+      designation="PILOT-B"
+      name="OPERATIVE"
+      color="orange"
+      checkStatus="ERROR"
+      fields={[
+        { label: "STATUS", value: "CRITICAL", status: "critical" },
+      ]}
+    />
+    <PilotCard
+      designation="PILOT-C"
+      name="OPERATIVE"
+      color="cyan"
+      checkStatus="SYNC"
+      fields={[
+        { label: "STATUS", value: "SYNCING", status: "warning" },
+      ]}
+    />
+    <PilotCard
+      designation="PILOT-D"
+      name="OPERATIVE"
+      color="red"
+      checkStatus="OFFLINE"
+      fields={[
+        { label: "STATUS", value: "NO SIGNAL", status: "unknown" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "designation", type: "string", required: true, description: "Pilot designation (e.g. 'FIRST.C', 'THIRD.C')" },
+    { name: "name", type: "string", required: true, description: "Pilot name" },
+    { name: "unit", type: "string", description: "Unit assignment (e.g. 'EVA-01', 'EVA-00')" },
+    { name: "fields", type: "PilotCardField[]", description: "Status fields with label, value, and optional status" },
+    { name: "plugNumber", type: "string", description: "Connection/plug number" },
+    { name: "checkStatus", type: "'O.K.' | 'ERROR' | 'OFFLINE' | 'SYNC'", default: "'O.K.'", description: "Overall check status" },
+    { name: "color", type: "'red' | 'cyan' | 'green' | 'orange'", default: "'red'", description: "Color theme" },
+    { name: "imageUrl", type: "string", description: "Optional image URL for the pilot" },
+    { name: "animated", type: "boolean", default: "true", description: "Show animated entry" },
+  ]}
+/>
+
+### PilotCardField
+
+<PropsTable
+  props={[
+    { name: "label", type: "string", required: true, description: "Field label text" },
+    { name: "value", type: "string", required: true, description: "Field value text" },
+    { name: "status", type: "'ok' | 'warning' | 'critical' | 'unknown'", description: "Status color indicator" },
+  ]}
+/>

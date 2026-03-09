@@ -1,0 +1,90 @@
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { SurveillanceGrid } from "@/components/SurveillanceGrid";
+
+# Surveillance Grid
+
+Multi-camera monitoring grid inspired by NERV's surveillance system displays. Each cell can show different statuses including SIGNAL LOST, WARNING, and OFFLINE.
+
+<Callout type="info" title="ANIME REFERENCE">
+  Based on the multi-panel camera feeds showing Tokyo-3 surveillance stations with Japanese location labels and real-time status indicators.
+</Callout>
+
+## Default Grid
+
+<ComponentPreview>
+  <div className="bg-eva-black">
+    <SurveillanceGrid
+      title="TOKYO-3 SURVEILLANCE NETWORK"
+      columns={3}
+      feeds={[
+        { id: "CAM-01", label: "SECTOR 7-A", subLabel: "Side-A", status: "active" },
+        { id: "CAM-02", label: "SECTOR 12-B", subLabel: "Side-B", status: "active" },
+        { id: "CAM-03", label: "GEO-FRONT EAST", subLabel: "Side-C", status: "signal-lost" },
+        { id: "CAM-04", label: "SECTOR 3-A", subLabel: "Side-A", status: "warning" },
+        { id: "CAM-05", label: "LAKE ASHINO", subLabel: "Side-B", status: "active" },
+        { id: "CAM-06", label: "DOGMA ENTRANCE", subLabel: "Side-C", status: "offline" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## 2-Column Layout
+
+<ComponentPreview>
+  <div className="bg-eva-black">
+    <SurveillanceGrid
+      title="EVA CAGE MONITORS"
+      color="cyan"
+      columns={2}
+      feeds={[
+        { id: "CAGE-00", label: "EVA-00 BAY", status: "active" },
+        { id: "CAGE-01", label: "EVA-01 BAY", status: "active" },
+        { id: "CAGE-02", label: "EVA-02 BAY", status: "warning" },
+        { id: "CAGE-03", label: "RESERVE BAY", status: "offline" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Orange Theme
+
+<ComponentPreview>
+  <div className="bg-eva-black">
+    <SurveillanceGrid
+      title="PERIMETER DEFENSE"
+      color="orange"
+      columns={4}
+      feeds={[
+        { id: "PD-01", label: "NORTH GATE", status: "active" },
+        { id: "PD-02", label: "EAST WALL", status: "active" },
+        { id: "PD-03", label: "SOUTH GATE", status: "signal-lost" },
+        { id: "PD-04", label: "WEST WALL", status: "active" },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "feeds", type: "SurveillanceFeed[]", required: true, description: "Array of camera feed definitions" },
+    { name: "columns", type: "2 | 3 | 4", default: "3", description: "Number of grid columns" },
+    { name: "color", type: "'green' | 'cyan' | 'orange'", default: "'green'", description: "Color theme" },
+    { name: "title", type: "string", description: "Title text at top" },
+    { name: "showTimestamp", type: "boolean", default: "true", description: "Show live timestamp" },
+    { name: "animated", type: "boolean", default: "true", description: "Animate status overlays" },
+  ]}
+/>
+
+### SurveillanceFeed
+
+<PropsTable
+  props={[
+    { name: "id", type: "string", required: true, description: "Unique feed ID (e.g. 'CAM-01')" },
+    { name: "label", type: "string", required: true, description: "Location label" },
+    { name: "subLabel", type: "string", description: "Secondary label" },
+    { name: "status", type: "'active' | 'signal-lost' | 'warning' | 'offline'", default: "'active'", description: "Feed status" },
+    { name: "imageUrl", type: "string", description: "Background image URL" },
+  ]}
+/>

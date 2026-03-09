@@ -1,0 +1,62 @@
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { PatternAlert } from "@/components/PatternAlert";
+
+# Pattern Alert
+
+Angel detection alert display inspired by the NERV target classification system. Shows designation badge, pattern/blood type classification, and measurement scale bars.
+
+<Callout type="info" title="ANIME REFERENCE">
+  Based on the Angel detection displays showing "11th ANGEL", "PATTERN: BLOOD TYPE BLUE" with scale markings used during target analysis sequences.
+</Callout>
+
+## Default Alert
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4">
+    <PatternAlert designation="3rd ANGEL" />
+  </div>
+</ComponentPreview>
+
+## Blood Type Classifications
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 space-y-4">
+    <PatternAlert designation="11th ANGEL" bloodType="BLUE" subtitle="OBJECT APPROACHING — TERMINAL VELOCITY" />
+    <PatternAlert designation="UNKNOWN TARGET" bloodType="ORANGE" color="red" subtitle="CLASSIFICATION PENDING" />
+    <PatternAlert designation="14th ANGEL" bloodType="RED" color="red" />
+  </div>
+</ComponentPreview>
+
+## Color Themes
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4 space-y-4">
+    <PatternAlert designation="5th ANGEL" color="orange" />
+    <PatternAlert designation="7th ANGEL" color="cyan" bloodType="BLUE" />
+    <PatternAlert designation="9th ANGEL" color="green" bloodType="GREEN" />
+  </div>
+</ComponentPreview>
+
+## Custom Scale Range
+
+<ComponentPreview>
+  <div className="bg-eva-black p-4">
+    <PatternAlert designation="15th ANGEL" scaleRange={5} unit="050X MAG" bloodType="BLUE" subtitle="SATELLITE TRACKING — MAGNIFICATION ENHANCED" />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "designation", type: "string", required: true, description: "Alert designation (e.g. '3rd ANGEL', '15th ANGEL')" },
+    { name: "pattern", type: "string", default: "'PATTERN'", description: "Pattern classification label" },
+    { name: "bloodType", type: "'BLUE' | 'ORANGE' | 'RED' | 'GREEN' | 'UNKNOWN'", default: "'BLUE'", description: "Blood type classification" },
+    { name: "visible", type: "boolean", default: "true", description: "Whether the alert is visible" },
+    { name: "scaleRange", type: "number", default: "3", description: "Scale range (-N to +N)" },
+    { name: "unit", type: "string", default: "'10⁻⁶m'", description: "Measurement unit label" },
+    { name: "subtitle", type: "string", description: "Optional subtitle / additional info" },
+    { name: "color", type: "'orange' | 'red' | 'cyan' | 'green'", default: "'orange'", description: "Color theme" },
+    { name: "animated", type: "boolean", default: "true", description: "Show animated scanline overlay" },
+  ]}
+/>

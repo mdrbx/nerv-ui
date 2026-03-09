@@ -20,6 +20,9 @@ import { EvaCard } from "@/components/EvaCard";
 import { WireframeLoader } from "@/components/WireframeLoader";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { EvaAccordion, EvaAccordionItem } from "@/components/EvaAccordion";
+import { SegmentDisplay } from "@/components/SegmentDisplay";
+import { TargetingReticle } from "@/components/TargetingReticle";
+import { SurveillanceGrid } from "@/components/SurveillanceGrid";
 
 export default function SaasLandingPage() {
   const [email, setEmail] = useState("");
@@ -176,6 +179,33 @@ export default function SaasLandingPage() {
                 />
               </div>
             </TargetingContainer>
+          </div>
+
+          {/* New row: SegmentDisplay + TargetingReticle + Surveillance */}
+          <div className="col-span-3">
+            <TargetingContainer label="UPTIME COUNTER" color="orange">
+              <div className="flex justify-center p-4">
+                <SegmentDisplay value={8547} format="raw" digits={5} color="orange" label="HOURS ACTIVE" size="md" />
+              </div>
+            </TargetingContainer>
+          </div>
+          <div className="col-span-3 flex items-center justify-center">
+            <TargetingReticle size={200} mode="SCAN:NET" color="cyan" targetLabel="NODE-01" animated />
+          </div>
+          <div className="col-span-6">
+            <SurveillanceGrid
+              title="DATACENTER FEEDS"
+              color="cyan"
+              columns={3}
+              feeds={[
+                { id: "DC-01", label: "RACK A-1", status: "active" },
+                { id: "DC-02", label: "RACK A-2", status: "active" },
+                { id: "DC-03", label: "RACK B-1", status: "warning" },
+                { id: "DC-04", label: "COOLING SYS", status: "active" },
+                { id: "DC-05", label: "POWER DIST", status: "active" },
+                { id: "DC-06", label: "BACKUP GEN", status: "offline" },
+              ]}
+            />
           </div>
         </div>
       </section>

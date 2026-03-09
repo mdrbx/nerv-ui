@@ -1,0 +1,67 @@
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { SegmentDisplay } from "@/components/SegmentDisplay";
+
+# Segment Display
+
+7-segment LCD countdown display inspired by the iconic NERV ACTIVE TIME REMAINING timer. Features authentic segment rendering, color-shift on critical threshold, and blinking colon separators.
+
+<Callout type="info" title="ANIME REFERENCE">
+  Based on the large orange/red countdown displays showing EVA internal battery remaining time. The display shifts from orange to red as time runs out.
+</Callout>
+
+## Default Countdown
+
+<ComponentPreview>
+  <div className="bg-eva-black p-6 flex justify-center">
+    <SegmentDisplay value={3600} countdown label="ACTIVE TIME REMAINING" subLabel="INTERNAL — MAIN ENERGY SUPPLY SYSTEM" />
+  </div>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview>
+  <div className="bg-eva-black p-6 flex flex-col items-center gap-6">
+    <SegmentDisplay value={599} format="MM:SS" size="sm" label="SMALL" />
+    <SegmentDisplay value={599} format="MM:SS" size="md" label="MEDIUM" />
+    <SegmentDisplay value={599} format="MM:SS" size="lg" label="LARGE" />
+  </div>
+</ComponentPreview>
+
+## Color Variants
+
+<ComponentPreview>
+  <div className="bg-eva-black p-6 flex flex-wrap justify-center gap-6">
+    <SegmentDisplay value={1234} format="raw" digits={4} color="orange" label="ORANGE" />
+    <SegmentDisplay value={5678} format="raw" digits={4} color="green" label="GREEN" />
+    <SegmentDisplay value={9012} format="raw" digits={4} color="cyan" label="CYAN" />
+    <SegmentDisplay value={3456} format="raw" digits={4} color="red" label="RED" />
+  </div>
+</ComponentPreview>
+
+## Critical Threshold
+
+When countdown reaches the threshold (default 60s), the display automatically turns red:
+
+<ComponentPreview>
+  <div className="bg-eva-black p-6 flex justify-center">
+    <SegmentDisplay value={30} countdown criticalThreshold={60} label="CRITICAL — BATTERY LOW" format="MM:SS" />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "value", type: "number", default: "0", description: "Value in seconds (countdown) or raw number" },
+    { name: "countdown", type: "boolean", default: "false", description: "Auto-decrement every second" },
+    { name: "format", type: "'H:MM:SS' | 'MM:SS' | 'SS' | 'raw'", default: "'H:MM:SS'", description: "Display format" },
+    { name: "digits", type: "number", description: "Fixed digit count for raw mode" },
+    { name: "color", type: "'orange' | 'red' | 'green' | 'cyan'", default: "'orange'", description: "Base color" },
+    { name: "criticalThreshold", type: "number", default: "60", description: "Seconds threshold for red color shift" },
+    { name: "label", type: "string", description: "Top label text" },
+    { name: "subLabel", type: "string", description: "Bottom sub-label text" },
+    { name: "size", type: "'sm' | 'md' | 'lg' | 'xl'", default: "'lg'", description: "Size preset" },
+    { name: "blinkSeparator", type: "boolean", default: "true", description: "Blink the colon separators" },
+    { name: "onComplete", type: "() => void", description: "Called when countdown reaches zero" },
+  ]}
+/>

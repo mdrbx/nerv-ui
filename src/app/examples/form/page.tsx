@@ -7,6 +7,8 @@ import { Button } from "@/components/Button";
 import { SystemDialog } from "@/components/SystemDialog";
 import { TerminalDisplay } from "@/components/TerminalDisplay";
 import { TargetingContainer } from "@/components/TargetingContainer";
+import { EvaStatusStamp } from "@/components/EvaStatusStamp";
+import { PilotCard } from "@/components/PilotCard";
 
 const unitOptions = [
   { value: "", label: "— SELECT UNIT —" },
@@ -200,20 +202,25 @@ export default function FormExample() {
         </div>
 
         {/* Output terminal */}
-        <div className="col-span-5 p-6">
+        <div className="col-span-5 p-6 space-y-4">
           <TargetingContainer
             label="TRANSMISSION OUTPUT"
             color={submitted ? "green" : "cyan"}
           >
             {submitted ? (
-              <TerminalDisplay
-                lines={outputLines}
-                color="green"
-                title="DISPATCH CONFIRMATION"
-                typewriter
-                maxHeight="400px"
-                showLineNumbers
-              />
+              <div className="relative">
+                <TerminalDisplay
+                  lines={outputLines}
+                  color="green"
+                  title="DISPATCH CONFIRMATION"
+                  typewriter
+                  maxHeight="300px"
+                  showLineNumbers
+                />
+                <div className="relative h-20 overflow-hidden">
+                  <EvaStatusStamp text="APPROVED" color="green" bordered rotation={-8} />
+                </div>
+              </div>
             ) : (
               <div className="p-8 text-center">
                 <div className="text-eva-mid-gray font-mono text-sm uppercase tracking-wider">
@@ -225,6 +232,21 @@ export default function FormExample() {
               </div>
             )}
           </TargetingContainer>
+
+          {/* Operator profile card */}
+          {formData.operatorName && (
+            <PilotCard
+              designation="OPERATOR"
+              name={formData.operatorName.toUpperCase() || "—"}
+              unit={formData.unit || undefined}
+              color="orange"
+              checkStatus={submitted ? "O.K." : "SYNC"}
+              fields={[
+                { label: "ID", value: formData.operatorId || "—", status: formData.operatorId ? "ok" : "unknown" },
+                { label: "PRIORITY", value: formData.priority || "—", status: formData.priority === "CRITICAL" ? "critical" : formData.priority === "HIGH" ? "warning" : "ok" },
+              ]}
+            />
+          )}
         </div>
       </div>
 

@@ -82,3 +82,22 @@ export type { EvaGaugeProps } from "./EvaGauge";
 
 export { EvaPieChart } from "./EvaPieChart";
 export type { EvaPieChartProps, EvaPieSlice } from "./EvaPieChart";
+
+// Phase 5 — Video-Reference Components
+export { EvaStatusStamp } from "./EvaStatusStamp";
+export type { EvaStatusStampProps } from "./EvaStatusStamp";
+
+export { SegmentDisplay } from "./SegmentDisplay";
+export type { SegmentDisplayProps } from "./SegmentDisplay";
+
+export { SurveillanceGrid } from "./SurveillanceGrid";
+export type { SurveillanceGridProps, SurveillanceFeed } from "./SurveillanceGrid";
+
+export { PatternAlert } from "./PatternAlert";
+export type { PatternAlertProps } from "./PatternAlert";
+
+export { TargetingReticle } from "./TargetingReticle";
+export type { TargetingReticleProps } from "./TargetingReticle";
+
+export { PilotCard } from "./PilotCard";
+export type { PilotCardProps, PilotCardField } from "./PilotCard";

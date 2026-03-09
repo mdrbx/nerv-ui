@@ -7,6 +7,8 @@ import { ClassifiedOverlay } from "@/components/ClassifiedOverlay";
 import { EmergencyBanner } from "@/components/EmergencyBanner";
 import { Button } from "@/components/Button";
 import { EvaCard } from "@/components/EvaCard";
+import { PilotCard } from "@/components/PilotCard";
+import { EvaStatusStamp } from "@/components/EvaStatusStamp";
 
 // ─── Blog post data ───
 interface Post {
@@ -390,6 +392,9 @@ export default function BlogExample() {
                       showLineNumbers
                     />
                   </ClassifiedOverlay>
+                  <div className="relative mt-4">
+                    <EvaStatusStamp text="CLASSIFIED" color="red" rotation={-8} bordered />
+                  </div>
                   <div className="mt-4">
                     <Button
                       variant="danger"
@@ -427,6 +432,54 @@ export default function BlogExample() {
               </EvaCard>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Pilot Cards Footer */}
+      <div className="border-t border-eva-orange px-6 py-4">
+        <h2
+          className="text-xs uppercase tracking-[0.2em] text-eva-orange font-bold mb-3"
+          style={{ fontFamily: "var(--font-eva-display)" }}
+        >
+          ACTIVE PILOT ROSTER
+        </h2>
+        <div className="grid grid-cols-3 gap-3">
+          <PilotCard
+            designation="FIRST.C"
+            name="REI AYANAMI"
+            unit="EVA-00"
+            color="cyan"
+            plugNumber="00"
+            checkStatus="O.K."
+            fields={[
+              { label: "SYNC RATE", value: "68.2%", status: "ok" },
+              { label: "STATUS", value: "STANDBY", status: "ok" },
+            ]}
+          />
+          <PilotCard
+            designation="THIRD.C"
+            name="SHINJI IKARI"
+            unit="EVA-01"
+            color="green"
+            plugNumber="01"
+            checkStatus="SYNC"
+            fields={[
+              { label: "SYNC RATE", value: "41.3%", status: "warning" },
+              { label: "STATUS", value: "IN FIELD", status: "warning" },
+            ]}
+          />
+          <PilotCard
+            designation="SECOND.C"
+            name="S.ASUKA LANGLEY"
+            unit="EVA-02"
+            color="red"
+            plugNumber="02"
+            checkStatus="O.K."
+            fields={[
+              { label: "SYNC RATE", value: "78.8%", status: "ok" },
+              { label: "STATUS", value: "STANDBY", status: "ok" },
+            ]}
+          />
         </div>
       </div>
     </div>

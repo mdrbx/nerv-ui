@@ -11,6 +11,10 @@ import { EvaBarChart } from "@/components/EvaBarChart";
 import { EvaGauge } from "@/components/EvaGauge";
 import { EvaPieChart } from "@/components/EvaPieChart";
 import { NavigationTabs } from "@/components/NavigationTabs";
+import { SurveillanceGrid } from "@/components/SurveillanceGrid";
+import { SegmentDisplay } from "@/components/SegmentDisplay";
+import { PatternAlert } from "@/components/PatternAlert";
+import { TargetingReticle } from "@/components/TargetingReticle";
 
 // ─── Simulated sensor data ───
 const sensorNames = ["THERMAL", "PRESSURE", "RADIATION", "EM-FIELD", "BIO-METRIC"];
@@ -106,6 +110,18 @@ export default function RealtimeDashboard() {
         />
       )}
 
+      {/* Pattern Alert on anomaly */}
+      {tick > 12 && (
+        <div className="px-6 py-2">
+          <PatternAlert
+            designation="UNKNOWN TARGET"
+            bloodType="ORANGE"
+            color="red"
+            subtitle="PATTERN ANALYSIS IN PROGRESS — MAGI CONSENSUS REQUIRED"
+          />
+        </div>
+      )}
+
       {/* Tab navigation */}
       <NavigationTabs
         tabs={[
@@ -147,7 +163,7 @@ export default function RealtimeDashboard() {
             </div>
 
             <div className="mt-6 border-t border-eva-white/10 pt-4">
-              <CountdownTimer initialSeconds={600} />
+              <SegmentDisplay value={600} countdown format="MM:SS" size="md" label="ACTIVE TIME REMAINING" color="orange" />
             </div>
           </div>
 
@@ -324,6 +340,36 @@ export default function RealtimeDashboard() {
                 />
               </div>
             </TargetingContainer>
+          </div>
+
+          {/* Targeting + Surveillance row */}
+          <div className="col-span-4 p-4 border-t border-eva-green flex items-center justify-center">
+            <TargetingReticle
+              size={250}
+              mode="TRACK:AUTO"
+              color="cyan"
+              targetLabel="SENSOR ARRAY"
+              coordinates={{ x: "135.221", y: "035.445" }}
+              readouts={[
+                { label: "RANGE", value: "4.2km" },
+                { label: "BEARING", value: "N/NW" },
+              ]}
+            />
+          </div>
+          <div className="col-span-8 border-t border-l border-eva-green">
+            <SurveillanceGrid
+              title="GEOFRONT MONITORING"
+              color="green"
+              columns={3}
+              feeds={[
+                { id: "CAM-01", label: "SECTOR 7-A", subLabel: "Level B-06", status: "active" },
+                { id: "CAM-02", label: "CAGE-01", subLabel: "EVA-01 Bay", status: "active" },
+                { id: "CAM-03", label: "CENTRAL DOGMA", subLabel: "Main Hall", status: "warning" },
+                { id: "CAM-04", label: "TERMINAL DOGMA", subLabel: "Restricted", status: "signal-lost" },
+                { id: "CAM-05", label: "LCL PLANT", subLabel: "Processing", status: "active" },
+                { id: "CAM-06", label: "GATE 7 NORTH", subLabel: "Perimeter", status: "active" },
+              ]}
+            />
           </div>
         </div>
       )}
