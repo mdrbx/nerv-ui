@@ -10,7 +10,7 @@
 All components are exported from `@/components` via barrel file. Each component is fully typed with TypeScript interfaces.
 
 ```tsx
-import { EmergencyBanner, Button, MagiSystemPanel } from "@/components";
+import { EmergencyBanner, Button, MagiSystemPanel } from "@mattloyed/eva-ui";
 ```
 
 ---
@@ -511,5 +511,5 @@ import type {
   CountdownTimerProps,
   SeeleMonolithProps,
   ClassifiedOverlayProps,
-} from "@/components";
+} from "@mattloyed/eva-ui";
 ```

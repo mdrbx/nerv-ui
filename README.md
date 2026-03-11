@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://mattloyed.github.io/eva-ui"><img src="https://img.shields.io/badge/LIVE_DEMO-COMMAND_CENTER-FF9900?style=for-the-badge&labelColor=000000" alt="Live Demo" /></a>
+  <img src="https://img.shields.io/badge/LIVE_DEMO-COMING_SOON-555555?style=for-the-badge&labelColor=000000" alt="Live Demo — Coming Soon" />
 </p>
 
 <p align="center">
@@ -82,7 +82,31 @@ EvaUI is a **17-component React design system** built to replicate the iconic CR
 
 ---
 
-## `> QUICK_START`
+## `> INSTALLATION`
+
+```bash
+npm install @mattloyed/eva-ui
+```
+
+**Peer dependencies** — make sure these are installed in your project:
+
+```bash
+npm install react react-dom framer-motion
+```
+
+> `tailwindcss` is an optional peer dependency — needed only if you use the included Tailwind preset.
+
+Then import components directly:
+
+```tsx
+import { Button, TerminalDisplay, EmergencyBanner } from "@mattloyed/eva-ui";
+```
+
+---
+
+## `> QUICK_START` (development / demo)
+
+To run the demo dashboard locally:
 
 ```bash
 git clone https://github.com/MattLoyeD/eva-ui.git
@@ -102,7 +126,7 @@ import {
   Button,
   MagiSystemPanel,
   CountdownTimer,
-} from "@/components";
+} from "@mattloyed/eva-ui";
 
 // Full-screen emergency alert
 <EmergencyBanner
@@ -215,9 +239,9 @@ All components are built with accessibility in mind:
 
 ## `> DEPLOYMENT`
 
-The project auto-deploys to GitHub Pages via GitHub Actions on every push to `master`. The live demo is available at:
+The project auto-deploys to GitHub Pages via GitHub Actions on every push to `master`. Once deployed, the live demo will be available at:
 
-**[https://mattloyed.github.io/eva-ui](https://mattloyed.github.io/eva-ui)**
+**https://mattloyed.github.io/eva-ui**
 
 To build the static export locally:
 
