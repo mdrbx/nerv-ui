@@ -3,7 +3,7 @@ import { readFile, writeFile } from "fs/promises";
 import { glob } from "tinyglobby";
 
 export default defineConfig({
-  // Entry point — barrel file exporting all 17 components
+  // Entry point — barrel file exporting all components
   entry: ["src/components/index.ts"],
 
   // Dual format: CommonJS for Node/require(), ESM for bundlers/import

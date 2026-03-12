@@ -10,7 +10,7 @@
 All components are exported from `@/components` via barrel file. Each component is fully typed with TypeScript interfaces.
 
 ```tsx
-import { EmergencyBanner, Button, MagiSystemPanel } from "@/components";
+import { EmergencyBanner, Button, MagiSystemPanel } from "@mattloyed/eva-ui";
 ```
 
 ---
@@ -483,12 +483,366 @@ TOP SECRET overlay with diagonal hazard stripes. Slides away violently when unlo
 
 ---
 
+## Phase 3 — Toast & Layout Primitives
+
+---
+
+### `EvaToastProvider`
+
+Context provider for the toast notification system. Wrap your app with this provider, then use the `useToast()` hook to trigger notifications.
+
+```tsx
+import { EvaToastProvider, useToast } from "@mattloyed/eva-ui";
+
+// Wrap your app
+<EvaToastProvider>
+  <App />
+</EvaToastProvider>
+
+// Inside any component
+function MyComponent() {
+  const { addToast } = useToast();
+  return (
+    <button onClick={() => addToast({ message: "System online", variant: "success" })}>
+      Notify
+    </button>
+  );
+}
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | **required** | App content |
+
+**Toast variants:** `info`, `success`, `warning`, `error`, `critical`
+
+**`addToast` payload:**
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `message` | `string` | **required** | Toast message text |
+| `variant` | `ToastVariant` | `"info"` | Visual variant |
+| `duration` | `number` | `4000` | Auto-dismiss delay in ms |
+
+---
+
+### `WireframeLoader`
+
+Rotating wireframe cube/polyhedron loading indicator with scanline effect.
+
+```tsx
+<WireframeLoader size={64} color="cyan" label="PROCESSING..." />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `number` | `64` | Loader size in pixels |
+| `color` | `"orange" \| "green" \| "cyan"` | `"cyan"` | Color theme |
+| `label` | `string` | `"PROCESSING..."` | Text below the loader |
+| `speed` | `number` | `2.5` | Rotation speed multiplier |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `EvaCard`
+
+Container card with angled cut corner and variant styling. Supports header title and footer slot.
+
+```tsx
+<EvaCard title="UNIT STATUS" variant="highlighted">
+  <p>All systems nominal</p>
+</EvaCard>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — | Card header title |
+| `children` | `ReactNode` | — | Card body content |
+| `footer` | `ReactNode` | — | Card footer content |
+| `variant` | `"default" \| "highlighted" \| "danger"` | `"default"` | Visual variant |
+| `cutSize` | `number` | `20` | Corner cut size in pixels |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `EvaAccordion`
+
+Expandable content sections with animated open/close. Supports single or multiple open items.
+
+```tsx
+<EvaAccordion multiple defaultOpen={["item-1"]}>
+  <EvaAccordionItem id="item-1" title="SECTION ALPHA" color="cyan">
+    Content here
+  </EvaAccordionItem>
+  <EvaAccordionItem id="item-2" title="SECTION BETA" color="orange">
+    More content
+  </EvaAccordionItem>
+</EvaAccordion>
+```
+
+**EvaAccordion props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | **required** | `EvaAccordionItem` children |
+| `multiple` | `boolean` | `false` | Allow multiple items open |
+| `defaultOpen` | `string[]` | `[]` | Initially open item IDs |
+| `className` | `string` | `""` | Additional CSS classes |
+
+**EvaAccordionItem props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | **required** | Unique item identifier |
+| `title` | `string` | **required** | Item header text |
+| `children` | `ReactNode` | — | Item body content |
+| `color` | `"orange" \| "green" \| "cyan"` | `"cyan"` | Color theme |
+
+---
+
+## Phase 4 — Chart Components
+
+---
+
+### `EvaBarChart`
+
+Horizontal bar chart with LCD-style block segments. Each bar renders as filled blocks against a track.
+
+```tsx
+<EvaBarChart
+  bars={[
+    { label: "EVA-00", value: 65, color: "cyan" },
+    { label: "EVA-01", value: 89, color: "orange" },
+    { label: "EVA-02", value: 42, color: "red" },
+  ]}
+  title="SYNC RATES"
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `bars` | `EvaBarChartBar[]` | **required** | `{ label, value, color? }` |
+| `title` | `string` | — | Chart title |
+| `maxValue` | `number` | — | Max value (auto-detected if omitted) |
+| `showValues` | `boolean` | `true` | Show value labels |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `EvaGauge`
+
+SVG radial gauge with animated needle and threshold color zones.
+
+```tsx
+<EvaGauge value={78} label="POWER OUTPUT" unit="%" />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | **required** | Current value (0-100) |
+| `label` | `string` | — | Gauge label text |
+| `unit` | `string` | — | Unit suffix |
+| `thresholds` | `object` | — | Color threshold values |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `EvaPieChart`
+
+SVG pie or donut chart with NERV-styled segments and legend.
+
+```tsx
+<EvaPieChart
+  slices={[
+    { label: "ACTIVE", value: 60, color: "#00FF00" },
+    { label: "STANDBY", value: 25, color: "#FF9900" },
+    { label: "OFFLINE", value: 15, color: "#FF0000" },
+  ]}
+  title="UNIT DISTRIBUTION"
+  donut
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `slices` | `EvaPieSlice[]` | **required** | `{ label, value, color }` |
+| `title` | `string` | — | Chart title |
+| `donut` | `boolean` | `false` | Render as donut chart |
+| `size` | `number` | `200` | Chart diameter in pixels |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+## Phase 5 — Video-Reference Components
+
+---
+
+### `EvaStatusStamp`
+
+Large rotated stamp overlay text. Used for classification marks like APPROVED, REJECTED, CLASSIFIED.
+
+```tsx
+<EvaStatusStamp text="APPROVED" color="green" rotation={-12} />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | **required** | Stamp text |
+| `visible` | `boolean` | `true` | Visibility toggle |
+| `color` | `"red" \| "green" \| "orange" \| "cyan"` | `"red"` | Stamp color |
+| `rotation` | `number` | `-12` | Rotation angle in degrees |
+| `repeat` | `boolean` | `false` | Tile the stamp across the area |
+| `repeatRows` | `number` | `3` | Rows when repeating |
+| `repeatCols` | `number` | `2` | Columns when repeating |
+| `subtitle` | `string` | — | Secondary text |
+| `bordered` | `boolean` | `false` | Show border around stamp |
+| `fullScreen` | `boolean` | `false` | Fixed full-screen overlay |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `SegmentDisplay`
+
+7-segment LED-style display for countdowns, clocks, and numeric readouts.
+
+```tsx
+<SegmentDisplay value={300} countdown format="M:SS" color="orange" label="TIME REMAINING" />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | `0` | Display value (seconds for countdown) |
+| `countdown` | `boolean` | `false` | Enable countdown mode |
+| `format` | `string` | `"H:MM:SS"` | Display format |
+| `digits` | `number` | — | Fixed digit count |
+| `color` | `"orange" \| "green" \| "cyan" \| "red"` | `"orange"` | Display color |
+| `criticalThreshold` | `number` | `60` | Seconds threshold for red blink |
+| `label` | `string` | — | Label above display |
+| `subLabel` | `string` | — | Label below display |
+| `size` | `"sm" \| "md" \| "lg"` | `"lg"` | Display size |
+| `blinkSeparator` | `boolean` | `true` | Blink the `:` separators |
+| `onComplete` | `() => void` | — | Countdown complete callback |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `SurveillanceGrid`
+
+Multi-feed surveillance camera grid with status indicators and timestamps.
+
+```tsx
+<SurveillanceGrid
+  feeds={[
+    { id: "CAM-01", label: "ENTRY GATE", status: "active" },
+    { id: "CAM-02", label: "CORRIDOR B", status: "inactive" },
+    { id: "CAM-03", label: "CAGE 7", status: "alert" },
+  ]}
+  columns={3}
+  title="SURVEILLANCE NETWORK"
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `feeds` | `SurveillanceFeed[]` | **required** | `{ id, label, status, imageUrl? }` |
+| `columns` | `number` | `3` | Grid columns |
+| `color` | `"orange" \| "green" \| "cyan"` | `"green"` | Grid color theme |
+| `title` | `string` | — | Grid title |
+| `showTimestamp` | `boolean` | `true` | Show timestamp overlay |
+| `animated` | `boolean` | `true` | Enable scanline animation |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `PatternAlert`
+
+PATTERN BLUE/ORANGE detection alert display with animated waveform and classification data.
+
+```tsx
+<PatternAlert designation="4TH ANGEL" pattern="PATTERN" bloodType="BLUE" />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `designation` | `string` | **required** | Target designation |
+| `pattern` | `string` | `"PATTERN"` | Pattern type prefix |
+| `bloodType` | `string` | `"BLUE"` | Blood type classification |
+| `visible` | `boolean` | `true` | Visibility toggle |
+| `scaleRange` | `number` | `3` | Scale range display |
+| `unit` | `string` | `"10⁻⁶m"` | Measurement unit |
+| `subtitle` | `string` | — | Additional info text |
+| `color` | `"orange" \| "green" \| "cyan" \| "red"` | `"orange"` | Color theme |
+| `animated` | `boolean` | `true` | Enable animations |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `TargetingReticle`
+
+Circular targeting HUD overlay with crosshairs, readouts, and lock-on animation.
+
+```tsx
+<TargetingReticle
+  mode="MODE:SHOOT"
+  locked={true}
+  coordinates={{ x: 35.6762, y: 139.6503 }}
+  targetLabel="TARGET ALPHA"
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `mode` | `string` | `"MODE:SHOOT"` | Display mode text |
+| `locked` | `boolean` | `false` | Lock-on state (triggers animation) |
+| `coordinates` | `{ x: number; y: number }` | — | Coordinate readout |
+| `readouts` | `string[]` | — | Additional data readouts |
+| `color` | `"red" \| "orange" \| "green" \| "cyan"` | `"red"` | Reticle color |
+| `size` | `number` | `400` | Reticle diameter |
+| `animated` | `boolean` | `true` | Enable animations |
+| `targetLabel` | `string` | — | Target identification label |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
+### `PilotCard`
+
+Pilot identification card with photo area, designation, vitals, and status indicators.
+
+```tsx
+<PilotCard
+  designation="FIRST CHILD"
+  name="Ayanami Rei"
+  unit="EVA-00"
+  fields={[
+    { label: "AGE", value: "14" },
+    { label: "BLOOD TYPE", value: "UNKNOWN" },
+  ]}
+  checkStatus="O.K."
+  color="red"
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `designation` | `string` | **required** | Pilot designation |
+| `name` | `string` | **required** | Pilot name |
+| `unit` | `string` | — | Assigned unit |
+| `fields` | `PilotCardField[]` | `[]` | `{ label, value }` data fields |
+| `plugNumber` | `string` | — | Entry plug number |
+| `checkStatus` | `string` | `"O.K."` | Status check text |
+| `color` | `"red" \| "orange" \| "green" \| "cyan"` | `"red"` | Card color theme |
+| `imageUrl` | `string` | — | Pilot photo URL |
+| `animated` | `boolean` | `true` | Enable entry animation |
+| `className` | `string` | `""` | Additional CSS classes |
+
+---
+
 ## `> EXPORTED_TYPES`
 
 All types are exported from the barrel file:
 
 ```tsx
 import type {
+  // Phase 1
   EmergencyBannerProps,
   TerminalDisplayProps,
   TargetingContainerProps,
@@ -503,6 +857,7 @@ import type {
   SystemDialogProps,
   NavigationTabsProps,
   NavigationTab,
+  // Phase 2
   EvaTitleScreenProps,
   MagiSystemPanelProps,
   MagiVote,
@@ -511,5 +866,42 @@ import type {
   CountdownTimerProps,
   SeeleMonolithProps,
   ClassifiedOverlayProps,
-} from "@/components";
+  // Phase 3
+  EvaToastProviderProps,
+  Toast,
+  ToastVariant,
+  ToastContextValue,
+  AddToastPayload,
+  WireframeLoaderProps,
+  EvaCardProps,
+  EvaAccordionProps,
+  EvaAccordionItemProps,
+  // Phase 4
+  EvaBarChartProps,
+  EvaBarChartBar,
+  EvaGaugeProps,
+  EvaPieChartProps,
+  EvaPieSlice,
+  // Phase 5
+  EvaStatusStampProps,
+  SegmentDisplayProps,
+  SurveillanceGridProps,
+  SurveillanceFeed,
+  PatternAlertProps,
+  TargetingReticleProps,
+  PilotCardProps,
+  PilotCardField,
+  // Phase 6
+  EvaCheckboxProps,
+  EvaToggleProps,
+  EvaTextareaProps,
+  EvaTooltipProps,
+  EvaBadgeProps,
+  EvaSkeletonProps,
+  EvaBreadcrumbProps,
+  EvaPaginationProps,
+  EvaRadioGroupProps,
+  EvaDrawerProps,
+  EvaDividerProps,
+} from "@mattloyed/eva-ui";
 ```

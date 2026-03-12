@@ -6,7 +6,7 @@ import { ToastDemo, ToastDurationDemo } from "@/components/docs/ToastDemo";
 Non-blocking NERV telemetry-style alerts triggered via the `useToast()` hook. Five severity variants with auto-dismiss progress bar, monospace typography, and CRT glow effects. Uses `AnimatePresence` for smooth slide-in/slide-out transitions.
 
 ```tsx
-import { EvaToastProvider, useToast } from "@/components";
+import { EvaToastProvider, useToast } from "@mattloyed/eva-ui";
 ```
 
 ## All Variants
@@ -54,7 +54,7 @@ Wrap your application with `<EvaToastProvider>` to enable toast notifications:
 
 ```tsx
 // app/layout.tsx or root component
-import { EvaToastProvider } from "@/components";
+import { EvaToastProvider } from "@mattloyed/eva-ui";
 
 export default function Layout({ children }) {
   return (
@@ -68,7 +68,7 @@ export default function Layout({ children }) {
 Then use the `useToast()` hook anywhere inside the provider:
 
 ```tsx
-import { useToast } from "@/components";
+import { useToast } from "@mattloyed/eva-ui";
 
 function MyComponent() {
   const { addToast } = useToast();

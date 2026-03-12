@@ -39,7 +39,7 @@
 
 ## `> SYSTEM_OVERVIEW`
 
-EvaUI is a **17-component React design system** built to replicate the iconic CRT-era military interfaces of NERV headquarters. Every pixel follows strict brutalist design rules:
+EvaUI is a **30+ component React design system** built to replicate the iconic CRT-era military interfaces of NERV headquarters. Every pixel follows strict brutalist design rules:
 
 - **`border-radius: 0`** everywhere — sharp industrial angles only
 - **NERV color palette** — black void, alert red, text orange, grid green, data cyan, magenta wave
@@ -78,11 +78,83 @@ EvaUI is a **17-component React design system** built to replicate the iconic CR
 | [`<SeeleMonolith />`](docs/COMPONENTS.md#seelemonolith) | SOUND ONLY monolith with equalizer | `id`, `isSpeaking` |
 | [`<ClassifiedOverlay />`](docs/COMPONENTS.md#classifiedoverlay) | TOP SECRET overlay with unlock mechanism | `text`, `isUnlocked`, `children` |
 
+### Phase 3 — Toast & Layout Primitives
+
+| Component | Description | Key Props |
+|-----------|-------------|-----------|
+| [`<EvaToastProvider />`](docs/COMPONENTS.md#evatoastprovider) | Toast notification context provider | `children` |
+| [`<WireframeLoader />`](docs/COMPONENTS.md#wireframeloader) | Rotating wireframe loading indicator | `size`, `color`, `label` |
+| [`<EvaCard />`](docs/COMPONENTS.md#evacard) | Container card with angled cut corner | `title`, `variant`, `cutSize` |
+| [`<EvaAccordion />`](docs/COMPONENTS.md#evaaccordion) | Expandable content sections | `multiple`, `defaultOpen` |
+
+### Phase 4 — Chart Components
+
+| Component | Description | Key Props |
+|-----------|-------------|-----------|
+| [`<EvaBarChart />`](docs/COMPONENTS.md#evabarchart) | Horizontal bar chart with LCD blocks | `bars`, `title`, `color` |
+| [`<EvaGauge />`](docs/COMPONENTS.md#evagauge) | SVG radial gauge with needle | `value`, `label`, `thresholds` |
+| [`<EvaPieChart />`](docs/COMPONENTS.md#evapiechart) | SVG pie chart with NERV styling | `slices`, `title`, `donut` |
+
+### Phase 5 — Video-Reference Components
+
+| Component | Description | Key Props |
+|-----------|-------------|-----------|
+| [`<EvaStatusStamp />`](docs/COMPONENTS.md#evastatusstamp) | Large stamp overlay (APPROVED, REJECTED) | `text`, `color`, `rotation` |
+| [`<SegmentDisplay />`](docs/COMPONENTS.md#segmentdisplay) | 7-segment LED countdown/clock | `value`, `format`, `color` |
+| [`<SurveillanceGrid />`](docs/COMPONENTS.md#surveillancegrid) | Multi-feed surveillance camera grid | `feeds`, `columns`, `color` |
+| [`<PatternAlert />`](docs/COMPONENTS.md#patternalert) | PATTERN BLUE/ORANGE detection alert | `designation`, `pattern`, `bloodType` |
+| [`<TargetingReticle />`](docs/COMPONENTS.md#targetingreticle) | Circular targeting HUD overlay | `mode`, `locked`, `coordinates` |
+| [`<PilotCard />`](docs/COMPONENTS.md#pilotcard) | Pilot identification card | `designation`, `name`, `unit` |
+
+### Phase 6 — Form & UI Primitives
+
+| Component | Description | Key Props |
+|-----------|-------------|-----------|
+| `<EvaCheckbox />` | Brutalist checkbox `[X]` / `[ ]` | `checked`, `label`, `indeterminate` |
+| `<EvaToggle />` | LCD ON/OFF switch | `checked`, `onChange`, `label` |
+| `<EvaTextarea />` | Terminal textarea with brackets | `label`, `color`, `error` |
+| `<EvaTooltip />` | L-bracket tooltip panel | `content`, `side`, `delay` |
+| `<EvaBadge />` | Classification stamp tag | `variant`, `label`, `removable` |
+| `<EvaSkeleton />` | Scanline shimmer placeholder | `width`, `height`, `variant` |
+| `<EvaBreadcrumb />` | Navigation path `>>` separator | `items`, `separator`, `color` |
+| `<EvaPagination />` | LCD page navigation | `total`, `pageSize`, `onPageChange` |
+| `<EvaRadioGroup />` | Radio buttons `(*)` / `( )` | `options`, `value`, `onChange` |
+| `<EvaDrawer />` | Slide-in sidebar panel | `open`, `onClose`, `side` |
+| `<EvaDivider />` | Section separator `── [ LABEL ] ──` | `label`, `variant`, `orientation` |
+
 > Full API reference with all props, types, and defaults: **[docs/COMPONENTS.md](docs/COMPONENTS.md)**
 
 ---
 
-## `> QUICK_START`
+## `> INSTALLATION`
+
+```bash
+npm install @mattloyed/eva-ui
+```
+
+**Peer dependencies:** `react`, `react-dom`, `framer-motion`. Tailwind CSS is optional.
+
+```tsx
+// Import components
+import { Button, TerminalDisplay, MagiSystemPanel } from "@mattloyed/eva-ui";
+
+// Import styles (required)
+import "@mattloyed/eva-ui/styles.css";
+```
+
+If using Tailwind CSS, add the preset:
+
+```js
+// tailwind.config.js
+import evaPreset from "@mattloyed/eva-ui/tailwind.preset";
+
+export default {
+  presets: [evaPreset],
+  // ...
+};
+```
+
+### Development / Demo site
 
 ```bash
 git clone https://github.com/MattLoyeD/eva-ui.git
@@ -102,7 +174,7 @@ import {
   Button,
   MagiSystemPanel,
   CountdownTimer,
-} from "@/components";
+} from "@mattloyed/eva-ui";
 
 // Full-screen emergency alert
 <EmergencyBanner
@@ -182,7 +254,7 @@ src/
 │   ├── SelectMenu/          # Styled dropdown
 │   ├── SyncProgressBar/     # LCD progress bar
 │   ├── DataGrid/            # Data surveillance table
-│   ├── SystemDialog/        # Modal dialog
+│   ├── SystemDialog/        # Modal dialog (Portal)
 │   ├── NavigationTabs/      # Classified tabs
 │   ├── EvaTitleScreen/      # Cinematic title card
 │   ├── MagiSystemPanel/     # MAGI supercomputer
@@ -190,6 +262,30 @@ src/
 │   ├── CountdownTimer/      # LCD countdown
 │   ├── SeeleMonolith/       # SOUND ONLY block
 │   ├── ClassifiedOverlay/   # TOP SECRET overlay
+│   ├── Toast/               # Toast notification system
+│   ├── WireframeLoader/     # Wireframe loading spinner
+│   ├── EvaCard/             # Container card
+│   ├── EvaAccordion/        # Expandable sections
+│   ├── EvaBarChart/         # Horizontal bar chart
+│   ├── EvaGauge/            # Radial gauge
+│   ├── EvaPieChart/         # Pie/donut chart
+│   ├── EvaStatusStamp/      # Stamp overlay
+│   ├── SegmentDisplay/      # 7-segment LED display
+│   ├── SurveillanceGrid/    # Camera feed grid
+│   ├── PatternAlert/        # Pattern detection alert
+│   ├── TargetingReticle/    # Targeting HUD
+│   ├── PilotCard/           # Pilot ID card
+│   ├── EvaCheckbox/         # Brutalist checkbox
+│   ├── EvaToggle/           # ON/OFF switch
+│   ├── EvaTextarea/         # Terminal textarea
+│   ├── EvaTooltip/          # L-bracket tooltip
+│   ├── EvaBadge/            # Classification tag
+│   ├── EvaSkeleton/         # Loading placeholder
+│   ├── EvaBreadcrumb/       # Navigation breadcrumb
+│   ├── EvaPagination/       # Page navigation
+│   ├── EvaRadioGroup/       # Radio button group
+│   ├── EvaDrawer/           # Slide-in sidebar
+│   ├── EvaDivider/          # Section separator
 │   └── index.ts             # Barrel exports
 ```
 
