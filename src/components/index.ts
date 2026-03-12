@@ -101,3 +101,41 @@ export type { TargetingReticleProps } from "./TargetingReticle";
 
 export { PilotCard } from "./PilotCard";
 export type { PilotCardProps, PilotCardField } from "./PilotCard";
+
+// Phase 6 — Form & UI Primitives
+export { EvaCheckbox } from "./EvaCheckbox";
+export type { EvaCheckboxProps } from "./EvaCheckbox";
+
+export { EvaToggle } from "./EvaToggle";
+export type { EvaToggleProps } from "./EvaToggle";
+
+export { EvaTextarea } from "./EvaTextarea";
+export type { EvaTextareaProps } from "./EvaTextarea";
+
+export { EvaTooltip } from "./EvaTooltip";
+export type { EvaTooltipProps } from "./EvaTooltip";
+
+export { EvaBadge } from "./EvaBadge";
+export type { EvaBadgeProps } from "./EvaBadge";
+
+export { EvaSkeleton } from "./EvaSkeleton";
+export type { EvaSkeletonProps } from "./EvaSkeleton";
+
+export { EvaBreadcrumb } from "./EvaBreadcrumb";
+export type { EvaBreadcrumbProps, EvaBreadcrumbItem } from "./EvaBreadcrumb";
+
+export { EvaPagination } from "./EvaPagination";
+export type { EvaPaginationProps } from "./EvaPagination";
+
+export { EvaRadioGroup } from "./EvaRadioGroup";
+export type { EvaRadioGroupProps, EvaRadioOption } from "./EvaRadioGroup";
+
+export { EvaDrawer } from "./EvaDrawer";
+export type { EvaDrawerProps } from "./EvaDrawer";
+
+export { EvaDivider } from "./EvaDivider";
+export type { EvaDividerProps } from "./EvaDivider";
+
+// Theme Provider
+export { EvaThemeProvider } from "./EvaThemeProvider";
+export type { EvaThemeProviderProps } from "./EvaThemeProvider";
