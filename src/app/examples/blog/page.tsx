@@ -6,9 +6,9 @@ import { TerminalDisplay } from "@/components/TerminalDisplay";
 import { ClassifiedOverlay } from "@/components/ClassifiedOverlay";
 import { EmergencyBanner } from "@/components/EmergencyBanner";
 import { Button } from "@/components/Button";
-import { EvaCard } from "@/components/EvaCard";
+import { Card } from "@/components/Card";
 import { PilotCard } from "@/components/PilotCard";
-import { EvaStatusStamp } from "@/components/EvaStatusStamp";
+import { StatusStamp } from "@/components/StatusStamp";
 
 // ─── Blog post data ───
 interface Post {
@@ -393,7 +393,7 @@ export default function BlogExample() {
                     />
                   </ClassifiedOverlay>
                   <div className="relative mt-4">
-                    <EvaStatusStamp text="CLASSIFIED" color="red" rotation={-8} bordered />
+                    <StatusStamp text="CLASSIFIED" color="red" rotation={-8} bordered />
                   </div>
                   <div className="mt-4">
                     <Button
@@ -420,7 +420,7 @@ export default function BlogExample() {
             </div>
           ) : (
             <div className="flex items-center justify-center h-full">
-              <EvaCard title="NO BULLETIN SELECTED">
+              <Card title="NO BULLETIN SELECTED">
                 <div className="text-center space-y-2 py-4">
                   <div className="text-eva-white/60 font-mono text-sm uppercase tracking-wider">
                     SELECT A BULLETIN TO VIEW
@@ -429,7 +429,7 @@ export default function BlogExample() {
                     {filteredPosts.length} ENTRIES AVAILABLE IN {activeCategory}
                   </div>
                 </div>
-              </EvaCard>
+              </Card>
             </div>
           )}
         </div>

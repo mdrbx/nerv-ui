@@ -1,0 +1,123 @@
+import { Tooltip, Button } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Tooltip
+
+Tactical overlay tooltip with L-bracket corner accents and configurable placement. Wraps any trigger element and displays content on hover/focus with an optional delay.
+
+```tsx
+import { Tooltip, Button } from "@mattloyed/eva-ui";
+```
+
+## Basic Usage
+
+<ComponentPreview
+  title="BASIC"
+  code={`import { Tooltip, Button } from "@mattloyed/eva-ui";
+
+<Tooltip content="LAUNCH SEQUENCE READY">
+  <Button>Hover me</Button>
+</Tooltip>`}
+>
+  <Tooltip content="LAUNCH SEQUENCE READY">
+    <Button>Hover me</Button>
+  </Tooltip>
+</ComponentPreview>
+
+## Placement Sides
+
+<ComponentPreview
+  title="TOP"
+  code={`<Tooltip content="TOP POSITION" side="top">
+  <Button>Top</Button>
+</Tooltip>`}
+>
+  <Tooltip content="TOP POSITION" side="top">
+    <Button>Top</Button>
+  </Tooltip>
+</ComponentPreview>
+
+<ComponentPreview
+  title="BOTTOM"
+  code={`<Tooltip content="BOTTOM POSITION" side="bottom">
+  <Button>Bottom</Button>
+</Tooltip>`}
+>
+  <Tooltip content="BOTTOM POSITION" side="bottom">
+    <Button>Bottom</Button>
+  </Tooltip>
+</ComponentPreview>
+
+<ComponentPreview
+  title="LEFT"
+  code={`<Tooltip content="LEFT POSITION" side="left">
+  <Button>Left</Button>
+</Tooltip>`}
+>
+  <Tooltip content="LEFT POSITION" side="left">
+    <Button>Left</Button>
+  </Tooltip>
+</ComponentPreview>
+
+<ComponentPreview
+  title="RIGHT"
+  code={`<Tooltip content="RIGHT POSITION" side="right">
+  <Button>Right</Button>
+</Tooltip>`}
+>
+  <Tooltip content="RIGHT POSITION" side="right">
+    <Button>Right</Button>
+  </Tooltip>
+</ComponentPreview>
+
+## Color Themes
+
+<ComponentPreview
+  title="ORANGE"
+  code={`<Tooltip content="UNIT-00 STATUS: FROZEN" color="orange">
+  <Button>Orange</Button>
+</Tooltip>`}
+>
+  <Tooltip content="UNIT-00 STATUS: FROZEN" color="orange">
+    <Button>Orange</Button>
+  </Tooltip>
+</ComponentPreview>
+
+<ComponentPreview
+  title="GREEN"
+  code={`<Tooltip content="SYNC RATE: NOMINAL" color="green">
+  <Button>Green</Button>
+</Tooltip>`}
+>
+  <Tooltip content="SYNC RATE: NOMINAL" color="green">
+    <Button>Green</Button>
+  </Tooltip>
+</ComponentPreview>
+
+<ComponentPreview
+  title="CYAN"
+  code={`<Tooltip content="MAGI ANALYSIS COMPLETE" color="cyan">
+  <Button>Cyan</Button>
+</Tooltip>`}
+>
+  <Tooltip content="MAGI ANALYSIS COMPLETE" color="cyan">
+    <Button>Cyan</Button>
+  </Tooltip>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "content", type: "ReactNode", description: "Tooltip content to display", required: true },
+    { name: "children", type: "ReactNode", description: "Trigger element the tooltip wraps", required: true },
+    { name: "side", type: '"top" | "bottom" | "left" | "right"', default: '"top"', description: "Placement side relative to the trigger" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme for border and text" },
+    { name: "delay", type: "number", default: "200", description: "Delay in milliseconds before showing" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes on the wrapper" },
+  ]}
+/>
+
+<Callout type="info" title="ACCESSIBILITY">
+  The tooltip uses `aria-describedby` and `role="tooltip"` for screen reader support. It responds to both hover and focus events.
+</Callout>

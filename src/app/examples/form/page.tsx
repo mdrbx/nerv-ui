@@ -7,13 +7,13 @@ import { Button } from "@/components/Button";
 import { SystemDialog } from "@/components/SystemDialog";
 import { TerminalDisplay } from "@/components/TerminalDisplay";
 import { TargetingContainer } from "@/components/TargetingContainer";
-import { EvaStatusStamp } from "@/components/EvaStatusStamp";
+import { StatusStamp } from "@/components/StatusStamp";
 import { PilotCard } from "@/components/PilotCard";
-import { EvaCheckbox } from "@/components/EvaCheckbox";
-import { EvaToggle } from "@/components/EvaToggle";
-import { EvaTextarea } from "@/components/EvaTextarea";
-import { EvaRadioGroup } from "@/components/EvaRadioGroup";
-import { EvaDivider } from "@/components/EvaDivider";
+import { Checkbox } from "@/components/Checkbox";
+import { Toggle } from "@/components/Toggle";
+import { Textarea } from "@/components/Textarea";
+import { RadioGroup } from "@/components/RadioGroup";
+import { Divider } from "@/components/Divider";
 
 const unitOptions = [
   { value: "", label: "— SELECT UNIT —" },
@@ -162,7 +162,7 @@ export default function FormExample() {
                 />
               </div>
 
-              <EvaTextarea
+              <Textarea
                 label="MISSION NOTES"
                 placeholder="Additional instructions..."
                 color="cyan"
@@ -174,9 +174,9 @@ export default function FormExample() {
                 rows={3}
               />
 
-              <EvaDivider label="AUTHORIZATION" color="orange" />
+              <Divider label="AUTHORIZATION" color="orange" />
 
-              <EvaRadioGroup
+              <RadioGroup
                 label="CLEARANCE LEVEL"
                 options={[
                   { value: "standard", label: "STANDARD" },
@@ -192,7 +192,7 @@ export default function FormExample() {
               />
 
               <div className="flex items-center gap-6">
-                <EvaCheckbox
+                <Checkbox
                   label="CONFIRM AUTHORIZATION"
                   checked={formData.confirmAuth}
                   onChange={(e) =>
@@ -200,7 +200,7 @@ export default function FormExample() {
                   }
                   color="orange"
                 />
-                <EvaToggle
+                <Toggle
                   label="LIVE MONITORING"
                   checked={formData.liveMonitoring}
                   onChange={(v) =>
@@ -268,7 +268,7 @@ export default function FormExample() {
                   showLineNumbers
                 />
                 <div className="relative h-40 overflow-hidden">
-                  <EvaStatusStamp text="APPROVED" color="green" bordered rotation={-8} />
+                  <StatusStamp text="APPROVED" color="green" bordered rotation={-8} />
                 </div>
               </div>
             ) : (

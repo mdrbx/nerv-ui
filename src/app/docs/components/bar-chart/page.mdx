@@ -1,0 +1,125 @@
+import { BarChart } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Bar Chart
+
+Animated bar chart with scanline texture, glow effects, and grid lines. Supports vertical and horizontal orientations. Built entirely with SVG-free DOM elements and Framer Motion.
+
+```tsx
+import { BarChart } from "@mattloyed/eva-ui";
+```
+
+## Vertical Bars
+
+<ComponentPreview
+  title="VERTICAL"
+  code={`<BarChart
+  title="SYNC PERFORMANCE"
+  bars={[
+    { label: "EVA-00", value: 68 },
+    { label: "EVA-01", value: 41 },
+    { label: "EVA-02", value: 92 },
+    { label: "EVA-03", value: 55 },
+    { label: "EVA-04", value: 78 },
+  ]}
+  unit="%"
+  color="cyan"
+/>`}
+>
+  <BarChart
+    title="SYNC PERFORMANCE"
+    bars={[
+      { label: "EVA-00", value: 68 },
+      { label: "EVA-01", value: 41 },
+      { label: "EVA-02", value: 92 },
+      { label: "EVA-03", value: 55 },
+      { label: "EVA-04", value: 78 },
+    ]}
+    unit="%"
+    color="cyan"
+  />
+</ComponentPreview>
+
+## Horizontal Bars
+
+<ComponentPreview
+  title="HORIZONTAL"
+  code={`<BarChart
+  title="RESOURCE ALLOCATION"
+  direction="horizontal"
+  bars={[
+    { label: "CPU", value: 87 },
+    { label: "MEMORY", value: 64 },
+    { label: "NETWORK", value: 92 },
+    { label: "STORAGE", value: 45 },
+    { label: "GPU", value: 71 },
+  ]}
+  unit="%"
+  color="green"
+/>`}
+>
+  <BarChart
+    title="RESOURCE ALLOCATION"
+    direction="horizontal"
+    bars={[
+      { label: "CPU", value: 87 },
+      { label: "MEMORY", value: 64 },
+      { label: "NETWORK", value: 92 },
+      { label: "STORAGE", value: 45 },
+      { label: "GPU", value: 71 },
+    ]}
+    unit="%"
+    color="green"
+  />
+</ComponentPreview>
+
+## Custom Colors Per Bar
+
+<ComponentPreview
+  title="MIXED COLORS"
+  code={`<BarChart
+  title="ANGEL THREAT INDEX"
+  bars={[
+    { label: "SACHIEL", value: 60, color: "#00FFFF" },
+    { label: "SHAMSHEL", value: 45, color: "#00FF00" },
+    { label: "RAMIEL", value: 95, color: "#FF0000" },
+    { label: "GAGHIEL", value: 55, color: "#FF9900" },
+    { label: "ISRAFEL", value: 70, color: "#FF00FF" },
+  ]}
+  color="orange"
+/>`}
+>
+  <BarChart
+    title="ANGEL THREAT INDEX"
+    bars={[
+      { label: "SACHIEL", value: 60, color: "#00FFFF" },
+      { label: "SHAMSHEL", value: 45, color: "#00FF00" },
+      { label: "RAMIEL", value: 95, color: "#FF0000" },
+      { label: "GAGHIEL", value: 55, color: "#FF9900" },
+      { label: "ISRAFEL", value: 70, color: "#FF00FF" },
+    ]}
+    color="orange"
+  />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "bars", type: "BarChartBar[]", description: "Array of { label, value, color? }", required: true },
+    { name: "maxValue", type: "number", description: "Max scale value (auto-detected if omitted)" },
+    { name: "color", type: '"cyan" | "green" | "orange" | "red" | "magenta"', default: '"cyan"', description: "Default bar color theme" },
+    { name: "title", type: "string", description: "Chart title text" },
+    { name: "showGrid", type: "boolean", default: "true", description: "Show grid lines" },
+    { name: "showValues", type: "boolean", default: "true", description: "Show value labels" },
+    { name: "direction", type: '"vertical" | "horizontal"', default: '"vertical"', description: "Bar orientation" },
+    { name: "stagger", type: "number", default: "0.08", description: "Animation stagger delay (seconds)" },
+    { name: "height", type: "number", default: "200", description: "Chart height in pixels" },
+    { name: "unit", type: "string", default: '""', description: "Value suffix (e.g. %, ms)" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="SCANLINE TEXTURE">
+  Each bar features a subtle horizontal scanline overlay for that authentic CRT monitor look. The glow effect uses box-shadow for GPU-accelerated rendering.
+</Callout>

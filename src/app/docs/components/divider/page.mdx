@@ -1,0 +1,99 @@
+import { Divider } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Divider
+
+Horizontal or vertical separator with optional centered label. Supports three color themes and three line-style variants (solid, dashed, dotted).
+
+```tsx
+import { Divider } from "@mattloyed/eva-ui";
+```
+
+## With Label
+
+<ComponentPreview
+  title="LABELED"
+  code={`<Divider label="SECTION 01" />`}
+>
+  <Divider label="SECTION 01" />
+</ComponentPreview>
+
+## Without Label
+
+<ComponentPreview
+  title="PLAIN"
+  code={`<Divider />`}
+>
+  <Divider />
+</ComponentPreview>
+
+## Color Themes
+
+<ComponentPreview
+  title="COLORS"
+  code={`<div className="space-y-4">
+  <Divider label="ORANGE" color="orange" />
+  <Divider label="GREEN" color="green" />
+  <Divider label="CYAN" color="cyan" />
+</div>`}
+>
+  <div className="space-y-4">
+    <Divider label="ORANGE" color="orange" />
+    <Divider label="GREEN" color="green" />
+    <Divider label="CYAN" color="cyan" />
+  </div>
+</ComponentPreview>
+
+## Line Style Variants
+
+<ComponentPreview
+  title="VARIANTS"
+  code={`<div className="space-y-4">
+  <Divider label="SOLID" variant="solid" />
+  <Divider label="DASHED" variant="dashed" />
+  <Divider label="DOTTED" variant="dotted" />
+</div>`}
+>
+  <div className="space-y-4">
+    <Divider label="SOLID" variant="solid" />
+    <Divider label="DASHED" variant="dashed" />
+    <Divider label="DOTTED" variant="dotted" />
+  </div>
+</ComponentPreview>
+
+## Vertical Orientation
+
+<ComponentPreview
+  title="VERTICAL"
+  code={`<div className="flex items-center gap-4 h-12">
+  <span className="text-xs font-mono text-eva-white/80">MAGI-01</span>
+  <Divider orientation="vertical" color="cyan" />
+  <span className="text-xs font-mono text-eva-white/80">MAGI-02</span>
+  <Divider orientation="vertical" color="cyan" />
+  <span className="text-xs font-mono text-eva-white/80">MAGI-03</span>
+</div>`}
+>
+  <div className="flex items-center gap-4 h-12">
+    <span className="text-xs font-mono text-eva-white/80">MAGI-01</span>
+    <Divider orientation="vertical" color="cyan" />
+    <span className="text-xs font-mono text-eva-white/80">MAGI-02</span>
+    <Divider orientation="vertical" color="cyan" />
+    <span className="text-xs font-mono text-eva-white/80">MAGI-03</span>
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "label", type: "string", description: "Optional centered label text displayed as [ LABEL ]" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme for line and label" },
+    { name: "variant", type: '"solid" | "dashed" | "dotted"', default: '"solid"', description: "Line style variant" },
+    { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "Divider orientation" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="VERTICAL MODE">
+  When `orientation="vertical"`, the label prop is ignored. The divider renders as an inline-block border-left element that stretches to its parent height.
+</Callout>

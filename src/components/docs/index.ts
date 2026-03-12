@@ -9,7 +9,8 @@ export {
   ToggleColorsDemo,
   ToggleSizesDemo,
   ToggleDisabledDemo,
-} from "./EvaToggleDemo";
-export { PaginationBasicDemo, PaginationGreenDemo, PaginationCyanDemo } from "./EvaPaginationDemo";
-export { RadioGroupBasicDemo, RadioGroupHorizontalDemo, RadioGroupGreenDemo, RadioGroupCyanDemo } from "./EvaRadioGroupDemo";
-export { DrawerBasicDemo, DrawerLeftDemo } from "./EvaDrawerDemo";
+} from "./ToggleDemo";
+export { PaginationBasicDemo, PaginationGreenDemo, PaginationCyanDemo } from "./PaginationDemo";
+export { RadioGroupBasicDemo, RadioGroupHorizontalDemo, RadioGroupGreenDemo, RadioGroupCyanDemo } from "./RadioGroupDemo";
+export { DrawerBasicDemo, DrawerLeftDemo } from "./DrawerDemo";
+export { AccordionBasicDemo, AccordionMultiDemo } from "./AccordionDemo";

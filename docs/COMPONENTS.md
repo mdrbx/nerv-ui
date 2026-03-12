@@ -327,12 +327,12 @@ Military-classified folder tabs with animated indicator bar. Supports horizontal
 
 ---
 
-### `EvaTitleScreen`
+### `TitleScreen`
 
 Cinematic title card with serif typography and staggered motion animation. Three alignment modes for different visual effects.
 
 ```tsx
-<EvaTitleScreen
+<TitleScreen
   title="NEON GENESIS EVANGELION"
   subtitle="Episode 01 — Angel Attack"
   align="split"
@@ -487,17 +487,17 @@ TOP SECRET overlay with diagonal hazard stripes. Slides away violently when unlo
 
 ---
 
-### `EvaToastProvider`
+### `ToastProvider`
 
 Context provider for the toast notification system. Wrap your app with this provider, then use the `useToast()` hook to trigger notifications.
 
 ```tsx
-import { EvaToastProvider, useToast } from "@mattloyed/eva-ui";
+import { ToastProvider, useToast } from "@mattloyed/eva-ui";
 
 // Wrap your app
-<EvaToastProvider>
+<ToastProvider>
   <App />
-</EvaToastProvider>
+</ToastProvider>
 
 // Inside any component
 function MyComponent() {
@@ -543,14 +543,14 @@ Rotating wireframe cube/polyhedron loading indicator with scanline effect.
 
 ---
 
-### `EvaCard`
+### `Card`
 
 Container card with angled cut corner and variant styling. Supports header title and footer slot.
 
 ```tsx
-<EvaCard title="UNIT STATUS" variant="highlighted">
+<Card title="UNIT STATUS" variant="highlighted">
   <p>All systems nominal</p>
-</EvaCard>
+</Card>
 ```
 
 | Prop | Type | Default | Description |
@@ -564,31 +564,31 @@ Container card with angled cut corner and variant styling. Supports header title
 
 ---
 
-### `EvaAccordion`
+### `Accordion`
 
 Expandable content sections with animated open/close. Supports single or multiple open items.
 
 ```tsx
-<EvaAccordion multiple defaultOpen={["item-1"]}>
-  <EvaAccordionItem id="item-1" title="SECTION ALPHA" color="cyan">
+<Accordion multiple defaultOpen={["item-1"]}>
+  <AccordionItem id="item-1" title="SECTION ALPHA" color="cyan">
     Content here
-  </EvaAccordionItem>
-  <EvaAccordionItem id="item-2" title="SECTION BETA" color="orange">
+  </AccordionItem>
+  <AccordionItem id="item-2" title="SECTION BETA" color="orange">
     More content
-  </EvaAccordionItem>
-</EvaAccordion>
+  </AccordionItem>
+</Accordion>
 ```
 
-**EvaAccordion props:**
+**Accordion props:**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | **required** | `EvaAccordionItem` children |
+| `children` | `ReactNode` | **required** | `AccordionItem` children |
 | `multiple` | `boolean` | `false` | Allow multiple items open |
 | `defaultOpen` | `string[]` | `[]` | Initially open item IDs |
 | `className` | `string` | `""` | Additional CSS classes |
 
-**EvaAccordionItem props:**
+**AccordionItem props:**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -603,12 +603,12 @@ Expandable content sections with animated open/close. Supports single or multipl
 
 ---
 
-### `EvaBarChart`
+### `BarChart`
 
 Horizontal bar chart with LCD-style block segments. Each bar renders as filled blocks against a track.
 
 ```tsx
-<EvaBarChart
+<BarChart
   bars={[
     { label: "EVA-00", value: 65, color: "cyan" },
     { label: "EVA-01", value: 89, color: "orange" },
@@ -620,7 +620,7 @@ Horizontal bar chart with LCD-style block segments. Each bar renders as filled b
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `bars` | `EvaBarChartBar[]` | **required** | `{ label, value, color? }` |
+| `bars` | `BarChartBar[]` | **required** | `{ label, value, color? }` |
 | `title` | `string` | — | Chart title |
 | `maxValue` | `number` | — | Max value (auto-detected if omitted) |
 | `showValues` | `boolean` | `true` | Show value labels |
@@ -628,12 +628,12 @@ Horizontal bar chart with LCD-style block segments. Each bar renders as filled b
 
 ---
 
-### `EvaGauge`
+### `Gauge`
 
 SVG radial gauge with animated needle and threshold color zones.
 
 ```tsx
-<EvaGauge value={78} label="POWER OUTPUT" unit="%" />
+<Gauge value={78} label="POWER OUTPUT" unit="%" />
 ```
 
 | Prop | Type | Default | Description |
@@ -646,12 +646,12 @@ SVG radial gauge with animated needle and threshold color zones.
 
 ---
 
-### `EvaPieChart`
+### `PieChart`
 
 SVG pie or donut chart with NERV-styled segments and legend.
 
 ```tsx
-<EvaPieChart
+<PieChart
   slices={[
     { label: "ACTIVE", value: 60, color: "#00FF00" },
     { label: "STANDBY", value: 25, color: "#FF9900" },
@@ -664,7 +664,7 @@ SVG pie or donut chart with NERV-styled segments and legend.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `slices` | `EvaPieSlice[]` | **required** | `{ label, value, color }` |
+| `slices` | `PieSlice[]` | **required** | `{ label, value, color }` |
 | `title` | `string` | — | Chart title |
 | `donut` | `boolean` | `false` | Render as donut chart |
 | `size` | `number` | `200` | Chart diameter in pixels |
@@ -676,12 +676,12 @@ SVG pie or donut chart with NERV-styled segments and legend.
 
 ---
 
-### `EvaStatusStamp`
+### `StatusStamp`
 
 Large rotated stamp overlay text. Used for classification marks like APPROVED, REJECTED, CLASSIFIED.
 
 ```tsx
-<EvaStatusStamp text="APPROVED" color="green" rotation={-12} />
+<StatusStamp text="APPROVED" color="green" rotation={-12} />
 ```
 
 | Prop | Type | Default | Description |
@@ -858,7 +858,7 @@ import type {
   NavigationTabsProps,
   NavigationTab,
   // Phase 2
-  EvaTitleScreenProps,
+  TitleScreenProps,
   MagiSystemPanelProps,
   MagiVote,
   MagiStatus,
@@ -867,23 +867,23 @@ import type {
   SeeleMonolithProps,
   ClassifiedOverlayProps,
   // Phase 3
-  EvaToastProviderProps,
+  ToastProviderProps,
   Toast,
   ToastVariant,
   ToastContextValue,
   AddToastPayload,
   WireframeLoaderProps,
-  EvaCardProps,
-  EvaAccordionProps,
-  EvaAccordionItemProps,
+  CardProps,
+  AccordionProps,
+  AccordionItemProps,
   // Phase 4
-  EvaBarChartProps,
-  EvaBarChartBar,
-  EvaGaugeProps,
-  EvaPieChartProps,
-  EvaPieSlice,
+  BarChartProps,
+  BarChartBar,
+  GaugeProps,
+  PieChartProps,
+  PieSlice,
   // Phase 5
-  EvaStatusStampProps,
+  StatusStampProps,
   SegmentDisplayProps,
   SurveillanceGridProps,
   SurveillanceFeed,
@@ -892,16 +892,16 @@ import type {
   PilotCardProps,
   PilotCardField,
   // Phase 6
-  EvaCheckboxProps,
-  EvaToggleProps,
-  EvaTextareaProps,
-  EvaTooltipProps,
-  EvaBadgeProps,
-  EvaSkeletonProps,
-  EvaBreadcrumbProps,
-  EvaPaginationProps,
-  EvaRadioGroupProps,
-  EvaDrawerProps,
-  EvaDividerProps,
+  CheckboxProps,
+  ToggleProps,
+  TextareaProps,
+  TooltipProps,
+  BadgeProps,
+  SkeletonProps,
+  BreadcrumbProps,
+  PaginationProps,
+  RadioGroupProps,
+  DrawerProps,
+  DividerProps,
 } from "@mattloyed/eva-ui";
 ```

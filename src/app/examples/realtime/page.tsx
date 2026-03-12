@@ -7,9 +7,9 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { DataGrid } from "@/components/DataGrid";
 import { TargetingContainer } from "@/components/TargetingContainer";
 import { EmergencyBanner } from "@/components/EmergencyBanner";
-import { EvaBarChart } from "@/components/EvaBarChart";
-import { EvaGauge } from "@/components/EvaGauge";
-import { EvaPieChart } from "@/components/EvaPieChart";
+import { BarChart } from "@/components/BarChart";
+import { Gauge } from "@/components/Gauge";
+import { PieChart } from "@/components/PieChart";
 import { NavigationTabs } from "@/components/NavigationTabs";
 import { SurveillanceGrid } from "@/components/SurveillanceGrid";
 import { SegmentDisplay } from "@/components/SegmentDisplay";
@@ -205,27 +205,27 @@ export default function RealtimeDashboard() {
               SYSTEM GAUGES
             </h2>
             <div className="grid grid-cols-2 gap-2">
-              <EvaGauge
+              <Gauge
                 value={Math.round(sensorValues[0])}
                 label="THERMAL"
                 color="orange"
                 size={130}
                 threshold={85}
               />
-              <EvaGauge
+              <Gauge
                 value={Math.round(sensorValues[2])}
                 label="RADIATION"
                 color="green"
                 size={130}
                 threshold={90}
               />
-              <EvaGauge
+              <Gauge
                 value={Math.round(sensorValues[3])}
                 label="EM-FIELD"
                 color="cyan"
                 size={130}
               />
-              <EvaGauge
+              <Gauge
                 value={Math.round(sensorValues[4])}
                 label="BIO-METRIC"
                 color="magenta"
@@ -234,7 +234,7 @@ export default function RealtimeDashboard() {
             </div>
 
             <div className="border-t border-eva-white/10 pt-3">
-              <EvaPieChart
+              <PieChart
                 title="EVENT STATUS"
                 slices={pieSlices}
                 size={120}
@@ -252,7 +252,7 @@ export default function RealtimeDashboard() {
           <div className="col-span-6 p-4 border-r border-eva-green">
             <TargetingContainer label="SENSOR LEVELS — VERTICAL" color="cyan">
               <div className="p-4">
-                <EvaBarChart
+                <BarChart
                   title="CURRENT READINGS"
                   bars={barChartBars}
                   unit="%"
@@ -267,7 +267,7 @@ export default function RealtimeDashboard() {
           <div className="col-span-6 p-4">
             <TargetingContainer label="SENSOR LEVELS — HORIZONTAL" color="orange">
               <div className="p-4">
-                <EvaBarChart
+                <BarChart
                   title="CURRENT READINGS"
                   bars={barChartBars}
                   unit="%"
@@ -283,7 +283,7 @@ export default function RealtimeDashboard() {
             <TargetingContainer label="GAUGE ARRAY" color="green">
               <div className="flex flex-wrap items-center justify-center gap-4 p-4">
                 {sensorNames.map((name, i) => (
-                  <EvaGauge
+                  <Gauge
                     key={name}
                     value={Math.round(sensorValues[i])}
                     label={name}
@@ -301,7 +301,7 @@ export default function RealtimeDashboard() {
           <div className="col-span-4 p-4 border-t border-l border-eva-green">
             <TargetingContainer label="STATUS DISTRIBUTION" color="orange">
               <div className="flex justify-center p-4">
-                <EvaPieChart
+                <PieChart
                   title="EVENT BREAKDOWN"
                   slices={pieSlices}
                   size={180}
@@ -313,7 +313,7 @@ export default function RealtimeDashboard() {
             <div className="mt-4">
               <TargetingContainer label="THREAT ASSESSMENT" color="red">
                 <div className="flex justify-center p-4">
-                  <EvaPieChart
+                  <PieChart
                     slices={[
                       { label: "SAFE", value: 60 },
                       { label: "MONITOR", value: 25 },

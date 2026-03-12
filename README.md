@@ -71,7 +71,7 @@ EvaUI is a **30+ component React design system** built to replicate the iconic C
 
 | Component | Description | Key Props |
 |-----------|-------------|-----------|
-| [`<EvaTitleScreen />`](docs/COMPONENTS.md#evatitlescreen) | Cinematic title card with serif typography | `title`, `subtitle`, `align` |
+| [`<TitleScreen />`](docs/COMPONENTS.md#titlescreen) | Cinematic title card with serif typography | `title`, `subtitle`, `align` |
 | [`<MagiSystemPanel />`](docs/COMPONENTS.md#magisystempanel) | 3-column MAGI supercomputer voting display | `votes[]`, `title` |
 | [`<SyncRatioChart />`](docs/COMPONENTS.md#syncratiochart) | Pure SVG dual sinusoidal waveform chart | `frequencyA/B`, `amplitudeA/B` |
 | [`<CountdownTimer />`](docs/COMPONENTS.md#countdowntimer) | LCD countdown with battery bar | `initialSeconds`, `onExpire` |
@@ -82,24 +82,24 @@ EvaUI is a **30+ component React design system** built to replicate the iconic C
 
 | Component | Description | Key Props |
 |-----------|-------------|-----------|
-| [`<EvaToastProvider />`](docs/COMPONENTS.md#evatoastprovider) | Toast notification context provider | `children` |
+| [`<ToastProvider />`](docs/COMPONENTS.md#toastprovider) | Toast notification context provider | `children` |
 | [`<WireframeLoader />`](docs/COMPONENTS.md#wireframeloader) | Rotating wireframe loading indicator | `size`, `color`, `label` |
-| [`<EvaCard />`](docs/COMPONENTS.md#evacard) | Container card with angled cut corner | `title`, `variant`, `cutSize` |
-| [`<EvaAccordion />`](docs/COMPONENTS.md#evaaccordion) | Expandable content sections | `multiple`, `defaultOpen` |
+| [`<Card />`](docs/COMPONENTS.md#card) | Container card with angled cut corner | `title`, `variant`, `cutSize` |
+| [`<Accordion />`](docs/COMPONENTS.md#accordion) | Expandable content sections | `multiple`, `defaultOpen` |
 
 ### Phase 4 — Chart Components
 
 | Component | Description | Key Props |
 |-----------|-------------|-----------|
-| [`<EvaBarChart />`](docs/COMPONENTS.md#evabarchart) | Horizontal bar chart with LCD blocks | `bars`, `title`, `color` |
-| [`<EvaGauge />`](docs/COMPONENTS.md#evagauge) | SVG radial gauge with needle | `value`, `label`, `thresholds` |
-| [`<EvaPieChart />`](docs/COMPONENTS.md#evapiechart) | SVG pie chart with NERV styling | `slices`, `title`, `donut` |
+| [`<BarChart />`](docs/COMPONENTS.md#barchart) | Horizontal bar chart with LCD blocks | `bars`, `title`, `color` |
+| [`<Gauge />`](docs/COMPONENTS.md#gauge) | SVG radial gauge with needle | `value`, `label`, `thresholds` |
+| [`<PieChart />`](docs/COMPONENTS.md#piechart) | SVG pie chart with NERV styling | `slices`, `title`, `donut` |
 
 ### Phase 5 — Video-Reference Components
 
 | Component | Description | Key Props |
 |-----------|-------------|-----------|
-| [`<EvaStatusStamp />`](docs/COMPONENTS.md#evastatusstamp) | Large stamp overlay (APPROVED, REJECTED) | `text`, `color`, `rotation` |
+| [`<StatusStamp />`](docs/COMPONENTS.md#statusstamp) | Large stamp overlay (APPROVED, REJECTED) | `text`, `color`, `rotation` |
 | [`<SegmentDisplay />`](docs/COMPONENTS.md#segmentdisplay) | 7-segment LED countdown/clock | `value`, `format`, `color` |
 | [`<SurveillanceGrid />`](docs/COMPONENTS.md#surveillancegrid) | Multi-feed surveillance camera grid | `feeds`, `columns`, `color` |
 | [`<PatternAlert />`](docs/COMPONENTS.md#patternalert) | PATTERN BLUE/ORANGE detection alert | `designation`, `pattern`, `bloodType` |
@@ -110,17 +110,17 @@ EvaUI is a **30+ component React design system** built to replicate the iconic C
 
 | Component | Description | Key Props |
 |-----------|-------------|-----------|
-| `<EvaCheckbox />` | Brutalist checkbox `[X]` / `[ ]` | `checked`, `label`, `indeterminate` |
-| `<EvaToggle />` | LCD ON/OFF switch | `checked`, `onChange`, `label` |
-| `<EvaTextarea />` | Terminal textarea with brackets | `label`, `color`, `error` |
-| `<EvaTooltip />` | L-bracket tooltip panel | `content`, `side`, `delay` |
-| `<EvaBadge />` | Classification stamp tag | `variant`, `label`, `removable` |
-| `<EvaSkeleton />` | Scanline shimmer placeholder | `width`, `height`, `variant` |
-| `<EvaBreadcrumb />` | Navigation path `>>` separator | `items`, `separator`, `color` |
-| `<EvaPagination />` | LCD page navigation | `total`, `pageSize`, `onPageChange` |
-| `<EvaRadioGroup />` | Radio buttons `(*)` / `( )` | `options`, `value`, `onChange` |
-| `<EvaDrawer />` | Slide-in sidebar panel | `open`, `onClose`, `side` |
-| `<EvaDivider />` | Section separator `── [ LABEL ] ──` | `label`, `variant`, `orientation` |
+| `<Checkbox />` | Brutalist checkbox `[X]` / `[ ]` | `checked`, `label`, `indeterminate` |
+| `<Toggle />` | LCD ON/OFF switch | `checked`, `onChange`, `label` |
+| `<Textarea />` | Terminal textarea with brackets | `label`, `color`, `error` |
+| `<Tooltip />` | L-bracket tooltip panel | `content`, `side`, `delay` |
+| `<Badge />` | Classification stamp tag | `variant`, `label`, `removable` |
+| `<Skeleton />` | Scanline shimmer placeholder | `width`, `height`, `variant` |
+| `<Breadcrumb />` | Navigation path `>>` separator | `items`, `separator`, `color` |
+| `<Pagination />` | LCD page navigation | `total`, `pageSize`, `onPageChange` |
+| `<RadioGroup />` | Radio buttons `(*)` / `( )` | `options`, `value`, `onChange` |
+| `<Drawer />` | Slide-in sidebar panel | `open`, `onClose`, `side` |
+| `<Divider />` | Section separator `── [ LABEL ] ──` | `label`, `variant`, `orientation` |
 
 > Full API reference with all props, types, and defaults: **[docs/COMPONENTS.md](docs/COMPONENTS.md)**
 
@@ -256,7 +256,7 @@ src/
 │   ├── DataGrid/            # Data surveillance table
 │   ├── SystemDialog/        # Modal dialog (Portal)
 │   ├── NavigationTabs/      # Classified tabs
-│   ├── EvaTitleScreen/      # Cinematic title card
+│   ├── TitleScreen/      # Cinematic title card
 │   ├── MagiSystemPanel/     # MAGI supercomputer
 │   ├── SyncRatioChart/      # SVG waveform chart
 │   ├── CountdownTimer/      # LCD countdown
@@ -264,28 +264,28 @@ src/
 │   ├── ClassifiedOverlay/   # TOP SECRET overlay
 │   ├── Toast/               # Toast notification system
 │   ├── WireframeLoader/     # Wireframe loading spinner
-│   ├── EvaCard/             # Container card
-│   ├── EvaAccordion/        # Expandable sections
-│   ├── EvaBarChart/         # Horizontal bar chart
-│   ├── EvaGauge/            # Radial gauge
-│   ├── EvaPieChart/         # Pie/donut chart
-│   ├── EvaStatusStamp/      # Stamp overlay
+│   ├── Card/             # Container card
+│   ├── Accordion/        # Expandable sections
+│   ├── BarChart/         # Horizontal bar chart
+│   ├── Gauge/            # Radial gauge
+│   ├── PieChart/         # Pie/donut chart
+│   ├── StatusStamp/      # Stamp overlay
 │   ├── SegmentDisplay/      # 7-segment LED display
 │   ├── SurveillanceGrid/    # Camera feed grid
 │   ├── PatternAlert/        # Pattern detection alert
 │   ├── TargetingReticle/    # Targeting HUD
 │   ├── PilotCard/           # Pilot ID card
-│   ├── EvaCheckbox/         # Brutalist checkbox
-│   ├── EvaToggle/           # ON/OFF switch
-│   ├── EvaTextarea/         # Terminal textarea
-│   ├── EvaTooltip/          # L-bracket tooltip
-│   ├── EvaBadge/            # Classification tag
-│   ├── EvaSkeleton/         # Loading placeholder
-│   ├── EvaBreadcrumb/       # Navigation breadcrumb
-│   ├── EvaPagination/       # Page navigation
-│   ├── EvaRadioGroup/       # Radio button group
-│   ├── EvaDrawer/           # Slide-in sidebar
-│   ├── EvaDivider/          # Section separator
+│   ├── Checkbox/         # Brutalist checkbox
+│   ├── Toggle/           # ON/OFF switch
+│   ├── Textarea/         # Terminal textarea
+│   ├── Tooltip/          # L-bracket tooltip
+│   ├── Badge/            # Classification tag
+│   ├── Skeleton/         # Loading placeholder
+│   ├── Breadcrumb/       # Navigation breadcrumb
+│   ├── Pagination/       # Page navigation
+│   ├── RadioGroup/       # Radio button group
+│   ├── Drawer/           # Slide-in sidebar
+│   ├── Divider/          # Section separator
 │   └── index.ts             # Barrel exports
 ```
 

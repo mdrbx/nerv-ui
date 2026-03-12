@@ -35,8 +35,8 @@ export { NavigationTabs } from "./NavigationTabs";
 export type { NavigationTabsProps, NavigationTab } from "./NavigationTabs";
 
 // Phase 2 — Advanced Components
-export { EvaTitleScreen } from "./EvaTitleScreen";
-export type { EvaTitleScreenProps } from "./EvaTitleScreen";
+export { TitleScreen } from "./TitleScreen";
+export type { TitleScreenProps } from "./TitleScreen";
 
 export { MagiSystemPanel } from "./MagiSystemPanel";
 export type { MagiSystemPanelProps, MagiVote, MagiStatus } from "./MagiSystemPanel";
@@ -67,25 +67,25 @@ export type {
 export { WireframeLoader } from "./WireframeLoader";
 export type { WireframeLoaderProps } from "./WireframeLoader";
 
-export { EvaCard } from "./EvaCard";
-export type { EvaCardProps } from "./EvaCard";
+export { Card } from "./Card";
+export type { CardProps } from "./Card";
 
-export { EvaAccordion, EvaAccordionItem } from "./EvaAccordion";
-export type { EvaAccordionProps, EvaAccordionItemProps } from "./EvaAccordion";
+export { Accordion, AccordionItem } from "./Accordion";
+export type { AccordionProps, AccordionItemProps } from "./Accordion";
 
 // Phase 4 — Chart Components
-export { EvaBarChart } from "./EvaBarChart";
-export type { EvaBarChartProps, EvaBarChartBar } from "./EvaBarChart";
+export { BarChart } from "./BarChart";
+export type { BarChartProps, BarChartBar } from "./BarChart";
 
-export { EvaGauge } from "./EvaGauge";
-export type { EvaGaugeProps } from "./EvaGauge";
+export { Gauge } from "./Gauge";
+export type { GaugeProps } from "./Gauge";
 
-export { EvaPieChart } from "./EvaPieChart";
-export type { EvaPieChartProps, EvaPieSlice } from "./EvaPieChart";
+export { PieChart } from "./PieChart";
+export type { PieChartProps, PieSlice } from "./PieChart";
 
 // Phase 5 — Video-Reference Components
-export { EvaStatusStamp } from "./EvaStatusStamp";
-export type { EvaStatusStampProps } from "./EvaStatusStamp";
+export { StatusStamp } from "./StatusStamp";
+export type { StatusStampProps } from "./StatusStamp";
 
 export { SegmentDisplay } from "./SegmentDisplay";
 export type { SegmentDisplayProps } from "./SegmentDisplay";
@@ -103,39 +103,39 @@ export { PilotCard } from "./PilotCard";
 export type { PilotCardProps, PilotCardField } from "./PilotCard";
 
 // Phase 6 — Form & UI Primitives
-export { EvaCheckbox } from "./EvaCheckbox";
-export type { EvaCheckboxProps } from "./EvaCheckbox";
+export { Checkbox } from "./Checkbox";
+export type { CheckboxProps } from "./Checkbox";
 
-export { EvaToggle } from "./EvaToggle";
-export type { EvaToggleProps } from "./EvaToggle";
+export { Toggle } from "./Toggle";
+export type { ToggleProps } from "./Toggle";
 
-export { EvaTextarea } from "./EvaTextarea";
-export type { EvaTextareaProps } from "./EvaTextarea";
+export { Textarea } from "./Textarea";
+export type { TextareaProps } from "./Textarea";
 
-export { EvaTooltip } from "./EvaTooltip";
-export type { EvaTooltipProps } from "./EvaTooltip";
+export { Tooltip } from "./Tooltip";
+export type { TooltipProps } from "./Tooltip";
 
-export { EvaBadge } from "./EvaBadge";
-export type { EvaBadgeProps } from "./EvaBadge";
+export { Badge } from "./Badge";
+export type { BadgeProps } from "./Badge";
 
-export { EvaSkeleton } from "./EvaSkeleton";
-export type { EvaSkeletonProps } from "./EvaSkeleton";
+export { Skeleton } from "./Skeleton";
+export type { SkeletonProps } from "./Skeleton";
 
-export { EvaBreadcrumb } from "./EvaBreadcrumb";
-export type { EvaBreadcrumbProps, EvaBreadcrumbItem } from "./EvaBreadcrumb";
+export { Breadcrumb } from "./Breadcrumb";
+export type { BreadcrumbProps, BreadcrumbItem } from "./Breadcrumb";
 
-export { EvaPagination } from "./EvaPagination";
-export type { EvaPaginationProps } from "./EvaPagination";
+export { Pagination } from "./Pagination";
+export type { PaginationProps } from "./Pagination";
 
-export { EvaRadioGroup } from "./EvaRadioGroup";
-export type { EvaRadioGroupProps, EvaRadioOption } from "./EvaRadioGroup";
+export { RadioGroup } from "./RadioGroup";
+export type { RadioGroupProps, RadioOption } from "./RadioGroup";
 
-export { EvaDrawer } from "./EvaDrawer";
-export type { EvaDrawerProps } from "./EvaDrawer";
+export { Drawer } from "./Drawer";
+export type { DrawerProps } from "./Drawer";
 
-export { EvaDivider } from "./EvaDivider";
-export type { EvaDividerProps } from "./EvaDivider";
+export { Divider } from "./Divider";
+export type { DividerProps } from "./Divider";
 
 // Theme Provider
-export { EvaThemeProvider } from "./EvaThemeProvider";
-export type { EvaThemeProviderProps } from "./EvaThemeProvider";
+export { ThemeProvider } from "./ThemeProvider";
+export type { ThemeProviderProps } from "./ThemeProvider";

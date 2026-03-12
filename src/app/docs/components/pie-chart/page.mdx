@@ -1,0 +1,132 @@
+import { PieChart } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Pie Chart
+
+Animated pie or donut chart with crosshair grid, glow effects, and optional legend. SVG-based with per-slice color override. Four color palettes available.
+
+```tsx
+import { PieChart } from "@mattloyed/eva-ui";
+```
+
+## Pie Chart
+
+<ComponentPreview
+  title="PIE"
+  code={`<PieChart
+  title="ANGEL ENCOUNTERS BY TYPE"
+  slices={[
+    { label: "HUMANOID", value: 6 },
+    { label: "GEOMETRIC", value: 3 },
+    { label: "ORGANIC", value: 4 },
+    { label: "HYBRID", value: 2 },
+    { label: "UNKNOWN", value: 1 },
+  ]}
+/>`}
+>
+  <div className="flex justify-center py-4">
+    <PieChart
+      title="ANGEL ENCOUNTERS BY TYPE"
+      slices={[
+        { label: "HUMANOID", value: 6 },
+        { label: "GEOMETRIC", value: 3 },
+        { label: "ORGANIC", value: 4 },
+        { label: "HYBRID", value: 2 },
+        { label: "UNKNOWN", value: 1 },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Donut Chart
+
+<ComponentPreview
+  title="DONUT"
+  code={`<PieChart
+  title="RESOURCE DISTRIBUTION"
+  donut
+  slices={[
+    { label: "MAGI-1", value: 40 },
+    { label: "MAGI-2", value: 35 },
+    { label: "MAGI-3", value: 25 },
+  ]}
+  color="cyan"
+/>`}
+>
+  <div className="flex justify-center py-4">
+    <PieChart
+      title="RESOURCE DISTRIBUTION"
+      donut
+      slices={[
+        { label: "MAGI-1", value: 40 },
+        { label: "MAGI-2", value: 35 },
+        { label: "MAGI-3", value: 25 },
+      ]}
+      color="cyan"
+    />
+  </div>
+</ComponentPreview>
+
+## Color Themes
+
+<ComponentPreview
+  title="THEMES"
+  code={`<PieChart
+  slices={[
+    { label: "A", value: 3 },
+    { label: "B", value: 5 },
+    { label: "C", value: 2 },
+  ]}
+  color="green"
+  size={120}
+/>
+<PieChart
+  slices={[
+    { label: "A", value: 3 },
+    { label: "B", value: 5 },
+    { label: "C", value: 2 },
+  ]}
+  color="orange"
+  size={120}
+/>`}
+>
+  <div className="flex justify-center gap-8 py-4">
+    <PieChart
+      slices={[
+        { label: "A", value: 3 },
+        { label: "B", value: 5 },
+        { label: "C", value: 2 },
+      ]}
+      color="green"
+      size={120}
+    />
+    <PieChart
+      slices={[
+        { label: "A", value: 3 },
+        { label: "B", value: 5 },
+        { label: "C", value: 2 },
+      ]}
+      color="orange"
+      size={120}
+    />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "slices", type: "PieSlice[]", description: "Array of { label, value, color? }", required: true },
+    { name: "title", type: "string", description: "Chart title" },
+    { name: "size", type: "number", default: "180", description: "Chart size in pixels" },
+    { name: "donut", type: "boolean", default: "false", description: "Hollow center mode" },
+    { name: "showLegend", type: "boolean", default: "true", description: "Show color legend" },
+    { name: "showLabels", type: "boolean", default: "true", description: "Show % labels on slices" },
+    { name: "color", type: '"cyan" | "green" | "orange" | "mixed"', default: '"mixed"', description: "Color palette" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="CROSSHAIR GRID">
+  The chart background features concentric circles and crosshair lines for that targeting computer aesthetic. Slices animate in with staggered scale transitions.
+</Callout>

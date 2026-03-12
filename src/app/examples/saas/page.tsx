@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { EvaTitleScreen } from "@/components/EvaTitleScreen";
+import { TitleScreen } from "@/components/TitleScreen";
 import { HexGridBackground } from "@/components/HexGridBackground";
 import { TargetingContainer } from "@/components/TargetingContainer";
 import { DataGrid } from "@/components/DataGrid";
@@ -12,14 +12,14 @@ import { SystemDialog } from "@/components/SystemDialog";
 import { SeeleMonolith } from "@/components/SeeleMonolith";
 import { SyncRatioChart } from "@/components/SyncRatioChart";
 import { SyncProgressBar } from "@/components/SyncProgressBar";
-import { EvaBarChart } from "@/components/EvaBarChart";
-import { EvaGauge } from "@/components/EvaGauge";
-import { EvaPieChart } from "@/components/EvaPieChart";
+import { BarChart } from "@/components/BarChart";
+import { Gauge } from "@/components/Gauge";
+import { PieChart } from "@/components/PieChart";
 import { NavigationTabs } from "@/components/NavigationTabs";
-import { EvaCard } from "@/components/EvaCard";
+import { Card } from "@/components/Card";
 import { WireframeLoader } from "@/components/WireframeLoader";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { EvaAccordion, EvaAccordionItem } from "@/components/EvaAccordion";
+import { Accordion, AccordionItem } from "@/components/Accordion";
 import { SegmentDisplay } from "@/components/SegmentDisplay";
 import { TargetingReticle } from "@/components/TargetingReticle";
 import { SurveillanceGrid } from "@/components/SurveillanceGrid";
@@ -45,7 +45,7 @@ export default function SaasLandingPage() {
       <section className="relative h-[600px] overflow-hidden">
         <HexGridBackground color="green" />
         <div className="absolute inset-0 z-10">
-          <EvaTitleScreen
+          <TitleScreen
             title="GENESIS"
             subtitle="NEURAL INTERFACE PLATFORM"
             align="center"
@@ -137,7 +137,7 @@ export default function SaasLandingPage() {
           <div className="col-span-4">
             <TargetingContainer label="SYNC RATE" color="green">
               <div className="flex justify-center py-4">
-                <EvaGauge value={Math.round(gaugeVal)} label="PILOT-01" color="green" size={180} threshold={90} />
+                <Gauge value={Math.round(gaugeVal)} label="PILOT-01" color="green" size={180} threshold={90} />
               </div>
             </TargetingContainer>
           </div>
@@ -146,7 +146,7 @@ export default function SaasLandingPage() {
           <div className="col-span-7">
             <TargetingContainer label="SUBSYSTEM PERFORMANCE" color="orange">
               <div className="p-4">
-                <EvaBarChart
+                <BarChart
                   title="MODULE STATUS"
                   direction="horizontal"
                   bars={[
@@ -166,7 +166,7 @@ export default function SaasLandingPage() {
           <div className="col-span-5">
             <TargetingContainer label="RESOURCE ALLOCATION" color="cyan">
               <div className="flex justify-center p-4">
-                <EvaPieChart
+                <PieChart
                   slices={[
                     { label: "COMPUTE", value: 45 },
                     { label: "MEMORY", value: 25 },
@@ -241,7 +241,7 @@ export default function SaasLandingPage() {
             {featureTab === "sync" && (
               <>
                 <div className="col-span-7">
-                  <EvaCard title="NEURAL SYNC ENGINE">
+                  <Card title="NEURAL SYNC ENGINE">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
                         Real-time neural pattern synchronization with sub-millisecond
@@ -267,10 +267,10 @@ export default function SaasLandingPage() {
                         </div>
                       </div>
                     </div>
-                  </EvaCard>
+                  </Card>
                 </div>
                 <div className="col-span-5 space-y-4">
-                  <EvaGauge value={94} label="THROUGHPUT" color="cyan" size={180} />
+                  <Gauge value={94} label="THROUGHPUT" color="cyan" size={180} />
                   <SyncProgressBar value={94} label="NEURAL I/O" blocks={15} />
                   <SyncProgressBar value={87} label="BANDWIDTH" blocks={15} />
                   <SyncProgressBar value={99} label="STABILITY" blocks={15} />
@@ -281,14 +281,14 @@ export default function SaasLandingPage() {
             {featureTab === "genome" && (
               <>
                 <div className="col-span-7">
-                  <EvaCard title="GENOME PROCESSOR">
+                  <Card title="GENOME PROCESSOR">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
                         Massively parallel genomic analysis powered by quantum-biological
                         compute clusters. Process 12.4M sequences per cycle with
                         automated mutation detection and protein folding simulation.
                       </p>
-                      <EvaBarChart
+                      <BarChart
                         bars={[
                           { label: "DNA SEQ", value: 92 },
                           { label: "PROTEIN", value: 78 },
@@ -301,12 +301,12 @@ export default function SaasLandingPage() {
                         height={140}
                       />
                     </div>
-                  </EvaCard>
+                  </Card>
                 </div>
                 <div className="col-span-5">
-                  <EvaCard title="SEQUENCE DISTRIBUTION">
+                  <Card title="SEQUENCE DISTRIBUTION">
                     <div className="flex justify-center py-4">
-                      <EvaPieChart
+                      <PieChart
                         slices={[
                           { label: "HUMAN", value: 45 },
                           { label: "ANGEL", value: 30 },
@@ -318,7 +318,7 @@ export default function SaasLandingPage() {
                         color="green"
                       />
                     </div>
-                  </EvaCard>
+                  </Card>
                 </div>
               </>
             )}
@@ -326,7 +326,7 @@ export default function SaasLandingPage() {
             {featureTab === "security" && (
               <>
                 <div className="col-span-7">
-                  <EvaCard title="A.T. FIELD SECURITY">
+                  <Card title="A.T. FIELD SECURITY">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
                         Multi-layered defensive architecture inspired by Absolute Terror
@@ -349,10 +349,10 @@ export default function SaasLandingPage() {
                         ))}
                       </div>
                     </div>
-                  </EvaCard>
+                  </Card>
                 </div>
                 <div className="col-span-5 flex flex-col items-center justify-center gap-4">
-                  <EvaGauge value={100} label="SHIELD INTEGRITY" color="green" size={180} />
+                  <Gauge value={100} label="SHIELD INTEGRITY" color="green" size={180} />
                   <div className="text-center text-[10px] font-mono text-eva-green">
                     ■ ZERO BREACHES SINCE INITIALIZATION
                   </div>
@@ -386,7 +386,7 @@ export default function SaasLandingPage() {
               { tier: "ENTERPRISE", nodes: 64, storage: "100 TB", sync: "240 Hz", price: "$7,999", variant: "default" as const },
               { tier: "NERV-CLASS", nodes: 256, storage: "1 PB", sync: "∞", price: "$29,999", variant: "alert" as const },
             ].map((plan) => (
-              <EvaCard key={plan.tier} title={plan.tier} variant={plan.variant}>
+              <Card key={plan.tier} title={plan.tier} variant={plan.variant}>
                 <div className="space-y-3 text-center">
                   <div
                     className={`text-3xl font-bold ${plan.variant === "alert" ? "text-eva-red" : "text-eva-cyan"}`}
@@ -421,7 +421,7 @@ export default function SaasLandingPage() {
                     SELECT
                   </Button>
                 </div>
-              </EvaCard>
+              </Card>
             ))}
           </div>
 
@@ -455,32 +455,32 @@ export default function SaasLandingPage() {
             FREQUENTLY ASKED
           </h2>
 
-          <EvaAccordion defaultOpen={["deploy"]}>
-            <EvaAccordionItem id="deploy" title="HOW DO I DEPLOY?" color="green">
+          <Accordion defaultOpen={["deploy"]}>
+            <AccordionItem id="deploy" title="HOW DO I DEPLOY?" color="green">
               <p className="text-xs font-mono text-eva-white/70 leading-relaxed">
                 Run the initialization sequence from your NERV-certified terminal.
                 Deployment takes approximately 3 minutes for PROTOTYPE tier and up to 15 minutes for NERV-CLASS infrastructure.
               </p>
-            </EvaAccordionItem>
-            <EvaAccordionItem id="security" title="IS MY DATA SECURE?" color="green">
+            </AccordionItem>
+            <AccordionItem id="security" title="IS MY DATA SECURE?" color="green">
               <p className="text-xs font-mono text-eva-white/70 leading-relaxed">
                 All data is encrypted with AES-256 and protected by our A.T. Field security layer.
                 We maintain a zero-breach record since system initialization.
               </p>
-            </EvaAccordionItem>
-            <EvaAccordionItem id="support" title="WHAT SUPPORT IS INCLUDED?" color="green">
+            </AccordionItem>
+            <AccordionItem id="support" title="WHAT SUPPORT IS INCLUDED?" color="green">
               <p className="text-xs font-mono text-eva-white/70 leading-relaxed">
                 All tiers include 24/7 MAGI-assisted support. ENTERPRISE and NERV-CLASS tiers
                 receive dedicated personnel and priority incident response.
               </p>
-            </EvaAccordionItem>
-            <EvaAccordionItem id="scale" title="CAN I SCALE DYNAMICALLY?" color="green">
+            </AccordionItem>
+            <AccordionItem id="scale" title="CAN I SCALE DYNAMICALLY?" color="green">
               <p className="text-xs font-mono text-eva-white/70 leading-relaxed">
                 Yes. Auto-scaling is enabled by default across all tiers. Compute nodes
                 expand automatically based on load patterns detected by the MAGI consensus engine.
               </p>
-            </EvaAccordionItem>
-          </EvaAccordion>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 

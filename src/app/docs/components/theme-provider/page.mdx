@@ -1,0 +1,92 @@
+import { ThemeProvider, Card, Button } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Theme Provider
+
+Wrapper component that injects CSS custom properties onto a `<div>`, allowing descendant components to inherit overridden theme values. Keys without a `--` prefix are automatically prefixed with `--color-`.
+
+```tsx
+import { ThemeProvider } from "@mattloyed/eva-ui";
+```
+
+## Basic Theme Override
+
+<ComponentPreview
+  title="CUSTOM COLORS"
+  code={`import { ThemeProvider, Card, Button } from "@mattloyed/eva-ui";
+
+<ThemeProvider
+  theme={{
+    "eva-green": "#ff00ff",
+    "eva-orange": "#00ffcc",
+  }}
+>
+  <Card title="THEMED PANEL">
+    <div className="text-sm font-mono text-eva-white/80 space-y-2">
+      <div>Custom properties cascade to all children.</div>
+      <Button className="mt-2">THEMED BUTTON</Button>
+    </div>
+  </Card>
+</ThemeProvider>`}
+>
+  <ThemeProvider
+    theme={{
+      "eva-green": "#ff00ff",
+      "eva-orange": "#00ffcc",
+    }}
+  >
+    <Card title="THEMED PANEL">
+      <div className="text-sm font-mono text-eva-white/80 space-y-2">
+        <div>Custom properties cascade to all children.</div>
+        <Button className="mt-2">THEMED BUTTON</Button>
+      </div>
+    </Card>
+  </ThemeProvider>
+</ComponentPreview>
+
+## Raw CSS Variables
+
+Use the `--` prefix to set arbitrary CSS custom properties directly.
+
+<ComponentPreview
+  title="RAW VARIABLES"
+  code={`<ThemeProvider
+  theme={{
+    "--font-eva-display": "monospace",
+    "--custom-glow": "rgba(255, 0, 128, 0.3)",
+  }}
+>
+  <Card title="RAW OVERRIDES">
+    <div className="text-xs font-mono text-eva-white/60">
+      Keys starting with -- are passed through as-is.
+    </div>
+  </Card>
+</ThemeProvider>`}
+>
+  <ThemeProvider
+    theme={{
+      "--font-eva-display": "monospace",
+      "--custom-glow": "rgba(255, 0, 128, 0.3)",
+    }}
+  >
+    <Card title="RAW OVERRIDES">
+      <div className="text-xs font-mono text-eva-white/60">
+        Keys starting with -- are passed through as-is.
+      </div>
+    </Card>
+  </ThemeProvider>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "theme", type: "Record<string, string>", default: '{}', description: "Theme overrides — keys are CSS custom property names (without -- prefix gets --color- prepended), values are CSS values" },
+    { name: "children", type: "ReactNode", required: true, description: "Child content that inherits the theme overrides" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes on the wrapper div" },
+  ]}
+/>
+
+<Callout type="info" title="KEY PREFIXING">
+  Keys without a `--` prefix are automatically converted to `--color-{key}`. For example, `"eva-green": "#ff00ff"` becomes `--color-eva-green: #ff00ff`. Keys that already start with `--` are passed through unchanged.
+</Callout>

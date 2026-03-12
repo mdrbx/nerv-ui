@@ -12,11 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `useId()` for accessible label/input association in `InputField` and `SelectMenu`
 - React Portal rendering for `SystemDialog` and `ToastContainer`
 - `aria-busy` and `aria-disabled` on `Button` when `loading={true}`
-- New form components: `EvaCheckbox`, `EvaToggle`, `EvaTextarea`, `EvaRadioGroup`
-- New UI primitives: `EvaTooltip`, `EvaBadge`, `EvaSkeleton`, `EvaDivider`
-- New navigation components: `EvaBreadcrumb`, `EvaPagination`
-- New overlay component: `EvaDrawer`
-- `EvaThemeProvider` for runtime theme customization via CSS custom properties
+- New form components: `Checkbox`, `Toggle`, `Textarea`, `RadioGroup`
+- New UI primitives: `Tooltip`, `Badge`, `Skeleton`, `Divider`
+- New navigation components: `Breadcrumb`, `Pagination`
+- New overlay component: `Drawer`
+- `ThemeProvider` for runtime theme customization via CSS custom properties
 - Vitest test suite with tests for core components
 - `CHANGELOG.md` and `CONTRIBUTING.md`
 - `type-check` script in package.json
@@ -34,10 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Phase 1 — 11 core interface components: `EmergencyBanner`, `TerminalDisplay`, `TargetingContainer`, `HexGridBackground`, `Button`, `InputField`, `SelectMenu`, `SyncProgressBar`, `DataGrid`, `SystemDialog`, `NavigationTabs`
-- Phase 2 — 6 advanced components: `EvaTitleScreen`, `MagiSystemPanel`, `SyncRatioChart`, `CountdownTimer`, `SeeleMonolith`, `ClassifiedOverlay`
-- Phase 3 — Toast system (`EvaToastProvider`, `ToastContainer`, `useToast`), `WireframeLoader`, `EvaCard`, `EvaAccordion`
-- Phase 4 — Chart components: `EvaBarChart`, `EvaGauge`, `EvaPieChart`
-- Phase 5 — Video-reference components: `EvaStatusStamp`, `SegmentDisplay`, `SurveillanceGrid`, `PatternAlert`, `TargetingReticle`, `PilotCard`
+- Phase 2 — 6 advanced components: `TitleScreen`, `MagiSystemPanel`, `SyncRatioChart`, `CountdownTimer`, `SeeleMonolith`, `ClassifiedOverlay`
+- Phase 3 — Toast system (`ToastProvider`, `ToastContainer`, `useToast`), `WireframeLoader`, `Card`, `Accordion`
+- Phase 4 — Chart components: `BarChart`, `Gauge`, `PieChart`
+- Phase 5 — Video-reference components: `StatusStamp`, `SegmentDisplay`, `SurveillanceGrid`, `PatternAlert`, `TargetingReticle`, `PilotCard`
 - NERV color palette and typography via Tailwind CSS 4 `@theme`
 - Tailwind preset (`tailwind.preset.js`)
 - Dual CJS/ESM build via tsup

@@ -1,0 +1,89 @@
+import { Gauge } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Gauge
+
+Semicircular gauge meter with animated needle, arc fill, and tick marks. SVG-based with Framer Motion draw-in animation. Supports threshold warning and five color themes.
+
+```tsx
+import { Gauge } from "@mattloyed/eva-ui";
+```
+
+## Default
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`<Gauge value={73} label="SYNC RATE" />`}
+>
+  <div className="flex justify-center py-4">
+    <Gauge value={73} label="SYNC RATE" />
+  </div>
+</ComponentPreview>
+
+## Colors
+
+<ComponentPreview
+  title="ALL COLORS"
+  code={`<Gauge value={85} label="NOMINAL" color="cyan" />
+<Gauge value={62} label="POWER" color="green" />
+<Gauge value={91} label="THERMAL" color="orange" />
+<Gauge value={45} label="SHIELD" color="red" />
+<Gauge value={78} label="NEURAL" color="magenta" />`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-4 py-4">
+    <Gauge value={85} label="NOMINAL" color="cyan" />
+    <Gauge value={62} label="POWER" color="green" />
+    <Gauge value={91} label="THERMAL" color="orange" />
+    <Gauge value={45} label="SHIELD" color="red" />
+    <Gauge value={78} label="NEURAL" color="magenta" />
+  </div>
+</ComponentPreview>
+
+## With Threshold
+
+When the value exceeds the threshold, the gauge automatically turns red.
+
+<ComponentPreview
+  title="THRESHOLD"
+  code={`<Gauge value={88} label="CORE TEMP" color="green" threshold={75} unit="°C" max={120} />`}
+>
+  <div className="flex justify-center py-4">
+    <Gauge value={88} label="CORE TEMP" color="green" threshold={75} unit="°C" max={120} />
+  </div>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="SIZES"
+  code={`<Gauge value={50} size={100} label="SM" />
+<Gauge value={72} size={160} label="MD" />
+<Gauge value={91} size={220} label="LG" />`}
+>
+  <div className="flex items-center justify-center gap-6 py-4">
+    <Gauge value={50} size={100} label="SM" />
+    <Gauge value={72} size={160} label="MD" />
+    <Gauge value={91} size={220} label="LG" />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "value", type: "number", description: "Current gauge value", required: true },
+    { name: "min", type: "number", default: "0", description: "Minimum value" },
+    { name: "max", type: "number", default: "100", description: "Maximum value" },
+    { name: "label", type: "string", description: "Label above gauge" },
+    { name: "unit", type: "string", default: '"%"', description: "Value suffix" },
+    { name: "color", type: '"cyan" | "green" | "orange" | "red" | "magenta"', default: '"cyan"', description: "Color theme" },
+    { name: "size", type: "number", default: "160", description: "Gauge size in pixels" },
+    { name: "showTicks", type: "boolean", default: "true", description: "Show tick marks" },
+    { name: "threshold", type: "number", description: "Value above which gauge turns red" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="240° ARC">
+  The gauge uses a 240° arc sweep (from 7 o&apos;clock to 5 o&apos;clock) with 13 tick marks. The needle and value arc animate on mount with staggered Framer Motion transitions.
+</Callout>

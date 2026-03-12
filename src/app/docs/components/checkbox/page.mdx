@@ -1,0 +1,80 @@
+import { Checkbox } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Checkbox
+
+Monospaced bracket-style checkbox with `[X]` / `[ ]` / `[-]` states. Renders a hidden native checkbox for accessibility while displaying a stylised EVA-themed indicator with optional label.
+
+```tsx
+import { Checkbox } from "@mattloyed/eva-ui";
+```
+
+## Unchecked
+
+<ComponentPreview
+  title="UNCHECKED"
+  code={`<Checkbox label="SYSTEM OFFLINE" />`}
+>
+  <Checkbox label="SYSTEM OFFLINE" />
+</ComponentPreview>
+
+## Checked
+
+<ComponentPreview
+  title="CHECKED"
+  code={`<Checkbox checked label="PATTERN BLUE CONFIRMED" />`}
+>
+  <Checkbox checked label="PATTERN BLUE CONFIRMED" />
+</ComponentPreview>
+
+## Indeterminate
+
+<ComponentPreview
+  title="INDETERMINATE"
+  code={`<Checkbox indeterminate label="PARTIAL SYNC" />`}
+>
+  <Checkbox indeterminate label="PARTIAL SYNC" />
+</ComponentPreview>
+
+## Colors
+
+<ComponentPreview
+  title="COLORS"
+  code={`<div className="flex flex-col gap-3">
+  <Checkbox checked color="orange" label="ORANGE" />
+  <Checkbox checked color="green" label="GREEN" />
+  <Checkbox checked color="cyan" label="CYAN" />
+</div>`}
+>
+  <div className="flex flex-col gap-3">
+    <Checkbox checked color="orange" label="ORANGE" />
+    <Checkbox checked color="green" label="GREEN" />
+    <Checkbox checked color="cyan" label="CYAN" />
+  </div>
+</ComponentPreview>
+
+## With Label
+
+<ComponentPreview
+  title="WITH LABEL"
+  code={`<Checkbox checked color="cyan" label="A.T. FIELD ACTIVE" />`}
+>
+  <Checkbox checked color="cyan" label="A.T. FIELD ACTIVE" />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "label", type: "string", description: "Label text (displayed uppercase with // prefix)" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme" },
+    { name: "indeterminate", type: "boolean", default: "false", description: "Indeterminate state — displays [-]" },
+    { name: "checked", type: "boolean", description: "Controlled checked state" },
+    { name: "disabled", type: "boolean", description: "Disables interaction and dims the checkbox" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="BRACKET NOTATION">
+  The checkbox renders as `[X]` when checked, `[ ]` when unchecked, and `[-]` when indeterminate, matching the monospaced terminal aesthetic of NERV system interfaces.
+</Callout>

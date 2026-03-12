@@ -1,0 +1,88 @@
+import { Breadcrumb } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Breadcrumb
+
+Navigation breadcrumb trail with `>>` separator, uppercase labels, and color-coded links. The last item renders as the current page.
+
+```tsx
+import { Breadcrumb } from "@mattloyed/eva-ui";
+```
+
+## Basic Usage
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`import { Breadcrumb } from "@mattloyed/eva-ui";
+
+<Breadcrumb
+  items={[
+    { label: "NERV HQ", href: "/" },
+    { label: "OPERATIONS", href: "/ops" },
+    { label: "UNIT STATUS" },
+  ]}
+/>`}
+>
+  <Breadcrumb
+    items={[
+      { label: "NERV HQ", href: "/" },
+      { label: "OPERATIONS", href: "/ops" },
+      { label: "UNIT STATUS" },
+    ]}
+  />
+</ComponentPreview>
+
+## Custom Separator
+
+<ComponentPreview
+  title="CUSTOM SEPARATOR"
+  code={`import { Breadcrumb } from "@mattloyed/eva-ui";
+
+<Breadcrumb
+  separator="/"
+  items={[
+    { label: "MAGI", href: "/" },
+    { label: "CASPER", href: "/casper" },
+    { label: "DIAGNOSTICS" },
+  ]}
+/>`}
+>
+  <Breadcrumb
+    separator="/"
+    items={[
+      { label: "MAGI", href: "/" },
+      { label: "CASPER", href: "/casper" },
+      { label: "DIAGNOSTICS" },
+    ]}
+  />
+</ComponentPreview>
+
+## Color Variants
+
+<ComponentPreview
+  title="COLORS"
+  code={`import { Breadcrumb } from "@mattloyed/eva-ui";
+
+<div className="space-y-4">
+  <Breadcrumb color="orange" items={[{ label: "HOME", href: "/" }, { label: "SECTOR A", href: "/a" }, { label: "CURRENT" }]} />
+  <Breadcrumb color="green" items={[{ label: "HOME", href: "/" }, { label: "SECTOR B", href: "/b" }, { label: "CURRENT" }]} />
+  <Breadcrumb color="cyan" items={[{ label: "HOME", href: "/" }, { label: "SECTOR C", href: "/c" }, { label: "CURRENT" }]} />
+</div>`}
+>
+  <div className="space-y-4">
+    <Breadcrumb color="orange" items={[{ label: "HOME", href: "/" }, { label: "SECTOR A", href: "/a" }, { label: "CURRENT" }]} />
+    <Breadcrumb color="green" items={[{ label: "HOME", href: "/" }, { label: "SECTOR B", href: "/b" }, { label: "CURRENT" }]} />
+    <Breadcrumb color="cyan" items={[{ label: "HOME", href: "/" }, { label: "SECTOR C", href: "/c" }, { label: "CURRENT" }]} />
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "items", type: "BreadcrumbItem[]", required: true, description: "Array of { label, href?, onClick? }" },
+    { name: "separator", type: "string", default: '">>"', description: "Separator character between items" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>

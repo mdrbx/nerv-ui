@@ -1,0 +1,73 @@
+import { Drawer } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+import { DrawerBasicDemo, DrawerLeftDemo } from "@/components/docs/DrawerDemo";
+
+# Drawer
+
+Slide-in side panel with backdrop overlay, animated via Framer Motion. Renders through a portal to `document.body`. Supports left/right positioning and three color themes.
+
+```tsx
+import { Drawer } from "@mattloyed/eva-ui";
+```
+
+## Basic Usage
+
+<Callout type="info" title="INTERACTIVE">
+  Click the button to open the drawer. Click the [X] button or the backdrop to close.
+</Callout>
+
+<ComponentPreview
+  title="DEFAULT (RIGHT)"
+  code={`const [open, setOpen] = useState(false);
+
+<Button onClick={() => setOpen(true)}>OPEN DRAWER</Button>
+<Drawer open={open} onClose={() => setOpen(false)} title="SYSTEM PANEL">
+  <div className="text-sm font-mono text-eva-white/80 space-y-2">
+    <div>Unit: EVA-01</div>
+    <div>Status: ACTIVE</div>
+    <div>Sync Rate: 89.2%</div>
+  </div>
+</Drawer>`}
+>
+  <DrawerBasicDemo />
+</ComponentPreview>
+
+## Left Side + Color
+
+<ComponentPreview
+  title="LEFT / GREEN"
+  code={`<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="NAVIGATION"
+  side="left"
+  color="green"
+>
+  <div className="text-sm font-mono text-eva-green/80 space-y-2">
+    <div>// OPERATIONS</div>
+    <div>// INTELLIGENCE</div>
+    <div>// MAGI SYSTEM</div>
+  </div>
+</Drawer>`}
+>
+  <DrawerLeftDemo />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "open", type: "boolean", required: true, description: "Whether the drawer is open" },
+    { name: "onClose", type: "() => void", required: true, description: "Called when the drawer should close" },
+    { name: "title", type: "string", description: "Header title displayed in the title bar" },
+    { name: "side", type: '"left" | "right"', default: '"right"', description: "Which side the drawer slides in from" },
+    { name: "width", type: "string", default: '"400px"', description: "Drawer width (any CSS value)" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme for borders, text, and glow" },
+    { name: "children", type: "ReactNode", description: "Drawer body content" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes on the panel" },
+  ]}
+/>
+
+<Callout type="info" title="PORTAL RENDERING">
+  Drawer renders via `createPortal` to `document.body`, so it always overlays the full viewport regardless of parent positioning context.
+</Callout>
