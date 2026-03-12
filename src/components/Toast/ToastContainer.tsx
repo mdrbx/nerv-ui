@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ToastContext, type Toast, type ToastVariant } from "./ToastContext";
 
@@ -114,7 +115,7 @@ export function ToastContainer() {
   const ctx = useContext(ToastContext);
   if (!ctx) return null;
 
-  return (
+  const content = (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
       <AnimatePresence mode="popLayout">
         {ctx.toasts.map((toast) => (
@@ -125,4 +126,10 @@ export function ToastContainer() {
       </AnimatePresence>
     </div>
   );
+
+  if (typeof document === 'undefined') {
+    return content;
+  }
+
+  return createPortal(content, document.body);
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 
 export interface EvaBarChartBar {
@@ -42,26 +43,27 @@ const colorMap = {
   magenta: { bar: "#FF00FF", glow: "rgba(255,0,255,0.3)", text: "text-eva-magenta", grid: "rgba(255,0,255,0.08)" },
 };
 
-export function EvaBarChart({
-  bars,
-  maxValue,
-  color = "cyan",
-  title,
-  showGrid = true,
-  showValues = true,
-  direction = "vertical",
-  stagger = 0.08,
-  height = 200,
-  unit = "",
-  className = "",
-}: EvaBarChartProps) {
+export const EvaBarChart = forwardRef<HTMLDivElement, EvaBarChartProps>(
+  function EvaBarChart({
+    bars,
+    maxValue,
+    color = "cyan",
+    title,
+    showGrid = true,
+    showValues = true,
+    direction = "vertical",
+    stagger = 0.08,
+    height = 200,
+    unit = "",
+    className = "",
+  }, ref) {
   const c = colorMap[color];
   const max = maxValue ?? Math.max(...bars.map((b) => b.value), 1);
   const gridLines = 4;
 
   if (direction === "horizontal") {
     return (
-      <div className={`font-mono ${className}`}>
+      <div ref={ref} className={`font-mono ${className}`}>
         {title && (
           <div
             className={`text-xs uppercase tracking-[0.2em] font-bold ${c.text} mb-3 border-b border-current/20 pb-1`}
@@ -130,7 +132,7 @@ export function EvaBarChart({
 
   // Vertical bars
   return (
-    <div className={`font-mono ${className}`}>
+    <div ref={ref} className={`font-mono ${className}`}>
       {title && (
         <div
           className={`text-xs uppercase tracking-[0.2em] font-bold ${c.text} mb-3 border-b border-current/20 pb-1`}
@@ -203,4 +205,4 @@ export function EvaBarChart({
       </div>
     </div>
   );
-}
+});

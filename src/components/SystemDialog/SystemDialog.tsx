@@ -1,6 +1,7 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../Button";
 import { HexGridBackground } from "../HexGridBackground";
@@ -28,21 +29,25 @@ export interface SystemDialogProps {
   showHazardStripes?: boolean;
   /** Optional className */
   className?: string;
+  /** Optional portal target element (defaults to document.body) */
+  portalContainer?: Element | null;
 }
 
-export function SystemDialog({
-  open,
-  title = "SYSTEM NOTIFICATION",
-  children,
-  severity = "normal",
-  acceptText = "ACCEPT",
-  declineText = "DECLINE",
-  onAccept,
-  onDecline,
-  onClose,
-  showHazardStripes,
-  className = "",
-}: SystemDialogProps) {
+export const SystemDialog = forwardRef<HTMLDivElement, SystemDialogProps>(
+  function SystemDialog({
+    open,
+    title = "SYSTEM NOTIFICATION",
+    children,
+    severity = "normal",
+    acceptText = "ACCEPT",
+    declineText = "DECLINE",
+    onAccept,
+    onDecline,
+    onClose,
+    showHazardStripes,
+    className = "",
+    portalContainer,
+  }, ref) {
   const isDestructive = severity === "critical" || showHazardStripes;
   const borderColor =
     severity === "critical"
@@ -57,7 +62,7 @@ export function SystemDialog({
         ? "text-eva-orange"
         : "text-eva-orange";
 
-  return (
+  const content = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -81,6 +86,7 @@ export function SystemDialog({
 
           {/* Dialog container */}
           <motion.div
+            ref={ref}
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
@@ -162,4 +168,10 @@ export function SystemDialog({
       )}
     </AnimatePresence>
   );
-}
+
+  if (typeof document === 'undefined') {
+    return content;
+  }
+
+  return createPortal(content, portalContainer || document.body);
+});

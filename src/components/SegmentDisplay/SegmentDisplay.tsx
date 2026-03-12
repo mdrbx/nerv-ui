@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { forwardRef, useState, useEffect, useRef, useCallback } from "react";
 
-export interface SegmentDisplayProps {
+export interface SegmentDisplayProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "color"> {
   /** Initial value in seconds (for countdown mode) or direct numeric display */
   value?: number;
   /** Whether to count down automatically */
@@ -125,154 +126,160 @@ function formatTime(totalSeconds: number, format: string): string {
   return `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
 
-export function SegmentDisplay({
-  value = 0,
-  countdown = false,
-  format = "H:MM:SS",
-  digits,
-  color = "orange",
-  criticalThreshold = 60,
-  label,
-  subLabel,
-  size = "lg",
-  blinkSeparator = true,
-  onComplete,
-  className = "",
-}: SegmentDisplayProps) {
-  const [currentValue, setCurrentValue] = useState(value);
-  const [blinkOn, setBlinkOn] = useState(true);
-  const completedRef = useRef(false);
+export const SegmentDisplay = forwardRef<HTMLDivElement, SegmentDisplayProps>(
+  function SegmentDisplay(
+    {
+      value = 0,
+      countdown = false,
+      format = "H:MM:SS",
+      digits,
+      color = "orange",
+      criticalThreshold = 60,
+      label,
+      subLabel,
+      size = "lg",
+      blinkSeparator = true,
+      onComplete,
+      className = "",
+      ...rest
+    },
+    ref
+  ) {
+    const [currentValue, setCurrentValue] = useState(value);
+    const [blinkOn, setBlinkOn] = useState(true);
+    const completedRef = useRef(false);
 
-  // Countdown
-  useEffect(() => {
-    if (!countdown) {
+    // Countdown
+    useEffect(() => {
+      if (!countdown) {
+        setCurrentValue(value);
+        return;
+      }
       setCurrentValue(value);
-      return;
-    }
-    setCurrentValue(value);
-    completedRef.current = false;
-    const interval = setInterval(() => {
-      setCurrentValue((prev) => {
-        if (prev <= 0) {
-          clearInterval(interval);
-          if (!completedRef.current) {
-            completedRef.current = true;
-            onComplete?.();
+      completedRef.current = false;
+      const interval = setInterval(() => {
+        setCurrentValue((prev) => {
+          if (prev <= 0) {
+            clearInterval(interval);
+            if (!completedRef.current) {
+              completedRef.current = true;
+              onComplete?.();
+            }
+            return 0;
           }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [value, countdown, onComplete]);
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }, [value, countdown, onComplete]);
 
-  // Blink colons
-  useEffect(() => {
-    if (!blinkSeparator) return;
-    const interval = setInterval(() => setBlinkOn((b) => !b), 500);
-    return () => clearInterval(interval);
-  }, [blinkSeparator]);
+    // Blink colons
+    useEffect(() => {
+      if (!blinkSeparator) return;
+      const interval = setInterval(() => setBlinkOn((b) => !b), 500);
+      return () => clearInterval(interval);
+    }, [blinkSeparator]);
 
-  const isCritical = countdown && currentValue <= criticalThreshold;
-  const activeColor = isCritical ? "red" : color;
-  const colors = colorMap[activeColor];
-  const dims = sizeMap[size];
+    const isCritical = countdown && currentValue <= criticalThreshold;
+    const activeColor = isCritical ? "red" : color;
+    const colors = colorMap[activeColor];
+    const dims = sizeMap[size];
 
-  const displayStr =
-    format === "raw"
-      ? String(currentValue).padStart(digits || 4, "0")
-      : formatTime(currentValue, format);
+    const displayStr =
+      format === "raw"
+        ? String(currentValue).padStart(digits || 4, "0")
+        : formatTime(currentValue, format);
 
-  return (
-    <div className={`inline-flex flex-col items-center ${className}`}>
-      {/* Label */}
-      {label && (
+    return (
+      <div ref={ref} className={`inline-flex flex-col items-center ${className}`} {...rest}>
+        {/* Label */}
+        {label && (
+          <div
+            className="text-xs font-bold uppercase tracking-[0.2em] mb-2"
+            style={{
+              fontFamily: "var(--font-eva-display)",
+              color: colors.on,
+              textShadow: `0 0 8px ${colors.glow}`,
+            }}
+          >
+            {label}
+          </div>
+        )}
+
+        {/* Display */}
         <div
-          className="text-xs font-bold uppercase tracking-[0.2em] mb-2"
+          className="flex items-center gap-1 px-4 py-3"
           style={{
-            fontFamily: "var(--font-eva-display)",
-            color: colors.on,
-            textShadow: `0 0 8px ${colors.glow}`,
+            background: "linear-gradient(180deg, #0A0A0A 0%, #050505 100%)",
+            border: `1px solid ${colors.on}30`,
+            boxShadow: `0 0 20px ${colors.glow}, inset 0 0 10px rgba(0,0,0,0.8)`,
           }}
         >
-          {label}
-        </div>
-      )}
+          {displayStr.split("").map((char, i) => {
+            if (char === ":") {
+              return (
+                <div
+                  key={i}
+                  className="flex flex-col items-center justify-center mx-1"
+                  style={{
+                    width: dims.stroke * 2,
+                    height: dims.digit,
+                    gap: dims.digit * 0.2,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: dims.stroke,
+                      height: dims.stroke,
+                      backgroundColor:
+                        blinkSeparator && !blinkOn ? colorMap[activeColor].off : colors.on,
+                      boxShadow: blinkOn ? `0 0 6px ${colors.glow}` : "none",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: dims.stroke,
+                      height: dims.stroke,
+                      backgroundColor:
+                        blinkSeparator && !blinkOn ? colorMap[activeColor].off : colors.on,
+                      boxShadow: blinkOn ? `0 0 6px ${colors.glow}` : "none",
+                    }}
+                  />
+                </div>
+              );
+            }
 
-      {/* Display */}
-      <div
-        className="flex items-center gap-1 px-4 py-3"
-        style={{
-          background: "linear-gradient(180deg, #0A0A0A 0%, #050505 100%)",
-          border: `1px solid ${colors.on}30`,
-          boxShadow: `0 0 20px ${colors.glow}, inset 0 0 10px rgba(0,0,0,0.8)`,
-        }}
-      >
-        {displayStr.split("").map((char, i) => {
-          if (char === ":") {
             return (
               <div
                 key={i}
-                className="flex flex-col items-center justify-center mx-1"
                 style={{
-                  width: dims.stroke * 2,
-                  height: dims.digit,
-                  gap: dims.digit * 0.2,
+                  filter: `drop-shadow(0 0 4px ${colors.glow})`,
+                  marginRight: dims.gap,
                 }}
               >
-                <div
-                  style={{
-                    width: dims.stroke,
-                    height: dims.stroke,
-                    backgroundColor:
-                      blinkSeparator && !blinkOn ? colorMap[activeColor].off : colors.on,
-                    boxShadow: blinkOn ? `0 0 6px ${colors.glow}` : "none",
-                  }}
-                />
-                <div
-                  style={{
-                    width: dims.stroke,
-                    height: dims.stroke,
-                    backgroundColor:
-                      blinkSeparator && !blinkOn ? colorMap[activeColor].off : colors.on,
-                    boxShadow: blinkOn ? `0 0 6px ${colors.glow}` : "none",
-                  }}
+                <SevenSegDigit
+                  char={char}
+                  width={dims.digit * 0.6}
+                  height={dims.digit}
+                  strokeWidth={dims.stroke}
+                  onColor={colors.on}
+                  offColor={colorMap[activeColor].off}
                 />
               </div>
             );
-          }
-
-          return (
-            <div
-              key={i}
-              style={{
-                filter: `drop-shadow(0 0 4px ${colors.glow})`,
-                marginRight: dims.gap,
-              }}
-            >
-              <SevenSegDigit
-                char={char}
-                width={dims.digit * 0.6}
-                height={dims.digit}
-                strokeWidth={dims.stroke}
-                onColor={colors.on}
-                offColor={colorMap[activeColor].off}
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Sub-label */}
-      {subLabel && (
-        <div
-          className="text-[10px] font-mono uppercase tracking-[0.15em] mt-2"
-          style={{ color: colors.on, opacity: 0.5 }}
-        >
-          {subLabel}
+          })}
         </div>
-      )}
-    </div>
-  );
-}
+
+        {/* Sub-label */}
+        {subLabel && (
+          <div
+            className="text-[10px] font-mono uppercase tracking-[0.15em] mt-2"
+            style={{ color: colors.on, opacity: 0.5 }}
+          >
+            {subLabel}
+          </div>
+        )}
+      </div>
+    );
+  }
+);

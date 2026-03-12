@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export type MagiStatus = "idle" | "computing" | "accepted" | "rejected";
@@ -10,7 +10,8 @@ export interface MagiVote {
   status: MagiStatus;
 }
 
-export interface MagiSystemPanelProps {
+export interface MagiSystemPanelProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "title"> {
   /** Array of MAGI brain votes */
   votes: MagiVote[];
   /** Title label */
@@ -99,11 +100,11 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
 
       {/* Body */}
       <div className="flex-1 min-h-[200px] relative">
-        {/* IDLE — green standby text */}
+        {/* IDLE -- green standby text */}
         {vote.status === "idle" && (
           <div className="flex items-center justify-center h-full p-4">
             <div className="text-center">
-              <div className="text-2xl font-mono text-eva-green/40 mb-2">—</div>
+              <div className="text-2xl font-mono text-eva-green/40 mb-2">&mdash;</div>
               <div className="text-xs font-mono text-eva-green/60 uppercase tracking-wider">
                 STANDBY
               </div>
@@ -111,7 +112,7 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
           </div>
         )}
 
-        {/* COMPUTING — scrolling hex/mono data */}
+        {/* COMPUTING -- scrolling hex/mono data */}
         {vote.status === "computing" && (
           <div className="h-full overflow-hidden p-2">
             <div className="space-y-0.5">
@@ -139,7 +140,7 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
           </div>
         )}
 
-        {/* ACCEPTED — orange/green filled with ACCEPTED text */}
+        {/* ACCEPTED -- orange/green filled with ACCEPTED text */}
         {vote.status === "accepted" && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -155,7 +156,7 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
           </motion.div>
         )}
 
-        {/* REJECTED — red background, REJECTED blinking */}
+        {/* REJECTED -- red background, REJECTED blinking */}
         {vote.status === "rejected" && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -196,45 +197,51 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
   );
 }
 
-export function MagiSystemPanel({
-  votes,
-  title = "MAGI SUPER COMPUTER SYSTEM",
-  className = "",
-}: MagiSystemPanelProps) {
-  return (
-    <div className={`bg-eva-black ${className}`}>
-      {/* Title */}
-      <div className="flex items-center justify-between px-4 py-2 border-2 border-eva-mid-gray border-b-0 bg-eva-dark-gray">
-        <span
-          className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange"
-          style={{ fontFamily: "var(--font-eva-display)" }}
-        >
-          {title}
-        </span>
-        <div className="flex gap-1.5">
-          {votes.map((v, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 ${
-                v.status === "accepted"
-                  ? "bg-eva-orange"
-                  : v.status === "rejected"
-                    ? "bg-eva-red"
-                    : v.status === "computing"
-                      ? "bg-eva-cyan"
-                      : "bg-eva-mid-gray"
-              }`}
-            />
+export const MagiSystemPanel = forwardRef<HTMLDivElement, MagiSystemPanelProps>(
+  function MagiSystemPanel(
+    {
+      votes,
+      title = "MAGI SUPER COMPUTER SYSTEM",
+      className = "",
+      ...rest
+    },
+    ref
+  ) {
+    return (
+      <div ref={ref} className={`bg-eva-black ${className}`} {...rest}>
+        {/* Title */}
+        <div className="flex items-center justify-between px-4 py-2 border-2 border-eva-mid-gray border-b-0 bg-eva-dark-gray">
+          <span
+            className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange"
+            style={{ fontFamily: "var(--font-eva-display)" }}
+          >
+            {title}
+          </span>
+          <div className="flex gap-1.5">
+            {votes.map((v, i) => (
+              <div
+                key={i}
+                className={`w-2 h-2 ${
+                  v.status === "accepted"
+                    ? "bg-eva-orange"
+                    : v.status === "rejected"
+                      ? "bg-eva-red"
+                      : v.status === "computing"
+                        ? "bg-eva-cyan"
+                        : "bg-eva-mid-gray"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* 3-column grid with thick borders */}
+        <div className="grid grid-cols-3 border-2 border-eva-mid-gray">
+          {votes.map((vote, i) => (
+            <MagiColumn key={vote.name} vote={vote} index={i} />
           ))}
         </div>
       </div>
-
-      {/* 3-column grid with thick borders */}
-      <div className="grid grid-cols-3 border-2 border-eva-mid-gray">
-        {votes.map((vote, i) => (
-          <MagiColumn key={vote.name} vote={vote} index={i} />
-        ))}
-      </div>
-    </div>
-  );
-}
+    );
+  }
+);

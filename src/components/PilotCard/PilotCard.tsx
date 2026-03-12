@@ -1,6 +1,12 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
+
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "color" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
 
 export interface PilotCardField {
   label: string;
@@ -8,7 +14,7 @@ export interface PilotCardField {
   status?: "ok" | "warning" | "critical" | "unknown";
 }
 
-export interface PilotCardProps {
+export interface PilotCardProps extends MotionSafeHTMLAttributes {
   /** Pilot designation (e.g. "FIRST.C", "THIRD.C") */
   designation: string;
   /** Pilot name */
@@ -48,7 +54,7 @@ const statusColors: Record<string, string> = {
   OFFLINE: "#555555",
 };
 
-export function PilotCard({
+export const PilotCard = forwardRef<HTMLDivElement, PilotCardProps>(function PilotCard({
   designation,
   name,
   unit,
@@ -59,7 +65,8 @@ export function PilotCard({
   imageUrl,
   animated = true,
   className = "",
-}: PilotCardProps) {
+  ...rest
+}, ref) {
   const colors = colorMap[color];
   const checkColor = statusColors[checkStatus] || statusColors.unknown;
 
@@ -74,6 +81,8 @@ export function PilotCard({
 
   return (
     <Wrapper
+      ref={ref}
+      {...rest}
       className={`relative bg-eva-black overflow-hidden ${className}`}
       style={{
         border: `1px solid ${colors.dim}`,
@@ -204,4 +213,4 @@ export function PilotCard({
       </div>
     </Wrapper>
   );
-}
+});

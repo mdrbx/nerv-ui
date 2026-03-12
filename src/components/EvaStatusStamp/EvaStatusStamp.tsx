@@ -1,8 +1,14 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface EvaStatusStampProps {
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "color" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface EvaStatusStampProps extends MotionSafeHTMLAttributes {
   /** The status text to display (e.g. "REFUSED", "APPROVED", "LOST") */
   text: string;
   /** Whether the stamp is visible */
@@ -59,7 +65,7 @@ const colorMap = {
   },
 };
 
-export function EvaStatusStamp({
+export const EvaStatusStamp = forwardRef<HTMLDivElement, EvaStatusStampProps>(function EvaStatusStamp({
   text,
   visible = true,
   color = "red",
@@ -71,7 +77,8 @@ export function EvaStatusStamp({
   bordered = false,
   fullScreen = false,
   className = "",
-}: EvaStatusStampProps) {
+  ...rest
+}, ref) {
   const colors = colorMap[color];
 
   const containerClass = fullScreen
@@ -82,6 +89,8 @@ export function EvaStatusStamp({
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={ref}
+          {...rest}
           className={`${containerClass} ${className}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -178,4 +187,4 @@ export function EvaStatusStamp({
       )}
     </AnimatePresence>
   );
-}
+});

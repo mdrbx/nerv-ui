@@ -1,9 +1,14 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, forwardRef } from "react";
 import { motion } from "framer-motion";
 
-export interface TargetingContainerProps {
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "children" | "className" | "color" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface TargetingContainerProps extends MotionSafeHTMLAttributes {
   children: ReactNode;
   /** Label displayed at the top of the container */
   label?: string;
@@ -24,18 +29,21 @@ const bracketColors = {
   red: "#FF0000",
 };
 
-export function TargetingContainer({
+export const TargetingContainer = forwardRef<HTMLDivElement, TargetingContainerProps>(function TargetingContainer({
   children,
   label,
   showCrosshairs = true,
   color = "orange",
   bracketSize = 24,
   className = "",
-}: TargetingContainerProps) {
+  ...rest
+}, ref) {
   const c = bracketColors[color];
 
   return (
     <motion.div
+      ref={ref}
+      {...rest}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -131,4 +139,4 @@ export function TargetingContainer({
       <div className="relative z-10">{children}</div>
     </motion.div>
   );
-}
+});

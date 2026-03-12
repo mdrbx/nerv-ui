@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 
 export interface EvaGaugeProps {
@@ -33,18 +34,19 @@ const colorMap = {
   magenta: { stroke: "#FF00FF", glow: "rgba(255,0,255,0.4)", text: "text-eva-magenta", fill: "rgba(255,0,255,0.06)" },
 };
 
-export function EvaGauge({
-  value,
-  min = 0,
-  max = 100,
-  label,
-  unit = "%",
-  color = "cyan",
-  size = 160,
-  showTicks = true,
-  threshold,
-  className = "",
-}: EvaGaugeProps) {
+export const EvaGauge = forwardRef<HTMLDivElement, EvaGaugeProps>(
+  function EvaGauge({
+    value,
+    min = 0,
+    max = 100,
+    label,
+    unit = "%",
+    color = "cyan",
+    size = 160,
+    showTicks = true,
+    threshold,
+    className = "",
+  }, ref) {
   const range = max - min;
   const pct = Math.max(0, Math.min(1, (value - min) / range));
   const isOverThreshold = threshold !== undefined && value > threshold;
@@ -95,7 +97,7 @@ export function EvaGauge({
   const needle = angleToXY(valueAngle);
 
   return (
-    <div className={`inline-flex flex-col items-center font-mono ${className}`}>
+    <div ref={ref} className={`inline-flex flex-col items-center font-mono ${className}`}>
       {label && (
         <div
           className={`text-[10px] uppercase tracking-[0.2em] font-bold ${activeColor.text} mb-1`}
@@ -197,4 +199,4 @@ export function EvaGauge({
       </svg>
     </div>
   );
-}
+});

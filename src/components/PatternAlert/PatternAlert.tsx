@@ -1,8 +1,14 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface PatternAlertProps {
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "color" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface PatternAlertProps extends MotionSafeHTMLAttributes {
   /** Alert designation (e.g. "3rd ANGEL", "15th ANGEL") */
   designation: string;
   /** Pattern classification */
@@ -39,7 +45,7 @@ const bloodTypeColors: Record<string, string> = {
   UNKNOWN: "#999999",
 };
 
-export function PatternAlert({
+export const PatternAlert = forwardRef<HTMLDivElement, PatternAlertProps>(function PatternAlert({
   designation,
   pattern = "PATTERN",
   bloodType = "BLUE",
@@ -50,7 +56,8 @@ export function PatternAlert({
   color = "orange",
   animated = true,
   className = "",
-}: PatternAlertProps) {
+  ...rest
+}, ref) {
   const colors = colorMap[color];
   const btColor = bloodTypeColors[bloodType] || bloodTypeColors.UNKNOWN;
   const scaleMarks = Array.from({ length: scaleRange * 2 + 1 }, (_, i) => i - scaleRange);
@@ -59,6 +66,8 @@ export function PatternAlert({
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={ref}
+          {...rest}
           className={`relative bg-eva-black overflow-hidden ${className}`}
           initial={{ opacity: 0, scaleY: 0.8 }}
           animate={{ opacity: 1, scaleY: 1 }}
@@ -215,4 +224,4 @@ export function PatternAlert({
       )}
     </AnimatePresence>
   );
-}
+});

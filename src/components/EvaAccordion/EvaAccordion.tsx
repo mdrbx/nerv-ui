@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, createContext, useContext, useCallback, type ReactNode } from "react";
+import { forwardRef, useState, createContext, useContext, useCallback, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-// ─── Types ───────────────────────────────────────────────
+// --- Types ---
 
-export interface EvaAccordionProps {
+export interface EvaAccordionProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
   /** Accordion items */
   children: ReactNode;
   /** Allow multiple items open at once */
@@ -16,7 +17,8 @@ export interface EvaAccordionProps {
   className?: string;
 }
 
-export interface EvaAccordionItemProps {
+export interface EvaAccordionItemProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className" | "id" | "title" | "color"> {
   /** Unique item identifier */
   id: string;
   /** Header label */
@@ -27,7 +29,7 @@ export interface EvaAccordionItemProps {
   color?: "cyan" | "white" | "orange" | "green";
 }
 
-// ─── Context ─────────────────────────────────────────────
+// --- Context ---
 
 interface AccordionContextValue {
   openIds: Set<string>;
@@ -43,100 +45,114 @@ const COLOR_MAP: Record<string, string> = {
   green: "text-eva-green",
 };
 
-// ─── Accordion Container ─────────────────────────────────
+// --- Accordion Container ---
 
-export function EvaAccordion({
-  children,
-  multiple = false,
-  defaultOpen = [],
-  className = "",
-}: EvaAccordionProps) {
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set(defaultOpen));
-
-  const toggle = useCallback(
-    (id: string) => {
-      setOpenIds((prev) => {
-        const next = new Set(prev);
-        if (next.has(id)) {
-          next.delete(id);
-        } else {
-          if (!multiple) next.clear();
-          next.add(id);
-        }
-        return next;
-      });
+export const EvaAccordion = forwardRef<HTMLDivElement, EvaAccordionProps>(
+  function EvaAccordion(
+    {
+      children,
+      multiple = false,
+      defaultOpen = [],
+      className = "",
+      ...rest
     },
-    [multiple]
-  );
+    ref
+  ) {
+    const [openIds, setOpenIds] = useState<Set<string>>(new Set(defaultOpen));
 
-  return (
-    <AccordionContext.Provider value={{ openIds, toggle }}>
-      <div
-        className={`border border-eva-mid-gray bg-eva-black ${className}`}
-      >
-        {children}
-      </div>
-    </AccordionContext.Provider>
-  );
-}
+    const toggle = useCallback(
+      (id: string) => {
+        setOpenIds((prev) => {
+          const next = new Set(prev);
+          if (next.has(id)) {
+            next.delete(id);
+          } else {
+            if (!multiple) next.clear();
+            next.add(id);
+          }
+          return next;
+        });
+      },
+      [multiple]
+    );
 
-// ─── Accordion Item ──────────────────────────────────────
-
-export function EvaAccordionItem({
-  id,
-  title,
-  children,
-  color = "cyan",
-}: EvaAccordionItemProps) {
-  const ctx = useContext(AccordionContext);
-  if (!ctx) {
-    throw new Error("[EvaUI] EvaAccordionItem must be used inside EvaAccordion.");
+    return (
+      <AccordionContext.Provider value={{ openIds, toggle }}>
+        <div
+          ref={ref}
+          className={`border border-eva-mid-gray bg-eva-black ${className}`}
+          {...rest}
+        >
+          {children}
+        </div>
+      </AccordionContext.Provider>
+    );
   }
+);
 
-  const isOpen = ctx.openIds.has(id);
-  const textColor = COLOR_MAP[color] ?? COLOR_MAP.cyan;
+// --- Accordion Item ---
 
-  return (
-    <div className="border-b border-eva-mid-gray/40 last:border-b-0">
-      {/* Header — clickable */}
-      <button
-        onClick={() => ctx.toggle(id)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left
-          hover:bg-eva-white/[0.03] transition-colors cursor-pointer group"
-      >
-        <span
-          className={`text-xs uppercase tracking-[0.15em] ${textColor}`}
-          style={{ fontFamily: "var(--font-eva-mono)" }}
+export const EvaAccordionItem = forwardRef<HTMLDivElement, EvaAccordionItemProps>(
+  function EvaAccordionItem(
+    {
+      id,
+      title,
+      children,
+      color = "cyan",
+      ...rest
+    },
+    ref
+  ) {
+    const ctx = useContext(AccordionContext);
+    if (!ctx) {
+      throw new Error("[EvaUI] EvaAccordionItem must be used inside EvaAccordion.");
+    }
+
+    const isOpen = ctx.openIds.has(id);
+    const textColor = COLOR_MAP[color] ?? COLOR_MAP.cyan;
+
+    return (
+      <div ref={ref} className="border-b border-eva-mid-gray/40 last:border-b-0" {...rest}>
+        {/* Header -- clickable */}
+        <button
+          onClick={() => ctx.toggle(id)}
+          className="w-full flex items-center justify-between px-4 py-3 text-left
+            hover:bg-eva-white/[0.03] transition-colors cursor-pointer group"
         >
-          {title}
-        </span>
-
-        {/* Terminal-style toggle icon */}
-        <span
-          className="text-[10px] text-eva-white/50 group-hover:text-eva-white/80 transition-colors"
-          style={{ fontFamily: "var(--font-eva-mono)" }}
-        >
-          {isOpen ? "[ - ]" : "[ + ]"}
-        </span>
-      </button>
-
-      {/* Collapsible content */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key={`content-${id}`}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.15, ease: "linear" }}
-            className="overflow-hidden"
+          <span
+            className={`text-xs uppercase tracking-[0.15em] ${textColor}`}
+            style={{ fontFamily: "var(--font-eva-mono)" }}
           >
-            <div className="px-4 pb-4 pt-1 border-t border-eva-mid-gray/20">
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+            {title}
+          </span>
+
+          {/* Terminal-style toggle icon */}
+          <span
+            className="text-[10px] text-eva-white/50 group-hover:text-eva-white/80 transition-colors"
+            style={{ fontFamily: "var(--font-eva-mono)" }}
+          >
+            {isOpen ? "[ - ]" : "[ + ]"}
+          </span>
+        </button>
+
+        {/* Collapsible content */}
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              key={`content-${id}`}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.15, ease: "linear" }}
+              className="overflow-hidden"
+            >
+              <div className="px-4 pb-4 pt-1 border-t border-eva-mid-gray/20">
+                {children}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
+);

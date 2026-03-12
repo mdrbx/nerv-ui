@@ -1,8 +1,14 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 
-export interface HexGridBackgroundProps {
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "color" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface HexGridBackgroundProps extends MotionSafeHTMLAttributes {
   /** Color of the hexagon strokes */
   color?: string;
   /** Overall opacity of the grid */
@@ -15,13 +21,14 @@ export interface HexGridBackgroundProps {
   className?: string;
 }
 
-export function HexGridBackground({
+export const HexGridBackground = forwardRef<HTMLDivElement, HexGridBackgroundProps>(function HexGridBackground({
   color = "#FF9900",
   opacity = 0.08,
   hexSize = 30,
   animated = true,
   className = "",
-}: HexGridBackgroundProps) {
+  ...rest
+}, ref) {
   // Calculate hex dimensions
   const w = hexSize * 2;
   const h = hexSize * Math.sqrt(3);
@@ -74,6 +81,8 @@ export function HexGridBackground({
   if (animated) {
     return (
       <motion.div
+        ref={ref}
+        {...rest}
         className="absolute inset-0 pointer-events-none"
         animate={{ opacity: [opacity, opacity * 1.5, opacity] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -84,6 +93,6 @@ export function HexGridBackground({
   }
 
   return (
-    <div className="absolute inset-0 pointer-events-none">{svgContent}</div>
+    <div ref={ref} {...rest} className="absolute inset-0 pointer-events-none">{svgContent}</div>
   );
-}
+});

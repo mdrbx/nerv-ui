@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 
 export interface EvaPieSlice {
@@ -34,16 +35,17 @@ const themeColors = {
   mixed: ["#00FFFF", "#FF9900", "#00FF00", "#FF0000", "#FF00FF", "#FFFF00", "#0099FF"],
 };
 
-export function EvaPieChart({
-  slices,
-  title,
-  size = 180,
-  donut = false,
-  showLegend = true,
-  showLabels = true,
-  color = "mixed",
-  className = "",
-}: EvaPieChartProps) {
+export const EvaPieChart = forwardRef<HTMLDivElement, EvaPieChartProps>(
+  function EvaPieChart({
+    slices,
+    title,
+    size = 180,
+    donut = false,
+    showLegend = true,
+    showLabels = true,
+    color = "mixed",
+    className = "",
+  }, ref) {
   const total = slices.reduce((s, sl) => s + sl.value, 0);
   if (total === 0) return null;
 
@@ -87,7 +89,7 @@ export function EvaPieChart({
   };
 
   return (
-    <div className={`inline-flex flex-col items-center font-mono ${className}`}>
+    <div ref={ref} className={`inline-flex flex-col items-center font-mono ${className}`}>
       {title && (
         <div
           className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange mb-3 border-b border-eva-orange/20 pb-1 w-full text-center"
@@ -217,4 +219,4 @@ export function EvaPieChart({
       </div>
     </div>
   );
-}
+});

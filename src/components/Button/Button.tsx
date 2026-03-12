@@ -1,9 +1,14 @@
 "use client";
 
-import { type ReactNode, type MouseEventHandler } from "react";
+import { forwardRef, type ReactNode, type MouseEventHandler } from "react";
 import { motion } from "framer-motion";
 
-export interface ButtonProps {
+type MotionSafeButtonAttributes = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "size" | "type" | "disabled" | "onClick" | "className" | "children" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface ButtonProps extends MotionSafeButtonAttributes {
   /** Visual variant */
   variant?: "primary" | "danger" | "ghost" | "terminal";
   /** Size preset */
@@ -53,62 +58,72 @@ const sizes = {
   lg: "px-8 py-3 text-base",
 };
 
-export function Button({
-  variant = "primary",
-  size = "md",
-  loading = false,
-  fullWidth = false,
-  children,
-  disabled,
-  onClick,
-  className = "",
-  type = "button",
-}: ButtonProps) {
-  const v = variants[variant];
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      variant = "primary",
+      size = "md",
+      loading = false,
+      fullWidth = false,
+      children,
+      disabled,
+      onClick,
+      className = "",
+      type = "button",
+      ...rest
+    },
+    ref
+  ) {
+    const v = variants[variant];
 
-  return (
-    <motion.button
-      type={type}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`
-        relative uppercase tracking-[0.15em] font-bold
-        transition-colors duration-100 cursor-pointer
-        select-none outline-none
-        disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none
-        ${v.base} ${v.hover} ${v.active}
-        ${sizes[size]}
-        ${fullWidth ? "w-full" : ""}
-        ${className}
-      `}
-      style={{ fontFamily: "var(--font-eva-display)" }}
-      disabled={disabled || loading}
-      onClick={onClick}
-    >
-      {/* Loading indicator */}
-      {loading && (
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex gap-1">
-            {[0, 1, 2].map((i) => (
-              <motion.span
-                key={i}
-                className="w-1.5 h-1.5 bg-current"
-                animate={{ opacity: [1, 0.2, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
-              />
-            ))}
+    return (
+      <motion.button
+        ref={ref}
+        {...rest}
+        type={type}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={`
+          relative uppercase tracking-[0.15em] font-bold
+          transition-colors duration-100 cursor-pointer
+          select-none outline-none
+          disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none
+          ${v.base} ${v.hover} ${v.active}
+          ${sizes[size]}
+          ${fullWidth ? "w-full" : ""}
+          ${className}
+        `}
+        style={{ fontFamily: "var(--font-eva-display)" }}
+        disabled={disabled || loading}
+        onClick={onClick}
+        aria-busy={loading ? true : undefined}
+        aria-disabled={loading ? true : undefined}
+      >
+        {/* Loading indicator */}
+        {loading && (
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex gap-1">
+              {[0, 1, 2].map((i) => (
+                <motion.span
+                  key={i}
+                  className="w-1.5 h-1.5 bg-current"
+                  animate={{ opacity: [1, 0.2, 1] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+                />
+              ))}
+            </span>
           </span>
-        </span>
-      )}
+        )}
 
-      {/* Content */}
-      <span className={loading ? "invisible" : ""}>{children}</span>
+        {/* Content */}
+        <span className={loading ? "invisible" : ""}>{children}</span>
 
-      {/* Decorative corner accents */}
-      <span className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-current opacity-50" />
-      <span className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-current opacity-50" />
-      <span className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-current opacity-50" />
-      <span className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-current opacity-50" />
-    </motion.button>
-  );
-}
+        {/* Decorative corner accents */}
+        <span className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-current opacity-50" />
+        <span className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-current opacity-50" />
+        <span className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-current opacity-50" />
+        <span className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-current opacity-50" />
+      </motion.button>
+    );
+  }
+);

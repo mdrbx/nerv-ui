@@ -1,9 +1,14 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface EmergencyBannerProps {
+type MotionSafeHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "children" | "className" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver" | "onAnimationStart"
+>;
+
+export interface EmergencyBannerProps extends MotionSafeHTMLAttributes {
   /** The alert text to display (e.g. "EMERGENCY", "WARNING", "REFUSED") */
   text?: string;
   /** Additional subtext below the main alert */
@@ -107,7 +112,7 @@ const severityConfig = {
   },
 };
 
-export function EmergencyBanner({
+export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(function EmergencyBanner({
   text = "EMERGENCY",
   subtext,
   visible = true,
@@ -115,7 +120,8 @@ export function EmergencyBanner({
   fullScreen = false,
   children,
   className = "",
-}: EmergencyBannerProps) {
+  ...rest
+}, ref) {
   const config = severityConfig[severity];
 
   const stripeStyle = {
@@ -132,6 +138,8 @@ export function EmergencyBanner({
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={ref}
+          {...rest}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
           exit={{ scaleY: 0, opacity: 0 }}
@@ -252,4 +260,4 @@ export function EmergencyBanner({
       )}
     </AnimatePresence>
   );
-}
+});

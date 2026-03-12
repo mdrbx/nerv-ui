@@ -1,6 +1,6 @@
 "use client";
 
-import { type InputHTMLAttributes, useState, forwardRef } from "react";
+import { type InputHTMLAttributes, useState, forwardRef, useId } from "react";
 
 export interface InputFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -55,10 +55,13 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       hint,
       wrapperClassName = "",
       className = "",
+      id,
       ...props
     },
     ref
   ) {
+    const generatedId = useId();
+    const inputId = id || generatedId;
     const [focused, setFocused] = useState(false);
     const c = colorMap[color];
 
@@ -67,6 +70,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         {/* Label */}
         {label && (
           <label
+            htmlFor={inputId}
             className={`text-xs uppercase tracking-[0.2em] font-bold ${c.label}`}
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
@@ -89,6 +93,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
           {/* Input */}
           <input
+            id={inputId}
             ref={ref}
             onFocus={(e) => {
               setFocused(true);

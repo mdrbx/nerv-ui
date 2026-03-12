@@ -1,6 +1,6 @@
 "use client";
 
-import { type SelectHTMLAttributes, useState, forwardRef } from "react";
+import { type SelectHTMLAttributes, useState, forwardRef, useId } from "react";
 
 export interface SelectMenuOption {
   value: string;
@@ -49,10 +49,13 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
       error,
       wrapperClassName = "",
       className = "",
+      id,
       ...props
     },
     ref
   ) {
+    const generatedId = useId();
+    const selectId = id || generatedId;
     const [focused, setFocused] = useState(false);
     const c = colorMap[color];
 
@@ -61,6 +64,7 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
         {/* Label */}
         {label && (
           <label
+            htmlFor={selectId}
             className={`text-xs uppercase tracking-[0.2em] font-bold ${c.text}`}
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
@@ -80,6 +84,7 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
 
           <div className="relative flex-1">
             <select
+              id={selectId}
               ref={ref}
               onFocus={(e) => {
                 setFocused(true);
