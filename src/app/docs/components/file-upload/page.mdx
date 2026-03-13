@@ -1,0 +1,108 @@
+import { FileUpload } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# File Upload
+
+Drag-and-drop file upload zone with L-bracket corners, animated hover state, file list display, and built-in size validation.
+
+```tsx
+import { FileUpload } from "@mattloyed/eva-ui";
+```
+
+## Basic Usage
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`import { FileUpload } from "@mattloyed/eva-ui";
+
+<FileUpload onFilesSelected={(files) => console.log(files)} />`}
+>
+  <FileUpload />
+</ComponentPreview>
+
+## Accept Filter
+
+<ComponentPreview
+  title="PDF ONLY"
+  code={`<FileUpload
+  accept=".pdf"
+  label="DROP PDF FILES"
+  sublabel="Only .pdf files accepted"
+  color="cyan"
+  onFilesSelected={(files) => console.log(files)}
+/>`}
+>
+  <FileUpload
+    accept=".pdf"
+    label="DROP PDF FILES"
+    sublabel="Only .pdf files accepted"
+    color="cyan"
+  />
+</ComponentPreview>
+
+## Max Size Limit
+
+<ComponentPreview
+  title="MAX SIZE 2 MB"
+  code={`<FileUpload
+  maxSize={2 * 1024 * 1024}
+  label="DROP FILES (MAX 2 MB)"
+  color="green"
+  onFilesSelected={(files) => console.log(files)}
+/>`}
+>
+  <FileUpload
+    maxSize={2 * 1024 * 1024}
+    label="DROP FILES (MAX 2 MB)"
+    color="green"
+  />
+</ComponentPreview>
+
+## Multiple Files
+
+<ComponentPreview
+  title="MULTIPLE"
+  code={`<FileUpload
+  multiple
+  accept=".png,.jpg,.jpeg"
+  label="DROP IMAGES"
+  sublabel="PNG or JPG, multiple allowed"
+  onFilesSelected={(files) => console.log(files)}
+/>`}
+>
+  <FileUpload
+    multiple
+    accept=".png,.jpg,.jpeg"
+    label="DROP IMAGES"
+    sublabel="PNG or JPG, multiple allowed"
+  />
+</ComponentPreview>
+
+## Disabled
+
+<ComponentPreview
+  title="DISABLED"
+  code={`<FileUpload disabled label="UPLOAD LOCKED" />`}
+>
+  <FileUpload disabled label="UPLOAD LOCKED" />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: "onFilesSelected", type: "(files: File[]) => void", description: "Callback when files are selected or dropped" },
+    { name: "accept", type: "string", description: 'Accepted file types, e.g. ".pdf,.doc"' },
+    { name: "multiple", type: "boolean", default: "false", description: "Allow selecting multiple files" },
+    { name: "maxSize", type: "number", description: "Maximum file size in bytes; files exceeding this are rejected with an error" },
+    { name: "label", type: "string", default: '"DROP FILES HERE"', description: "Primary label inside the drop zone" },
+    { name: "sublabel", type: "string", default: '"or click to browse"', description: "Secondary label below the primary" },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme for brackets and accents" },
+    { name: "disabled", type: "boolean", default: "false", description: "Disable interaction and dim the component" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+<Callout type="info" title="FILE VALIDATION">
+  Files exceeding the maxSize limit are rejected with an inline error message. Accepted files appear in a list below the drop zone and can be individually removed.
+</Callout>

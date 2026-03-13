@@ -17,6 +17,12 @@ import { TerminalDisplay } from "@/components/TerminalDisplay";
 import { DataGrid } from "@/components/DataGrid";
 import { NavigationTabs } from "@/components/NavigationTabs";
 import { TargetingContainer } from "@/components/TargetingContainer";
+import { Badge } from "@/components/Badge";
+import { Gauge } from "@/components/Gauge";
+import { BarChart } from "@/components/BarChart";
+import { PhaseStatusStack } from "@/components/PhaseStatusStack";
+import { Stepper } from "@/components/Stepper";
+import { Divider } from "@/components/Divider";
 
 // ─── Pilot sync data ───
 const pilots = [
@@ -197,58 +203,62 @@ export default function NervCommandCenter() {
           </EmergencyBanner>
         )}
 
-        {/* NORMAL → Title screen header (compact) */}
+        {/* NORMAL → Hero header */}
         {!isEmergency && (
-          <div className="relative w-full h-[120px] overflow-hidden bg-bg-base flex items-center justify-between px-8">
-            {/* Left — title + doc link */}
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-white text-3xl md:text-5xl font-black uppercase"
-                style={{
-                  fontFamily: "var(--font-eva-title)",
-                  lineHeight: "0.9",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                PROJECT
-                <br />
-                NERV
-              </motion.h1>
-              <Link
-                href="/docs"
-                className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-eva-cyan hover:text-eva-orange transition-colors font-bold mt-2 inline-block"
-                style={{ fontFamily: "var(--font-eva-display)" }}
-              >
-                DOCUMENTATION &rarr;
+          <div className="relative w-full overflow-hidden bg-bg-base px-4 sm:px-8 py-6 sm:py-8">
+            {/* Top row: title + time */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 sm:gap-0">
+              {/* Left — EVA-UI title block */}
+              <div className="text-center sm:text-left">
+                <motion.h1
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-white text-5xl sm:text-6xl md:text-7xl font-black uppercase"
+                  style={{
+                    fontFamily: "var(--font-eva-display)",
+                    lineHeight: "0.85",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  EVA-UI
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.5 }}
+                  transition={{ delay: 0.15 }}
+                  className="text-eva-mid-gray text-xs sm:text-sm uppercase tracking-[0.35em] mt-1"
+                  style={{ fontFamily: "var(--font-eva-display)" }}
+                >
+                  NERV COMMAND CENTER
+                </motion.p>
+              </div>
+
+              {/* Right — time */}
+              <div className="text-center sm:text-right">
+                <span
+                  className="text-sm font-mono text-eva-orange tabular-nums eva-text-shadow-orange block"
+                  style={{ fontFamily: "var(--font-eva-mono)" }}
+                >
+                  {currentTime || "00:00:00"} — TOKYO-3
+                </span>
+              </div>
+            </div>
+
+            {/* Quick-link buttons row */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+              className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-5"
+            >
+              <Link href="/docs">
+                <Button variant="primary" size="sm">DOCUMENTATION</Button>
               </Link>
-            </div>
-
-            {/* Center — decorative line */}
-            <div className="hidden md:block flex-1 mx-8 h-px bg-eva-mid-gray/30" />
-
-            {/* Right — subtitle + time */}
-            <div className="text-right">
-              <motion.p
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 0.6, x: 0 }}
-                className="text-white text-xl md:text-3xl font-black uppercase"
-                style={{
-                  fontFamily: "var(--font-eva-title)",
-                  lineHeight: "0.9",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                EVA-UI DEMO
-              </motion.p>
-              <span
-                className="text-sm font-mono text-eva-orange tabular-nums eva-text-shadow-orange mt-2 block"
-                style={{ fontFamily: "var(--font-eva-mono)" }}
-              >
-                {currentTime || "00:00:00"} — TOKYO-3
-              </span>
-            </div>
+              <Link href="/examples">
+                <Button variant="terminal" size="sm">EXAMPLES</Button>
+              </Link>
+              <Button variant="ghost" size="sm">NPM PACKAGE</Button>
+            </motion.div>
           </div>
         )}
       </header>
@@ -279,9 +289,16 @@ export default function NervCommandCenter() {
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] sm:text-xs font-mono text-eva-mid-gray truncate hidden sm:inline">
-            NERV HQ — CENTRAL DOGMA — GEOFRONT L-02
+        <div className="flex items-center gap-3 sm:gap-4 flex-wrap justify-center sm:justify-end">
+          <code className="hidden md:inline text-[10px] sm:text-xs font-mono text-eva-cyan bg-eva-black/60 px-2 py-0.5 border border-eva-cyan/30 select-all">
+            npm install @mattloyed/eva-ui
+          </code>
+          <span className="hidden sm:inline text-[10px] sm:text-xs font-mono text-eva-mid-gray">
+            47 COMPONENTS
+          </span>
+          <span className="hidden sm:inline text-eva-mid-gray/30">|</span>
+          <span className="hidden sm:inline text-[10px] sm:text-xs font-mono text-eva-mid-gray">
+            v0.7.0
           </span>
           <Button
             variant={isEmergency ? "primary" : "danger"}
@@ -537,45 +554,149 @@ export default function NervCommandCenter() {
       </section>
 
       {/* ═══════════════════════════════════════════
+          COMPONENT SHOWCASE
+          ═══════════════════════════════════════════ */}
+      <section className={`border-t-2 ${borderColor}`}>
+        <TargetingContainer label="COMPONENT SHOWCASE" color="orange">
+          <div className="p-4 sm:p-6 space-y-6">
+            {/* Category badges */}
+            <div className="flex flex-wrap gap-2">
+              <Badge label="FORMS" variant="info" size="sm" />
+              <Badge label="CHARTS" variant="success" size="sm" />
+              <Badge label="OVERLAYS" variant="danger" size="sm" />
+              <Badge label="HUD" variant="warning" size="sm" />
+              <Badge label="DATA" variant="default" size="sm" />
+              <Badge label="LAYOUT" variant="info" size="sm" />
+            </div>
+
+            <Divider color="orange" variant="dashed" />
+
+            {/* Live demo row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+              {/* Gauge */}
+              <div className="flex justify-center">
+                <Gauge
+                  value={syncValues[2]}
+                  label="SYNC RATE"
+                  unit="%"
+                  color="cyan"
+                  size={140}
+                  showTicks
+                  threshold={85}
+                />
+              </div>
+
+              {/* BarChart (segmented) */}
+              <div>
+                <BarChart
+                  bars={[
+                    { label: "EVA-00", value: syncValues[0] },
+                    { label: "EVA-01", value: syncValues[1] },
+                    { label: "EVA-02", value: syncValues[2] },
+                  ]}
+                  maxValue={100}
+                  color="green"
+                  title="UNIT STATUS"
+                  showGrid
+                  showValues
+                  segmented
+                  height={160}
+                  unit="%"
+                />
+              </div>
+
+              {/* PhaseStatusStack */}
+              <div>
+                <PhaseStatusStack
+                  title="SYSTEM PHASES"
+                  color="orange"
+                  phases={[
+                    { label: "MAGI CORE", status: "ok", value: "ONLINE" },
+                    { label: "A.T. FIELD", status: "ok", value: "ACTIVE" },
+                    { label: "ENTRY PLUG", status: "warning", value: "SYNC" },
+                    { label: "S2 ENGINE", status: "danger", value: "LOCKED" },
+                    { label: "DUMMY PLUG", status: "inactive", value: "OFF" },
+                  ]}
+                />
+              </div>
+            </div>
+
+            <Divider color="cyan" variant="dashed" />
+
+            {/* Stepper: INSTALL → IMPORT → BUILD */}
+            <div className="max-w-lg mx-auto">
+              <Stepper
+                steps={[
+                  { label: "INSTALL", description: "npm install @mattloyed/eva-ui" },
+                  { label: "IMPORT", description: "import { Button } from ..." },
+                  { label: "BUILD", description: "Create your command center" },
+                ]}
+                activeStep={1}
+                color="cyan"
+                direction="horizontal"
+              />
+            </div>
+          </div>
+        </TargetingContainer>
+      </section>
+
+      {/* ═══════════════════════════════════════════
           FOOTER STATUS BAR
           ═══════════════════════════════════════════ */}
       <footer
-        className={`px-4 py-1 border-t ${borderColor} ${
+        className={`px-4 py-3 border-t-2 ${borderColor} ${
           isEmergency ? "bg-eva-red/5" : "bg-eva-dark-gray"
-        } flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-xs font-mono text-eva-mid-gray gap-2`}
+        } flex flex-col gap-3 text-[10px] sm:text-xs font-mono text-eva-mid-gray`}
       >
-        <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-          <span>NERV COMMAND CENTER v3.0</span>
-          <span className="text-eva-mid-gray/30">|</span>
-          <span>
-            EvaUI —{" "}
-            <span className="text-eva-orange">DESIGN SYSTEM</span>
-          </span>
-          <span className="text-eva-mid-gray/30">|</span>
+        {/* Top row — links */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/docs"
             className="text-eva-cyan hover:text-eva-orange transition-colors uppercase tracking-wider"
           >
-            DOCUMENTATION &rarr;
+            DOCUMENTATION
           </Link>
           <span className="text-eva-mid-gray/30">|</span>
           <Link
-            href="/examples/realtime"
+            href="/examples"
             className="text-eva-cyan hover:text-eva-orange transition-colors uppercase tracking-wider"
           >
-            EXAMPLES &rarr;
+            EXAMPLES
           </Link>
+          <span className="text-eva-mid-gray/30">|</span>
+          <a
+            href="https://github.com/mattloyed/eva-ui"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-eva-cyan hover:text-eva-orange transition-colors uppercase tracking-wider"
+          >
+            GITHUB
+          </a>
+          <span className="text-eva-mid-gray/30">|</span>
+          <a
+            href="https://www.npmjs.com/package/@mattloyed/eva-ui"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-eva-cyan hover:text-eva-orange transition-colors uppercase tracking-wider"
+          >
+            NPM
+          </a>
         </div>
-        <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end">
+
+        {/* Bottom row — attribution + quote */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>
+            MADE WITH [REDACTED] BY{" "}
+            <span className="text-eva-orange">MATTLOYED</span>
+          </span>
+          <span className="text-eva-mid-gray/50 italic">
+            &ldquo;GOD&apos;S IN HIS HEAVEN. ALL&apos;S RIGHT WITH THE WORLD.&rdquo;
+          </span>
           <span>
             MAGI:{" "}
             {magiVotes.every((v) => v.status === "idle")
               ? "STANDBY"
               : "ACTIVE"}
-          </span>
-          <span className="text-eva-mid-gray/30">|</span>
-          <span className="text-eva-green">
-            SECURE CHANNEL — ENCRYPTED
           </span>
         </div>
       </footer>

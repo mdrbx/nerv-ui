@@ -1,0 +1,153 @@
+import { DropdownMenu, Button } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Dropdown Menu
+
+Animated overlay menu triggered by any element. Supports icons, disabled items, danger actions, and dividers with configurable color themes and alignment.
+
+```tsx
+import { DropdownMenu } from "@mattloyed/eva-ui";
+```
+
+## Basic Usage
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`import { DropdownMenu, Button } from "@mattloyed/eva-ui";
+
+<DropdownMenu
+  trigger={<Button label="ACTIONS" size="sm" />}
+  items={[
+    { label: "View Details", onClick: () => {} },
+    { label: "Edit Record", onClick: () => {} },
+    { label: "Duplicate", onClick: () => {} },
+    { label: "Export Data", onClick: () => {} },
+  ]}
+/>`}
+>
+  <DropdownMenu
+    trigger={<Button label="ACTIONS" size="sm" />}
+    items={[
+      { label: "View Details" },
+      { label: "Edit Record" },
+      { label: "Duplicate" },
+      { label: "Export Data" },
+    ]}
+  />
+</ComponentPreview>
+
+## Danger Item & Divider
+
+<ComponentPreview
+  title="DANGER + DIVIDER"
+  code={`<DropdownMenu
+  trigger={<Button label="OPTIONS" size="sm" variant="outline" />}
+  items={[
+    { label: "Rename", onClick: () => {} },
+    { label: "Move", onClick: () => {} },
+    { divider: true },
+    { label: "Delete", danger: true, onClick: () => {} },
+  ]}
+/>`}
+>
+  <DropdownMenu
+    trigger={<Button label="OPTIONS" size="sm" variant="outline" />}
+    items={[
+      { label: "Rename" },
+      { label: "Move" },
+      { divider: true },
+      { label: "Delete", danger: true },
+    ]}
+  />
+</ComponentPreview>
+
+## Icons & Disabled
+
+<ComponentPreview
+  title="ICONS + DISABLED"
+  code={`<DropdownMenu
+  trigger={<Button label="FILE" size="sm" />}
+  color="cyan"
+  items={[
+    { label: "Open", icon: ">" },
+    { label: "Save", icon: "S" },
+    { label: "Print", icon: "P", disabled: true },
+    { divider: true },
+    { label: "Close", icon: "X", danger: true },
+  ]}
+/>`}
+>
+  <DropdownMenu
+    trigger={<Button label="FILE" size="sm" />}
+    color="cyan"
+    items={[
+      { label: "Open", icon: ">" },
+      { label: "Save", icon: "S" },
+      { label: "Print", icon: "P", disabled: true },
+      { divider: true },
+      { label: "Close", icon: "X", danger: true },
+    ]}
+  />
+</ComponentPreview>
+
+## Right-Aligned
+
+<ComponentPreview
+  title="ALIGN RIGHT"
+  code={`<div className="flex justify-end">
+  <DropdownMenu
+    trigger={<Button label="MENU" size="sm" />}
+    align="right"
+    color="green"
+    items={[
+      { label: "Profile" },
+      { label: "Settings" },
+      { divider: true },
+      { label: "Logout", danger: true },
+    ]}
+  />
+</div>`}
+>
+  <div className="flex justify-end">
+    <DropdownMenu
+      trigger={<Button label="MENU" size="sm" />}
+      align="right"
+      color="green"
+      items={[
+        { label: "Profile" },
+        { label: "Settings" },
+        { divider: true },
+        { label: "Logout", danger: true },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## DropdownMenuProps
+
+<PropsTable
+  props={[
+    { name: "trigger", type: "ReactNode", description: "The element that opens the menu", required: true },
+    { name: "items", type: "DropdownMenuItem[]", description: "Menu items to render (see below)", required: true },
+    { name: "color", type: '"orange" | "green" | "cyan" | "red"', default: '"orange"', description: "Color theme for borders and text" },
+    { name: "align", type: '"left" | "right"', default: '"left"', description: "Menu alignment relative to the trigger" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes for the wrapper" },
+  ]}
+/>
+
+## DropdownMenuItem
+
+<PropsTable
+  props={[
+    { name: "label", type: "string", description: "Menu item text (rendered uppercase)", required: true },
+    { name: "icon", type: "string", description: "Icon character displayed before the label" },
+    { name: "onClick", type: "() => void", description: "Callback when the item is clicked" },
+    { name: "disabled", type: "boolean", description: "Prevent interaction and reduce opacity" },
+    { name: "danger", type: "boolean", description: "Render item in red danger color" },
+    { name: "divider", type: "boolean", description: "Render a horizontal separator instead of a button" },
+  ]}
+/>
+
+<Callout type="info" title="KEYBOARD SUPPORT">
+  The menu closes automatically on Escape key press and on clicks outside the menu area.
+</Callout>

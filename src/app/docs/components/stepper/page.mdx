@@ -1,0 +1,137 @@
+import { Stepper } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Stepper
+
+Multi-step progress indicator with numbered squares, connector lines, and an animated pulse on the active step. Supports horizontal and vertical layouts.
+
+```tsx
+import { Stepper } from "@mattloyed/eva-ui";
+```
+
+## Horizontal
+
+<ComponentPreview
+  title="HORIZONTAL"
+  code={`import { Stepper } from "@mattloyed/eva-ui";
+
+<Stepper
+  activeStep={1}
+  steps={[
+    { label: "INIT" },
+    { label: "CONFIG" },
+    { label: "DEPLOY" },
+    { label: "VERIFY" },
+  ]}
+/>`}
+>
+  <Stepper
+    activeStep={1}
+    steps={[
+      { label: "INIT" },
+      { label: "CONFIG" },
+      { label: "DEPLOY" },
+      { label: "VERIFY" },
+    ]}
+  />
+</ComponentPreview>
+
+## Vertical
+
+<ComponentPreview
+  title="VERTICAL"
+  code={`<Stepper
+  direction="vertical"
+  activeStep={2}
+  steps={[
+    { label: "CONNECT", description: "Establish data link" },
+    { label: "AUTHENTICATE", description: "Verify pilot identity" },
+    { label: "SYNCHRONIZE", description: "Neural sync in progress" },
+    { label: "ACTIVATE", description: "Launch sequence" },
+  ]}
+/>`}
+>
+  <Stepper
+    direction="vertical"
+    activeStep={2}
+    steps={[
+      { label: "CONNECT", description: "Establish data link" },
+      { label: "AUTHENTICATE", description: "Verify pilot identity" },
+      { label: "SYNCHRONIZE", description: "Neural sync in progress" },
+      { label: "ACTIVATE", description: "Launch sequence" },
+    ]}
+  />
+</ComponentPreview>
+
+## Active Step Variations
+
+<ComponentPreview
+  title="FIRST STEP ACTIVE"
+  code={`<Stepper
+  activeStep={0}
+  color="cyan"
+  steps={[
+    { label: "SCAN" },
+    { label: "ANALYZE" },
+    { label: "REPORT" },
+  ]}
+/>`}
+>
+  <Stepper
+    activeStep={0}
+    color="cyan"
+    steps={[
+      { label: "SCAN" },
+      { label: "ANALYZE" },
+      { label: "REPORT" },
+    ]}
+  />
+</ComponentPreview>
+
+<ComponentPreview
+  title="ALL COMPLETED"
+  code={`<Stepper
+  activeStep={3}
+  color="green"
+  steps={[
+    { label: "UPLOAD" },
+    { label: "PROCESS" },
+    { label: "COMPLETE" },
+  ]}
+/>`}
+>
+  <Stepper
+    activeStep={3}
+    color="green"
+    steps={[
+      { label: "UPLOAD" },
+      { label: "PROCESS" },
+      { label: "COMPLETE" },
+    ]}
+  />
+</ComponentPreview>
+
+## StepperProps
+
+<PropsTable
+  props={[
+    { name: "steps", type: "StepItem[]", description: "Step definitions (see below)", required: true },
+    { name: "activeStep", type: "number", description: "Currently active step (0-based index)", required: true },
+    { name: "color", type: '"orange" | "green" | "cyan"', default: '"orange"', description: "Color theme for step indicators and connectors" },
+    { name: "direction", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "Layout direction" },
+    { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
+  ]}
+/>
+
+## StepItem
+
+<PropsTable
+  props={[
+    { name: "label", type: "string", description: "Step label text (rendered uppercase)", required: true },
+    { name: "description", type: "string", description: "Optional description shown below the label (vertical mode)" },
+  ]}
+/>
+
+<Callout type="info" title="STEP STATES">
+  Steps before the active index show a checkmark and solid connector. The active step pulses with a glowing dot. Future steps appear dimmed with dashed connectors.
+</Callout>
