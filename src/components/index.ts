@@ -143,6 +143,15 @@ export type { PhaseStatusStackProps, PhaseItem } from "./PhaseStatusStack";
 export { GradientStatusBar } from "./GradientStatusBar";
 export type { GradientStatusBarProps, StatusZone } from "./GradientStatusBar";
 
+export { DropdownMenu } from "./DropdownMenu";
+export type { DropdownMenuProps, DropdownMenuItem } from "./DropdownMenu";
+
+export { Stepper } from "./Stepper";
+export type { StepperProps, StepItem } from "./Stepper";
+
+export { FileUpload } from "./FileUpload";
+export type { FileUploadProps } from "./FileUpload";
+
 // Theme Provider
 export { ThemeProvider } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";

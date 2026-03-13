@@ -18,6 +18,8 @@ export interface MagiSystemPanelProps
   title?: string;
   /** Optional className */
   className?: string;
+  /** Use angled trapezoidal layout like the anime MAGI display */
+  trapezoidal?: boolean;
 }
 
 // Hexadecimal data lines for the "computing" scrolling effect
@@ -41,6 +43,25 @@ const hexLines = [
   "0x88A1 sync CASPER_LOGIC",
   "0x3C7B verify_consensus(3/3)",
 ];
+
+const trapezoidClipPaths = {
+  top: "polygon(0 0, 100% 0, 85% 100%, 15% 100%)",
+  bottomLeft: "polygon(0 0, 55% 0, 40% 100%, 0 100%)",
+  bottomRight: "polygon(45% 0, 100% 0, 100% 100%, 60% 100%)",
+};
+
+function getGlowColor(status: MagiStatus): string {
+  switch (status) {
+    case "accepted":
+      return "rgba(255, 153, 0, 0.4)";
+    case "rejected":
+      return "rgba(255, 0, 0, 0.4)";
+    case "computing":
+      return "rgba(0, 255, 255, 0.4)";
+    default:
+      return "rgba(0, 255, 0, 0.15)";
+  }
+}
 
 function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
   const [scrollLines, setScrollLines] = useState<string[]>([]);
@@ -203,10 +224,85 @@ export const MagiSystemPanel = forwardRef<HTMLDivElement, MagiSystemPanelProps>(
       votes,
       title = "MAGI SUPER COMPUTER SYSTEM",
       className = "",
+      trapezoidal = false,
       ...rest
     },
     ref
   ) {
+    if (trapezoidal) {
+      const balthasar = votes[1] ?? votes[0];
+      const casper = votes[2] ?? votes[1] ?? votes[0];
+      const melchior = votes[0];
+
+      return (
+        <div ref={ref} className={`bg-eva-black ${className}`} {...rest}>
+          {/* Title */}
+          <div className="flex items-center justify-between px-4 py-2 border-2 border-eva-mid-gray border-b-0 bg-eva-dark-gray">
+            <span
+              className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange"
+              style={{ fontFamily: "var(--font-eva-display)" }}
+            >
+              {title}
+            </span>
+            <div className="flex gap-1.5">
+              {votes.map((v, i) => (
+                <div
+                  key={i}
+                  className={`w-2 h-2 ${
+                    v.status === "accepted"
+                      ? "bg-eva-orange"
+                      : v.status === "rejected"
+                        ? "bg-eva-red"
+                        : v.status === "computing"
+                          ? "bg-eva-cyan"
+                          : "bg-eva-mid-gray"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Trapezoidal MAGI layout */}
+          <div className="border-2 border-eva-mid-gray bg-eva-black p-4">
+            {/* Row 1: BALTHASAR — centered top trapezoid */}
+            <div className="flex justify-center mb-[-12px]">
+              <div
+                className="w-full"
+                style={{
+                  clipPath: trapezoidClipPaths.top,
+                  boxShadow: `0 0 12px ${getGlowColor(balthasar.status)}, inset 0 0 8px ${getGlowColor(balthasar.status)}`,
+                }}
+              >
+                <MagiColumn vote={balthasar} index={1} />
+              </div>
+            </div>
+
+            {/* Row 2: CASPER (left) + MELCHIOR (right) */}
+            <div className="grid grid-cols-2 gap-0">
+              <div
+                className="mr-[-8px]"
+                style={{
+                  clipPath: trapezoidClipPaths.bottomLeft,
+                  boxShadow: `0 0 12px ${getGlowColor(casper.status)}, inset 0 0 8px ${getGlowColor(casper.status)}`,
+                }}
+              >
+                <MagiColumn vote={casper} index={2} />
+              </div>
+              <div
+                className="ml-[-8px]"
+                style={{
+                  clipPath: trapezoidClipPaths.bottomRight,
+                  boxShadow: `0 0 12px ${getGlowColor(melchior.status)}, inset 0 0 8px ${getGlowColor(melchior.status)}`,
+                }}
+              >
+                <MagiColumn vote={melchior} index={0} />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div ref={ref} className={`bg-eva-black ${className}`} {...rest}>
         {/* Title */}
