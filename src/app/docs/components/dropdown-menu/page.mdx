@@ -16,7 +16,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
   code={`import { DropdownMenu, Button } from "@mattloyed/eva-ui";
 
 <DropdownMenu
-  trigger={<Button label="ACTIONS" size="sm" />}
+  trigger={<Button size="sm">ACTIONS</Button>}
   items={[
     { label: "View Details", onClick: () => {} },
     { label: "Edit Record", onClick: () => {} },
@@ -26,7 +26,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 />`}
 >
   <DropdownMenu
-    trigger={<Button label="ACTIONS" size="sm" />}
+    trigger={<Button size="sm">ACTIONS</Button>}
     items={[
       { label: "View Details" },
       { label: "Edit Record" },
@@ -41,7 +41,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 <ComponentPreview
   title="DANGER + DIVIDER"
   code={`<DropdownMenu
-  trigger={<Button label="OPTIONS" size="sm" variant="outline" />}
+  trigger={<Button size="sm" variant="ghost">OPTIONS</Button>}
   items={[
     { label: "Rename", onClick: () => {} },
     { label: "Move", onClick: () => {} },
@@ -51,7 +51,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 />`}
 >
   <DropdownMenu
-    trigger={<Button label="OPTIONS" size="sm" variant="outline" />}
+    trigger={<Button size="sm" variant="ghost">OPTIONS</Button>}
     items={[
       { label: "Rename" },
       { label: "Move" },
@@ -66,7 +66,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 <ComponentPreview
   title="ICONS + DISABLED"
   code={`<DropdownMenu
-  trigger={<Button label="FILE" size="sm" />}
+  trigger={<Button size="sm">FILE</Button>}
   color="cyan"
   items={[
     { label: "Open", icon: ">" },
@@ -78,7 +78,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 />`}
 >
   <DropdownMenu
-    trigger={<Button label="FILE" size="sm" />}
+    trigger={<Button size="sm">FILE</Button>}
     color="cyan"
     items={[
       { label: "Open", icon: ">" },
@@ -96,7 +96,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
   title="ALIGN RIGHT"
   code={`<div className="flex justify-end">
   <DropdownMenu
-    trigger={<Button label="MENU" size="sm" />}
+    trigger={<Button size="sm">MENU</Button>}
     align="right"
     color="green"
     items={[
@@ -110,7 +110,7 @@ import { DropdownMenu } from "@mattloyed/eva-ui";
 >
   <div className="flex justify-end">
     <DropdownMenu
-      trigger={<Button label="MENU" size="sm" />}
+      trigger={<Button size="sm">MENU</Button>}
       align="right"
       color="green"
       items={[
