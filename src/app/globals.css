@@ -262,10 +262,17 @@ body::after {
   }
 }
 
+/* Ensure form elements have padding (Tailwind 4 may not generate utilities) */
+input,
+textarea,
+select {
+  padding: 0.625rem 1rem; /* py-2.5 px-4 */
+}
+
 @media (min-width: 1024px) {
   .docs-main {
-    padding-left: 16rem; /* w-64 = 256px = 16rem */
-    padding-top: 0;
+    padding-left: 18rem;
+    padding-top: 1.5rem;
   }
   .docs-content {
     padding: 3rem 2.5rem; /* more breathing room on desktop */
