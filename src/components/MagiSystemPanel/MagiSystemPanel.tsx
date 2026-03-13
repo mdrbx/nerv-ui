@@ -84,7 +84,7 @@ function MagiColumn({ vote, index }: { vote: MagiVote; index: number }) {
           : "STANDBY";
 
   return (
-    <div className="flex flex-col border-r border-eva-mid-gray last:border-r-0 bg-eva-black overflow-hidden">
+    <div className="flex flex-col md:border-r border-eva-mid-gray last:border-r-0 bg-eva-black overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-2 border-b-2 border-eva-mid-gray bg-eva-dark-gray">
         <span
@@ -236,7 +236,7 @@ export const MagiSystemPanel = forwardRef<HTMLDivElement, MagiSystemPanelProps>(
         </div>
 
         {/* 3-column grid with thick borders */}
-        <div className="grid grid-cols-3 border-2 border-eva-mid-gray">
+        <div className="grid grid-cols-1 md:grid-cols-3 border-2 border-eva-mid-gray">
           {votes.map((vote, i) => (
             <MagiColumn key={vote.name} vote={vote} index={i} />
           ))}

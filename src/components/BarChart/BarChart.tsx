@@ -31,6 +31,8 @@ export interface BarChartProps {
   height?: number;
   /** Unit suffix for values (e.g. "%", "ms") */
   unit?: string;
+  /** Segmented LCD-cell look with discrete blocks */
+  segmented?: boolean;
   /** Optional className */
   className?: string;
 }
@@ -55,6 +57,7 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
     stagger = 0.08,
     height = 200,
     unit = "",
+    segmented = false,
     className = "",
   }, ref) {
   const c = colorMap[color];
@@ -99,17 +102,24 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
                     transition={{ duration: 0.6, delay: i * stagger, ease: "easeOut" }}
                     className="h-full relative"
                     style={{
-                      backgroundColor: barColor,
+                      ...(segmented
+                        ? {
+                            backgroundColor: "transparent",
+                            background: `repeating-linear-gradient(90deg, ${barColor} 0px, ${barColor} 6px, transparent 6px, transparent 8px)`,
+                          }
+                        : { backgroundColor: barColor }),
                       boxShadow: `0 0 8px ${bar.color ? barColor + "50" : c.glow}`,
                     }}
                   >
                     {/* Scanline overlay */}
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
-                      }}
-                    />
+                    {!segmented && (
+                      <div
+                        className="absolute inset-0 opacity-20"
+                        style={{
+                          background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
+                        }}
+                      />
+                    )}
                   </motion.div>
                 </div>
                 {showValues && (
@@ -180,17 +190,24 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
                   transition={{ duration: 0.6, delay: i * stagger, ease: "easeOut" }}
                   className="w-full relative min-w-[8px]"
                   style={{
-                    backgroundColor: barColor,
+                    ...(segmented
+                      ? {
+                          backgroundColor: "transparent",
+                          background: `repeating-linear-gradient(0deg, ${barColor} 0px, ${barColor} 6px, transparent 6px, transparent 8px)`,
+                        }
+                      : { backgroundColor: barColor }),
                     boxShadow: `0 0 8px ${bar.color ? barColor + "50" : c.glow}`,
                   }}
                 >
                   {/* Scanline overlay */}
-                  <div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                      background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
-                    }}
-                  />
+                  {!segmented && (
+                    <div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
+                      }}
+                    />
+                  )}
                 </motion.div>
                 <div className="text-[8px] text-eva-white/50 mt-1 text-center truncate w-full">
                   {bar.label}

@@ -42,7 +42,7 @@ export default function SaasLandingPage() {
   return (
     <div className="min-h-screen bg-eva-black">
       {/* ═══════ HERO SECTION ═══════ */}
-      <section className="relative h-[600px] overflow-hidden">
+      <section className="relative h-[400px] md:h-[600px] overflow-hidden">
         <HexGridBackground color="green" />
         <div className="absolute inset-0 z-10">
           <TitleScreen
@@ -89,7 +89,7 @@ export default function SaasLandingPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="px-6 py-5 border-r border-eva-orange/20 last:border-r-0 text-center"
+              className="px-6 py-5 md:border-r border-eva-orange/20 last:border-r-0 text-center"
             >
               <div
                 className={`text-3xl font-bold ${metric.color}`}
@@ -123,9 +123,9 @@ export default function SaasLandingPage() {
           REAL-TIME DATA VISUALIZATION — ALL INDICATORS ACTIVE
         </p>
 
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* Waveform */}
-          <div className="col-span-8">
+          <div className="col-span-full md:col-span-8">
             <TargetingContainer label="NEURAL SYNC WAVEFORM" color="cyan">
               <div style={{ height: "200px" }}>
                 <SyncRatioChart showGrid animated speed={2} frequencyA={0.06} frequencyB={0.09} />
@@ -134,7 +134,7 @@ export default function SaasLandingPage() {
           </div>
 
           {/* Gauge */}
-          <div className="col-span-4">
+          <div className="col-span-full md:col-span-4">
             <TargetingContainer label="SYNC RATE" color="green">
               <div className="flex justify-center py-4">
                 <Gauge value={Math.round(gaugeVal)} label="PILOT-01" color="green" size={180} threshold={90} />
@@ -143,7 +143,7 @@ export default function SaasLandingPage() {
           </div>
 
           {/* Bar Chart + Pie */}
-          <div className="col-span-7">
+          <div className="col-span-full md:col-span-7">
             <TargetingContainer label="SUBSYSTEM PERFORMANCE" color="orange">
               <div className="p-4">
                 <BarChart
@@ -163,7 +163,7 @@ export default function SaasLandingPage() {
             </TargetingContainer>
           </div>
 
-          <div className="col-span-5">
+          <div className="col-span-full md:col-span-5">
             <TargetingContainer label="RESOURCE ALLOCATION" color="cyan">
               <div className="flex justify-center p-4">
                 <PieChart
@@ -182,17 +182,17 @@ export default function SaasLandingPage() {
           </div>
 
           {/* New row: SegmentDisplay + TargetingReticle + Surveillance */}
-          <div className="col-span-3">
+          <div className="col-span-full md:col-span-3">
             <TargetingContainer label="UPTIME COUNTER" color="orange">
               <div className="flex justify-center p-4">
                 <SegmentDisplay value={8547} format="raw" digits={5} color="orange" label="HOURS ACTIVE" size="md" />
               </div>
             </TargetingContainer>
           </div>
-          <div className="col-span-3 flex items-center justify-center">
+          <div className="col-span-full md:col-span-3 flex items-center justify-center">
             <TargetingReticle size={200} mode="SCAN:NET" color="cyan" targetLabel="NODE-01" animated />
           </div>
-          <div className="col-span-6">
+          <div className="col-span-full md:col-span-6">
             <SurveillanceGrid
               title="DATACENTER FEEDS"
               color="cyan"
@@ -237,10 +237,10 @@ export default function SaasLandingPage() {
             color="orange"
           />
 
-          <div className="mt-6 grid grid-cols-12 gap-6">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-12 gap-6">
             {featureTab === "sync" && (
               <>
-                <div className="col-span-7">
+                <div className="col-span-full md:col-span-7">
                   <Card title="NEURAL SYNC ENGINE">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
@@ -269,7 +269,7 @@ export default function SaasLandingPage() {
                     </div>
                   </Card>
                 </div>
-                <div className="col-span-5 space-y-4">
+                <div className="col-span-full md:col-span-5 space-y-4">
                   <Gauge value={94} label="THROUGHPUT" color="cyan" size={180} />
                   <SyncProgressBar value={94} label="NEURAL I/O" blocks={15} />
                   <SyncProgressBar value={87} label="BANDWIDTH" blocks={15} />
@@ -280,7 +280,7 @@ export default function SaasLandingPage() {
 
             {featureTab === "genome" && (
               <>
-                <div className="col-span-7">
+                <div className="col-span-full md:col-span-7">
                   <Card title="GENOME PROCESSOR">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
@@ -303,7 +303,7 @@ export default function SaasLandingPage() {
                     </div>
                   </Card>
                 </div>
-                <div className="col-span-5">
+                <div className="col-span-full md:col-span-5">
                   <Card title="SEQUENCE DISTRIBUTION">
                     <div className="flex justify-center py-4">
                       <PieChart
@@ -325,7 +325,7 @@ export default function SaasLandingPage() {
 
             {featureTab === "security" && (
               <>
-                <div className="col-span-7">
+                <div className="col-span-full md:col-span-7">
                   <Card title="A.T. FIELD SECURITY">
                     <div className="space-y-4">
                       <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
@@ -351,7 +351,7 @@ export default function SaasLandingPage() {
                     </div>
                   </Card>
                 </div>
-                <div className="col-span-5 flex flex-col items-center justify-center gap-4">
+                <div className="col-span-full md:col-span-5 flex flex-col items-center justify-center gap-4">
                   <Gauge value={100} label="SHIELD INTEGRITY" color="green" size={180} />
                   <div className="text-center text-[10px] font-mono text-eva-green">
                     ■ ZERO BREACHES SINCE INITIALIZATION
@@ -379,7 +379,7 @@ export default function SaasLandingPage() {
             SELECT THE INFRASTRUCTURE THAT MATCHES YOUR OPERATIONAL REQUIREMENTS
           </p>
 
-          <div className="grid grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {[
               { tier: "PROTOTYPE", nodes: 4, storage: "1 TB", sync: "60 Hz", price: "$499", variant: "default" as const },
               { tier: "PRODUCTION", nodes: 16, storage: "10 TB", sync: "120 Hz", price: "$1,999", variant: "default" as const },

@@ -10,8 +10,8 @@ export interface CardProps
   children: ReactNode;
   /** Footer content */
   footer?: ReactNode;
-  /** Visual variant -- default (green border) or alert (red border + glow) */
-  variant?: "default" | "alert";
+  /** Visual variant -- default (green border), alert (red border + glow), or hud (minimal translucent) */
+  variant?: "default" | "alert" | "hud";
   /** Corner cut size in pixels */
   cutSize?: number;
   /** Additional CSS classes */
@@ -30,6 +30,12 @@ const VARIANT_CONFIG = {
     titleColor: "text-eva-red",
     glowColor: "rgba(255, 0, 0, 0.12)",
     decorColor: "bg-eva-red",
+  },
+  hud: {
+    borderColor: "rgba(255, 255, 255, 0.08)",
+    titleColor: "text-white/70",
+    glowColor: "transparent",
+    decorColor: "bg-white/20",
   },
 };
 
@@ -51,46 +57,51 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     ref
   ) {
     const config = VARIANT_CONFIG[variant];
+    const isHud = variant === "hud";
 
-    // Clip-path: rectangle with top-right corner cut
-    const clipPath = `polygon(0 0, calc(100% - ${cutSize}px) 0, 100% ${cutSize}px, 100% 100%, 0 100%)`;
+    // Clip-path: rectangle with top-right corner cut (skipped for hud)
+    const clipPath = isHud
+      ? undefined
+      : `polygon(0 0, calc(100% - ${cutSize}px) 0, 100% ${cutSize}px, 100% 100%, 0 100%)`;
 
     return (
       <div
         ref={ref}
-        className={`relative bg-eva-black ${className}`}
+        className={`relative ${isHud ? "bg-black/60 backdrop-blur-sm" : "bg-eva-black"} ${className}`}
         style={{
           clipPath,
           border: `1px solid ${config.borderColor}`,
-          boxShadow: `0 0 12px ${config.glowColor}, inset 0 0 6px ${config.glowColor}`,
+          boxShadow: isHud ? undefined : `0 0 12px ${config.glowColor}, inset 0 0 6px ${config.glowColor}`,
         }}
         {...rest}
       >
-        {/* Corner cut decoration -- small triangle at the cut edge */}
-        <div
-          className="absolute top-0 right-0 pointer-events-none"
-          style={{
-            width: cutSize + 1,
-            height: cutSize + 1,
-          }}
-        >
-          <svg
-            width={cutSize + 1}
-            height={cutSize + 1}
-            viewBox={`0 0 ${cutSize + 1} ${cutSize + 1}`}
-            className="absolute top-0 right-0"
+        {/* Corner cut decoration -- small triangle at the cut edge (hidden for hud) */}
+        {!isHud && (
+          <div
+            className="absolute top-0 right-0 pointer-events-none"
+            style={{
+              width: cutSize + 1,
+              height: cutSize + 1,
+            }}
           >
-            <line
-              x1="0"
-              y1="0"
-              x2={cutSize}
-              y2={cutSize}
-              stroke={config.borderColor}
-              strokeWidth="1"
-              opacity="0.4"
-            />
-          </svg>
-        </div>
+            <svg
+              width={cutSize + 1}
+              height={cutSize + 1}
+              viewBox={`0 0 ${cutSize + 1} ${cutSize + 1}`}
+              className="absolute top-0 right-0"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2={cutSize}
+                y2={cutSize}
+                stroke={config.borderColor}
+                strokeWidth="1"
+                opacity="0.4"
+              />
+            </svg>
+          </div>
+        )}
 
         {/* Header */}
         {title && (

@@ -218,7 +218,7 @@ export default function NervCommandCenter() {
               </motion.h1>
               <Link
                 href="/docs"
-                className="text-[10px] uppercase tracking-[0.2em] text-eva-cyan hover:text-eva-orange transition-colors font-bold mt-2 inline-block"
+                className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-eva-cyan hover:text-eva-orange transition-colors font-bold mt-2 inline-block"
                 style={{ fontFamily: "var(--font-eva-display)" }}
               >
                 DOCUMENTATION &rarr;
@@ -257,7 +257,7 @@ export default function NervCommandCenter() {
           STATUS BAR
           ═══════════════════════════════════════════ */}
       <div
-        className={`flex items-center justify-between px-4 py-1.5 border-b ${borderColor} ${
+        className={`flex flex-col sm:flex-row items-center justify-between px-4 py-1.5 border-b ${borderColor} gap-2 ${
           isEmergency ? "bg-eva-red/10" : "bg-eva-dark-gray"
         }`}
       >
@@ -280,7 +280,7 @@ export default function NervCommandCenter() {
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-[10px] font-mono text-eva-mid-gray">
+          <span className="text-[10px] sm:text-xs font-mono text-eva-mid-gray truncate hidden sm:inline">
             NERV HQ — CENTRAL DOGMA — GEOFRONT L-02
           </span>
           <Button
@@ -296,12 +296,12 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           MAIN CONTENT — 3-Column Grid
           ═══════════════════════════════════════════ */}
-      <main className="grid grid-cols-12 gap-0">
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-0">
         {/* ─────────────────────────────────────────
             LEFT COLUMN — Monitoring (3 cols)
             ───────────────────────────────────────── */}
         <div
-          className={`col-span-3 border-r ${borderColor} flex flex-col`}
+          className={`col-span-full lg:col-span-3 lg:border-r ${borderColor} flex flex-col`}
         >
           {/* Countdown Timer */}
           <div className={`border-b ${borderColor}`}>
@@ -319,7 +319,7 @@ export default function NervCommandCenter() {
 
             {pilots.map((p, i) => (
               <div key={p.id} className="space-y-1">
-                <div className="flex items-center justify-between text-[10px] font-mono text-eva-mid-gray">
+                <div className="flex items-center justify-between text-[10px] sm:text-xs font-mono text-eva-mid-gray">
                   <span>{p.id}</span>
                   <span className="text-eva-cyan">{p.pilot}</span>
                 </div>
@@ -333,7 +333,7 @@ export default function NervCommandCenter() {
 
             {/* Decorative footer */}
             <div className="mt-auto pt-4 border-t border-eva-mid-gray/30">
-              <div className="text-[9px] font-mono text-eva-mid-gray/70 space-y-0.5">
+              <div className="text-[9px] sm:text-xs font-mono text-eva-mid-gray/70 space-y-0.5">
                 <div>LCL SYSTEM ........... NOMINAL</div>
                 <div>ENTRY PLUG ........... LOCKED</div>
                 <div>A.T. FIELD ........... DEPLOYED</div>
@@ -346,7 +346,7 @@ export default function NervCommandCenter() {
         {/* ─────────────────────────────────────────
             CENTER COLUMN — Data Viz & Decision (6 cols)
             ───────────────────────────────────────── */}
-        <div className="col-span-6 flex flex-col">
+        <div className="col-span-full lg:col-span-6 flex flex-col">
           {/* Sync Ratio Chart — top half */}
           <div
             className={`border-b ${borderColor} flex flex-col`}
@@ -359,7 +359,7 @@ export default function NervCommandCenter() {
               >
                 HARMONIC WAVEFORM ANALYSIS
               </span>
-              <div className="flex items-center gap-3 text-[10px] font-mono">
+              <div className="flex items-center gap-3 text-[10px] sm:text-xs font-mono">
                 <span className="flex items-center gap-1">
                   <span className="w-3 h-0.5 bg-eva-cyan inline-block" />
                   <span className="text-eva-cyan">DATA-BLUE</span>
@@ -385,7 +385,7 @@ export default function NervCommandCenter() {
             RIGHT COLUMN — Comms & Security (3 cols)
             ───────────────────────────────────────── */}
         <div
-          className={`col-span-3 border-l ${borderColor} flex flex-col`}
+          className={`col-span-full lg:col-span-3 lg:border-l ${borderColor} flex flex-col`}
         >
           {/* SEELE Monoliths */}
           <div className={`border-b ${borderColor} p-3`}>
@@ -442,7 +442,7 @@ export default function NervCommandCenter() {
                   readOnly
                 />
 
-                <div className="pt-2 text-[9px] font-mono text-eva-mid-gray/70 space-y-0.5">
+                <div className="pt-2 text-[9px] sm:text-xs font-mono text-eva-mid-gray/70 space-y-0.5">
                   <div>CLEARANCE: LEVEL 7 — EYES ONLY</div>
                   <div>ENCRYPTION: AES-256 / MAGI-VERIFIED</div>
                 </div>
@@ -481,9 +481,9 @@ export default function NervCommandCenter() {
           />
         </div>
 
-        <div className="grid grid-cols-12 gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
           {/* Left — Terminal Display */}
-          <div className={`col-span-5 border-r ${borderColor}`}>
+          <div className={`col-span-full lg:col-span-5 lg:border-r ${borderColor}`}>
             <TargetingContainer label="SYSTEM OUTPUT" color="cyan">
               <TerminalDisplay
                 lines={[
@@ -507,7 +507,7 @@ export default function NervCommandCenter() {
           </div>
 
           {/* Right — DataGrid with event log */}
-          <div className="col-span-7">
+          <div className="col-span-full lg:col-span-7">
             <DataGrid
               columns={[
                 {
@@ -542,9 +542,9 @@ export default function NervCommandCenter() {
       <footer
         className={`px-4 py-1 border-t ${borderColor} ${
           isEmergency ? "bg-eva-red/5" : "bg-eva-dark-gray"
-        } flex items-center justify-between text-[10px] font-mono text-eva-mid-gray`}
+        } flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-xs font-mono text-eva-mid-gray gap-2`}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
           <span>NERV COMMAND CENTER v3.0</span>
           <span className="text-eva-mid-gray/30">|</span>
           <span>
@@ -566,7 +566,7 @@ export default function NervCommandCenter() {
             EXAMPLES &rarr;
           </Link>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end">
           <span>
             MAGI:{" "}
             {magiVotes.every((v) => v.status === "idle")

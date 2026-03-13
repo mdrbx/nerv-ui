@@ -22,6 +22,12 @@ export interface GaugeProps {
   showTicks?: boolean;
   /** Threshold value — gauge changes to red above this */
   threshold?: number;
+  /** Display variant */
+  variant?: "needle" | "ring";
+  /** Gradient start color for ring variant */
+  gradientFrom?: string;
+  /** Gradient end color for ring variant */
+  gradientTo?: string;
   /** Optional className */
   className?: string;
 }
@@ -45,8 +51,12 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
     size = 160,
     showTicks = true,
     threshold,
+    variant = "needle",
+    gradientFrom = "#FF00FF",
+    gradientTo = "#FF9900",
     className = "",
   }, ref) {
+  const isRing = variant === "ring";
   const range = max - min;
   const pct = Math.max(0, Math.min(1, (value - min) / range));
   const isOverThreshold = threshold !== undefined && value > threshold;
@@ -112,12 +122,22 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
         height={size * 0.7}
         className="overflow-visible"
       >
+        {/* Gradient definition for ring variant */}
+        {isRing && (
+          <defs>
+            <linearGradient id={`gauge-ring-grad-${label ?? "default"}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={gradientFrom} />
+              <stop offset="100%" stopColor={gradientTo} />
+            </linearGradient>
+          </defs>
+        )}
+
         {/* Background arc */}
         <path
           d={bgArc}
           fill="none"
           stroke="rgba(255,255,255,0.06)"
-          strokeWidth={8}
+          strokeWidth={isRing ? 14 : 8}
           strokeLinecap="butt"
         />
 
@@ -130,7 +150,7 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
             )}
             fill="none"
             stroke="rgba(255,0,0,0.12)"
-            strokeWidth={8}
+            strokeWidth={isRing ? 14 : 8}
             strokeLinecap="butt"
           />
         )}
@@ -139,14 +159,16 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
         <motion.path
           d={valueArc}
           fill="none"
-          stroke={activeColor.stroke}
-          strokeWidth={5}
+          stroke={isRing ? `url(#gauge-ring-grad-${label ?? "default"})` : activeColor.stroke}
+          strokeWidth={isRing ? 14 : 5}
           strokeLinecap="butt"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           style={{
-            filter: `drop-shadow(0 0 4px ${activeColor.glow})`,
+            filter: isRing
+              ? `drop-shadow(0 0 6px ${gradientFrom}80)`
+              : `drop-shadow(0 0 4px ${activeColor.glow})`,
           }}
         />
 
@@ -159,29 +181,34 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
             x2={tick.outer.x}
             y2={tick.outer.y}
             stroke={tick.major ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.12)"}
-            strokeWidth={tick.major ? 1 : 0.5}
+            strokeWidth={isRing
+              ? (tick.major ? 1.5 : 0.8)
+              : (tick.major ? 1 : 0.5)
+            }
           />
         ))}
 
-        {/* Needle */}
-        <motion.line
-          x1={cx}
-          y1={cy}
-          x2={needle.x}
-          y2={needle.y}
-          stroke={activeColor.stroke}
-          strokeWidth={1.5}
-          strokeLinecap="butt"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          style={{
-            filter: `drop-shadow(0 0 3px ${activeColor.glow})`,
-          }}
-        />
+        {/* Needle (needle variant only) */}
+        {!isRing && (
+          <motion.line
+            x1={cx}
+            y1={cy}
+            x2={needle.x}
+            y2={needle.y}
+            stroke={activeColor.stroke}
+            strokeWidth={1.5}
+            strokeLinecap="butt"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            style={{
+              filter: `drop-shadow(0 0 3px ${activeColor.glow})`,
+            }}
+          />
+        )}
 
         {/* Center dot */}
-        <circle cx={cx} cy={cy} r={2.5} fill={activeColor.stroke} />
+        <circle cx={cx} cy={cy} r={2.5} fill={isRing ? gradientFrom : activeColor.stroke} />
         <circle cx={cx} cy={cy} r={1} fill="#000" />
 
         {/* Value text */}
@@ -189,7 +216,7 @@ export const Gauge = forwardRef<HTMLDivElement, GaugeProps>(
           x={cx}
           y={cy + 14}
           textAnchor="middle"
-          fill={activeColor.stroke}
+          fill={isRing ? gradientTo : activeColor.stroke}
           fontSize={10}
           fontFamily="monospace"
           fontWeight="bold"

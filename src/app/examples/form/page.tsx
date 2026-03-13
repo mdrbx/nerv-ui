@@ -104,12 +104,12 @@ export default function FormExample() {
         </p>
       </div>
 
-      <div className="grid grid-cols-12 gap-0">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
         {/* Form */}
-        <div className="col-span-7 p-6 pt-10 border-r border-eva-orange">
+        <div className="col-span-full md:col-span-7 p-6 pt-6 md:pt-10 md:border-r border-eva-orange border-b md:border-b-0">
           <TargetingContainer label="OPERATOR DETAILS" color="orange">
             <div className="p-4 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InputField
                   label="OPERATOR NAME"
                   placeholder="Enter full name..."
@@ -138,7 +138,7 @@ export default function FormExample() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <SelectMenu
                   label="EVANGELION UNIT"
                   options={unitOptions}
@@ -252,7 +252,7 @@ export default function FormExample() {
         </div>
 
         {/* Output terminal */}
-        <div className="col-span-5 p-6 space-y-4">
+        <div className="col-span-full md:col-span-5 p-6 space-y-4">
           <TargetingContainer
             label="TRANSMISSION OUTPUT"
             color={submitted ? "green" : "cyan"}

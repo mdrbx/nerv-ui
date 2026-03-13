@@ -135,9 +135,9 @@ export default function RealtimeDashboard() {
       />
 
       {viewTab === "overview" && (
-        <div className="grid grid-cols-12 gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
           {/* Left: Sensor Bars */}
-          <div className="col-span-3 border-r border-eva-green p-4">
+          <div className="lg:col-span-3 col-span-full lg:border-r border-eva-green p-4">
             <h2
               className="text-xs uppercase tracking-[0.2em] text-eva-orange font-bold mb-4"
               style={{ fontFamily: "var(--font-eva-display)" }}
@@ -168,9 +168,9 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Center: Dual waveforms */}
-          <div className="col-span-5 flex flex-col">
+          <div className="lg:col-span-5 col-span-full flex flex-col">
             <TargetingContainer label="WAVEFORM A — PRIMARY" color="cyan">
-              <div style={{ height: "200px" }}>
+              <div className="h-[160px] sm:h-[200px]">
                 <SyncRatioChart
                   showGrid
                   animated
@@ -182,7 +182,7 @@ export default function RealtimeDashboard() {
             </TargetingContainer>
 
             <TargetingContainer label="WAVEFORM B — SECONDARY" color="orange">
-              <div style={{ height: "200px" }}>
+              <div className="h-[160px] sm:h-[200px]">
                 <SyncRatioChart
                   showGrid
                   animated
@@ -197,7 +197,7 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Right: Gauges + mini pie */}
-          <div className="col-span-4 border-l border-eva-green p-4 space-y-4">
+          <div className="lg:col-span-4 col-span-full lg:border-l border-eva-green p-4 space-y-4">
             <h2
               className="text-xs uppercase tracking-[0.2em] text-eva-orange font-bold"
               style={{ fontFamily: "var(--font-eva-display)" }}
@@ -247,9 +247,9 @@ export default function RealtimeDashboard() {
       )}
 
       {viewTab === "charts" && (
-        <div className="grid grid-cols-12 gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
           {/* Left: Vertical bar chart */}
-          <div className="col-span-6 p-4 border-r border-eva-green">
+          <div className="lg:col-span-6 col-span-full p-4 lg:border-r border-eva-green">
             <TargetingContainer label="SENSOR LEVELS — VERTICAL" color="cyan">
               <div className="p-4">
                 <BarChart
@@ -264,7 +264,7 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Right: Horizontal bar chart */}
-          <div className="col-span-6 p-4">
+          <div className="lg:col-span-6 col-span-full p-4">
             <TargetingContainer label="SENSOR LEVELS — HORIZONTAL" color="orange">
               <div className="p-4">
                 <BarChart
@@ -279,7 +279,7 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Bottom: Gauges row + Pie */}
-          <div className="col-span-8 p-4 border-t border-eva-green">
+          <div className="lg:col-span-8 col-span-full p-4 border-t border-eva-green">
             <TargetingContainer label="GAUGE ARRAY" color="green">
               <div className="flex flex-wrap items-center justify-center gap-4 p-4">
                 {sensorNames.map((name, i) => (
@@ -298,7 +298,7 @@ export default function RealtimeDashboard() {
             </TargetingContainer>
           </div>
 
-          <div className="col-span-4 p-4 border-t border-l border-eva-green">
+          <div className="lg:col-span-4 col-span-full p-4 border-t lg:border-l border-eva-green">
             <TargetingContainer label="STATUS DISTRIBUTION" color="orange">
               <div className="flex justify-center p-4">
                 <PieChart
@@ -328,9 +328,9 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Waveforms at bottom */}
-          <div className="col-span-12 border-t border-eva-green">
+          <div className="col-span-full border-t border-eva-green">
             <TargetingContainer label="HARMONIC ANALYSIS" color="cyan">
-              <div style={{ height: "200px" }}>
+              <div className="h-[160px] sm:h-[200px]">
                 <SyncRatioChart
                   showGrid
                   animated
@@ -343,7 +343,7 @@ export default function RealtimeDashboard() {
           </div>
 
           {/* Targeting + Surveillance row */}
-          <div className="col-span-4 p-4 border-t border-eva-green flex items-center justify-center">
+          <div className="lg:col-span-4 col-span-full p-4 border-t border-eva-green flex items-center justify-center">
             <TargetingReticle
               size={250}
               mode="TRACK:AUTO"
@@ -356,7 +356,7 @@ export default function RealtimeDashboard() {
               ]}
             />
           </div>
-          <div className="col-span-8 border-t border-l border-eva-green">
+          <div className="lg:col-span-8 col-span-full border-t lg:border-l border-eva-green">
             <SurveillanceGrid
               title="GEOFRONT MONITORING"
               color="green"
@@ -375,8 +375,8 @@ export default function RealtimeDashboard() {
       )}
 
       {viewTab === "events" && (
-        <div className="grid grid-cols-12 gap-0">
-          <div className="col-span-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+          <div className="col-span-full overflow-x-auto">
             <DataGrid
               columns={[
                 { key: "time", header: "TIME", width: "140px", sortable: true },

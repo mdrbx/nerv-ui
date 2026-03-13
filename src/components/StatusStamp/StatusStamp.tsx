@@ -27,6 +27,8 @@ export interface StatusStampProps extends MotionSafeHTMLAttributes {
   subtitle?: string;
   /** Whether to show a border frame */
   bordered?: boolean;
+  /** Whether to show a double border frame (implies bordered) */
+  doubleBordered?: boolean;
   /** Full-screen overlay mode */
   fullScreen?: boolean;
   className?: string;
@@ -75,11 +77,13 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
   repeatCols = 2,
   subtitle,
   bordered = false,
+  doubleBordered = false,
   fullScreen = false,
   className = "",
   ...rest
 }, ref) {
   const colors = colorMap[color];
+  const effectiveBordered = bordered || doubleBordered;
 
   const containerClass = fullScreen
     ? "fixed inset-0 z-50 flex items-center justify-center bg-eva-black/90"
@@ -135,27 +139,47 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
               animate={{ scale: 1, opacity: 1, rotate: rotation }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             >
-              {bordered ? (
-                <div
-                  className="px-8 py-4"
-                  style={{
-                    border: `3px solid ${colors.border}`,
-                    backgroundColor: colors.bg,
-                    boxShadow: `0 0 20px ${colors.glow}, inset 0 0 20px ${colors.bg}`,
-                  }}
-                >
-                  <span
-                    className="font-bold uppercase tracking-[0.15em] whitespace-nowrap"
-                    style={{
-                      fontFamily: "var(--font-eva-display)",
-                      fontSize: "clamp(2rem, 8vw, 6rem)",
-                      color: colors.text,
-                      textShadow: `0 0 10px ${colors.glow}`,
-                    }}
-                  >
-                    {text}
-                  </span>
-                </div>
+              {effectiveBordered ? (
+                (() => {
+                  const innerBox = (
+                    <div
+                      className="px-8 py-4"
+                      style={{
+                        border: `3px solid ${colors.border}`,
+                        backgroundColor: colors.bg,
+                        boxShadow: `0 0 20px ${colors.glow}, inset 0 0 20px ${colors.bg}`,
+                      }}
+                    >
+                      <span
+                        className="font-bold uppercase tracking-[0.15em] whitespace-nowrap"
+                        style={{
+                          fontFamily: "var(--font-eva-display)",
+                          fontSize: "clamp(2rem, 8vw, 6rem)",
+                          color: colors.text,
+                          textShadow: `0 0 10px ${colors.glow}`,
+                        }}
+                      >
+                        {text}
+                      </span>
+                    </div>
+                  );
+
+                  if (doubleBordered) {
+                    return (
+                      <div
+                        style={{
+                          padding: 5,
+                          border: `3px solid ${colors.border}`,
+                          boxShadow: `0 0 20px ${colors.glow}`,
+                        }}
+                      >
+                        {innerBox}
+                      </div>
+                    );
+                  }
+
+                  return innerBox;
+                })()
               ) : (
                 <span
                   className="font-bold uppercase tracking-[0.15em] whitespace-nowrap"

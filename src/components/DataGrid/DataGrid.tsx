@@ -182,7 +182,7 @@ export const DataGrid = forwardRef<HTMLDivElement, DataGridProps>(
     }, [autoScroll, scrollSpeed, hovering]);
 
     return (
-      <div ref={ref} className={`bg-eva-black border border-eva-mid-gray ${className}`} {...rest}>
+      <div ref={ref} className={`bg-eva-black border border-eva-mid-gray overflow-x-auto ${className}`} {...rest}>
         {/* Title bar */}
         {title && (
           <div className="flex items-center justify-between px-3 py-1.5 border-b border-eva-mid-gray bg-eva-dark-gray">

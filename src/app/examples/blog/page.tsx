@@ -269,6 +269,7 @@ export default function BlogExample() {
 
   return (
     <div className="min-h-screen bg-eva-black">
+      <div className="max-w-7xl mx-auto">
       {/* Breaking news banner */}
       {breakingPost && (
         <EmergencyBanner
@@ -307,9 +308,9 @@ export default function BlogExample() {
         color="orange"
       />
 
-      <div className="grid grid-cols-12 gap-0" style={{ minHeight: "600px" }}>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-0" style={{ minHeight: "600px" }}>
         {/* Post list */}
-        <div className="col-span-4 border-r border-eva-orange overflow-y-auto" style={{ maxHeight: "700px" }}>
+        <div className="col-span-full md:col-span-4 border-r border-eva-orange overflow-y-auto max-h-[50vh] md:max-h-[700px]">
           <div className="p-2 space-y-1">
             {filteredPosts.map((post) => (
               <button
@@ -357,7 +358,7 @@ export default function BlogExample() {
         </div>
 
         {/* Post content */}
-        <div className="col-span-8 p-4">
+        <div className="col-span-full md:col-span-8 p-4">
           {selectedPost ? (
             <div className="relative">
               {/* Post header */}
@@ -443,7 +444,7 @@ export default function BlogExample() {
         >
           ACTIVE PILOT ROSTER
         </h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           <PilotCard
             designation="FIRST.C"
             name="REI AYANAMI"
@@ -481,6 +482,7 @@ export default function BlogExample() {
             ]}
           />
         </div>
+      </div>
       </div>
     </div>
   );

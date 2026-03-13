@@ -136,6 +136,13 @@ export type { DrawerProps } from "./Drawer";
 export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
 
+// Phase 7 — Evangelion-Inspired Status Components
+export { PhaseStatusStack } from "./PhaseStatusStack";
+export type { PhaseStatusStackProps, PhaseItem } from "./PhaseStatusStack";
+
+export { GradientStatusBar } from "./GradientStatusBar";
+export type { GradientStatusBarProps, StatusZone } from "./GradientStatusBar";
+
 // Theme Provider
 export { ThemeProvider } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";

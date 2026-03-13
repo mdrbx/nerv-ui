@@ -124,9 +124,19 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
 }, ref) {
   const config = severityConfig[severity];
 
-  const stripeStyle = {
+  const stripeStyleTop = {
     background: `repeating-linear-gradient(
       -45deg,
+      ${config.stripeColor1},
+      ${config.stripeColor1} 8px,
+      ${config.stripeColor2} 8px,
+      ${config.stripeColor2} 16px
+    )`,
+  };
+
+  const stripeStyleBottom = {
+    background: `repeating-linear-gradient(
+      45deg,
       ${config.stripeColor1},
       ${config.stripeColor1} 8px,
       ${config.stripeColor2} 8px,
@@ -169,7 +179,7 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
           />
 
           {/* Top hazard stripe */}
-          <div className="relative h-4" style={stripeStyle} />
+          <div className="relative h-4" style={stripeStyleTop} />
 
           {/* Content area */}
           <div className="relative px-6 py-8 flex flex-col items-center justify-center min-h-[120px]">
@@ -255,7 +265,7 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
           </div>
 
           {/* Bottom hazard stripe */}
-          <div className="relative h-4" style={stripeStyle} />
+          <div className="relative h-4" style={stripeStyleBottom} />
         </motion.div>
       )}
     </AnimatePresence>
