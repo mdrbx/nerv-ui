@@ -241,3 +241,17 @@ body::after {
 .eva-border-glow-red {
   box-shadow: 0 0 8px rgba(255, 0, 0, 0.4), inset 0 0 4px rgba(255, 0, 0, 0.1);
 }
+
+/* ============================================
+   DOCS LAYOUT — Sidebar offset
+   ============================================ */
+.docs-main {
+  padding-top: 3rem; /* h-12 mobile top bar */
+}
+
+@media (min-width: 1024px) {
+  .docs-main {
+    padding-left: 16rem; /* w-64 = 256px = 16rem */
+    padding-top: 0;
+  }
+}

@@ -10,7 +10,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     h1: ({ children }) => (
       <h1
-        className="text-3xl md:text-4xl font-bold uppercase tracking-[0.2em] text-eva-orange mb-6 mt-12 first:mt-0 border-l-4 border-eva-orange pl-4"
+        className="text-3xl md:text-4xl font-bold uppercase tracking-[0.2em] text-eva-orange mb-6 border-l-4 border-eva-orange pl-4"
         style={{ fontFamily: "var(--font-eva-display)" }}
       >
         {children}
