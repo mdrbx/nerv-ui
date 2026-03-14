@@ -3,7 +3,7 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Emergency Banner
 
-Full-screen or inline alert banner with animated hazard stripes, scanline overlay, and flickering text. Seven severity levels cover every operational scenario — from routine information to total system failure.
+Full-screen or inline alert banner with mirrored hazard bands, massive condensed title type, and scanline treatment. Seven severity levels cover every operational scenario — from routine information to total system failure.
 
 ```tsx
 import { EmergencyBanner } from "@mattloyed/eva-ui";
@@ -46,6 +46,29 @@ Seven severity levels control the color scheme, hazard stripe style, and flicker
   code={`<EmergencyBanner text="WARNING" severity="warning" visible />`}
 >
   <EmergencyBanner text="WARNING" severity="warning" visible />
+</ComponentPreview>
+
+## Static Bands
+
+Disable stripe motion when you want a frozen broadcast frame or a cleaner capture.
+
+<ComponentPreview
+  title="STATIC"
+  code={`<EmergencyBanner
+  text="ALERT"
+  severity="emergency"
+  animateStripes={false}
+  subtext="SIGNAL HELD — MANUAL REVIEW"
+  visible
+/>`}
+>
+  <EmergencyBanner
+    text="ALERT"
+    severity="emergency"
+    animateStripes={false}
+    subtext="SIGNAL HELD — MANUAL REVIEW"
+    visible
+  />
 </ComponentPreview>
 
 ### Info (Cyan — static)
@@ -157,6 +180,12 @@ The `children` prop allows embedding links, buttons, or other interactive conten
       description: "Fixed full-screen overlay mode vs inline container",
     },
     {
+      name: "animateStripes",
+      type: "boolean",
+      default: "true",
+      description: "Animates the mirrored hazard bands; disable for a static broadcast frame",
+    },
+    {
       name: "children",
       type: "ReactNode",
       default: "—",
@@ -175,4 +204,8 @@ The `children` prop allows embedding links, buttons, or other interactive conten
 
 <Callout type="info" title="ARIA ATTRIBUTES">
   EmergencyBanner uses `role="alert"` and `aria-live="assertive"` to announce the alert to screen readers immediately when it becomes visible.
+</Callout>
+
+<Callout type="info" title="ANIME BANNER LANGUAGE">
+  The emergency and warning variants intentionally push toward the anime broadcast look: dominant black type on a hot field, mirrored diagonal bands collapsing toward center, and much less decorative chrome than a normal HUD panel.
 </Callout>

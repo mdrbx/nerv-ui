@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 import { PilotCard } from "@/components/PilotCard";
 
@@ -7,6 +8,10 @@ Pilot status card inspired by NERV's pilot monitoring displays. Shows designatio
 
 <Callout type="info" title="ANIME REFERENCE">
   Based on the pilot status cards displayed during sync tests showing "FIRST.C REI AYANAMI", "THIRD.C SHINJI IKARI", and "SECOND.C S.ASUKA LANGLEY" with their respective EVA unit assignments.
+</Callout>
+
+<Callout type="info" title="CAMERA OVERLAY FAMILY">
+  `PilotCard` now uses the camera-overlay grammar for subject plates and relay tags. See <Link href="/docs/getting-started/camera-overlays">Camera Overlay Grammar</Link> for the rules behind the rounded double plaques and footage-style titling.
 </Callout>
 
 ## Default Card
@@ -27,10 +32,14 @@ Pilot status card inspired by NERV's pilot monitoring displays. Shows designatio
   </div>
 </ComponentPreview>
 
+## Overlay Intent
+
+The card is no longer just a boxed data module. Its title plaques behave like subject annotations clipped onto a live relay, while the lower rows stay closer to a rigid monitoring panel. That split is deliberate: soft identification plates above, harder telemetry strips below.
+
 ## All Three Pilots
 
 <ComponentPreview>
-  <div className="bg-eva-black p-4 grid grid-cols-3 gap-3">
+  <div className="grid grid-cols-1 gap-3 bg-eva-black p-4 md:grid-cols-2 xl:grid-cols-3">
     <PilotCard
       designation="FIRST.C"
       name="REI AYANAMI"
@@ -73,7 +82,7 @@ Pilot status card inspired by NERV's pilot monitoring displays. Shows designatio
 ## Status Variants
 
 <ComponentPreview>
-  <div className="bg-eva-black p-4 grid grid-cols-2 gap-3 max-w-lg mx-auto">
+  <div className="mx-auto grid max-w-3xl grid-cols-1 gap-3 bg-eva-black p-4 sm:grid-cols-2">
     <PilotCard
       designation="PILOT-A"
       name="OPERATIVE"

@@ -53,37 +53,50 @@ export const PhaseStatusStack = forwardRef<HTMLDivElement, PhaseStatusStackProps
       <div ref={ref} className={`flex flex-col ${className}`}>
         {title && (
           <div
-            className={`text-[10px] uppercase tracking-[0.2em] font-bold mb-1 ${titleColorMap[color]}`}
+            className={`mb-1 border-b border-current/25 pb-1 text-[10px] uppercase tracking-[0.22em] font-bold ${titleColorMap[color]}`}
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
             {title}
           </div>
         )}
 
-        <div className="flex flex-col gap-[2px]">
-          {phases.map((phase, i) => (
+        <div className="flex flex-col gap-[3px]">
+          {phases.map((phase, index) => (
             <div
-              key={i}
-              className={`
-                flex items-center justify-between
-                px-2 py-[3px]
-                ${statusColorMap[phase.status]}
-              `}
+              key={index}
+              className="grid grid-cols-[64px_minmax(0,1fr)_48px] items-center gap-2 border border-white/10 bg-black/70 px-2 py-1"
+              style={{ borderColor: "rgba(224,224,224,0.08)" }}
             >
               <span
-                className={`text-[10px] uppercase tracking-[0.15em] font-bold font-mono ${statusTextMap[phase.status]}`}
+                className="text-[9px] uppercase tracking-[0.14em] text-eva-white/62"
                 style={{ fontFamily: "var(--font-eva-mono)" }}
               >
                 {phase.label}
               </span>
-              {phase.value && (
-                <span
-                  className={`text-[10px] font-bold font-mono ${statusTextMap[phase.status]}`}
-                  style={{ fontFamily: "var(--font-eva-mono)" }}
-                >
-                  {phase.value}
-                </span>
-              )}
+              <div className="relative h-3 overflow-hidden border border-white/10 bg-black/60">
+                <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-eva-orange/60" />
+                <div
+                  className={`absolute left-0 top-0 bottom-0 ${statusColorMap[phase.status]}`}
+                  style={{
+                    width:
+                      phase.status === "ok"
+                        ? "100%"
+                        : phase.status === "warning"
+                          ? "68%"
+                          : phase.status === "danger"
+                            ? "48%"
+                            : "24%",
+                    backgroundImage:
+                      "repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0,0,0,0.38) 6px, rgba(0,0,0,0.38) 7px)",
+                  }}
+                />
+              </div>
+              <span
+                className={`text-right text-[9px] font-bold uppercase ${statusTextMap[phase.status]}`}
+                style={{ fontFamily: "var(--font-eva-mono)" }}
+              >
+                {phase.value ?? phase.status}
+              </span>
             </div>
           ))}
         </div>

@@ -1,138 +1,147 @@
 @import "tailwindcss";
 
-/* ============================================
-   NERV DESIGN SYSTEM — DESIGN TOKENS
-   Neon Genesis Evangelion UI
-   ============================================ */
-
 @theme {
-  /* Core EVA Colors */
   --color-eva-black: #000000;
-  --color-eva-red: #FF0000;
-  --color-eva-orange: #FF9900;
-  --color-eva-green: #00FF00;
-  --color-eva-cyan: #00FFFF;
-  --color-eva-amber: #FFAA00;
-  --color-eva-white: #E0E0E0;
-  --color-eva-dark-gray: #1A1A1A;
-  --color-eva-mid-gray: #555555;
-  --color-eva-panel: #0A0A0A;
-  --color-eva-purple: #9933FF;
-  --color-eva-magenta: #FF00FF;
-  --color-eva-lcd-green: #39FF14;
+  --color-eva-red: #ff2b1d;
+  --color-eva-orange: #ff9900;
+  --color-eva-green: #00ff00;
+  --color-eva-cyan: #00f6ff;
+  --color-eva-amber: #ffb000;
+  --color-eva-white: #e3ddd4;
+  --color-eva-dark-gray: #121212;
+  --color-eva-mid-gray: #4e4e4e;
+  --color-eva-panel: #0a0a0a;
+  --color-eva-purple: #9933ff;
+  --color-eva-magenta: #ff00ff;
+  --color-eva-lcd-green: #39ff14;
 
-  /* Semantic aliases */
   --color-bg-base: #000000;
-  --color-alert-red: #FF0000;
-  --color-text-orange: #FF9900;
-  --color-grid-green: #00FF00;
-  --color-data-blue: #00FFFF;
-  --color-magenta-wave: #FF00FF;
-  --color-lcd-green: #39FF14;
+  --color-alert-red: #ff2b1d;
+  --color-text-orange: #ff9900;
+  --color-grid-green: #00ff00;
+  --color-data-blue: #00f6ff;
+  --color-magenta-wave: #ff00ff;
+  --color-lcd-green: #39ff14;
 
-  /* Fonts */
-  --font-eva-display: "EVA-Display", "Oswald", "Impact", "Arial Narrow", system-ui, sans-serif;
+  --font-eva-display: "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-eva-mono: "Fira Code", "JetBrains Mono", "Courier New", monospace;
   --font-eva-body: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
-  --font-eva-title: "Noto Serif JP", "Playfair Display", "Georgia", "Times New Roman", serif;
+  --font-eva-title: "Noto Serif JP", "Playfair Display", "Georgia", serif;
+
+  --space-2: 0.125rem;
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+
+  --line-soft: rgba(255, 153, 0, 0.12);
+  --line-strong: rgba(255, 153, 0, 0.28);
+  --panel-edge: rgba(255, 153, 0, 0.16);
+  --panel-surface: rgba(10, 10, 10, 0.9);
 }
 
-/* Fonts loaded via <link> in layout.tsx */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-radius: 0 !important;
+  }
 
-/* ============================================
-   GLOBAL RESETS
-   ============================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  html {
+    background: #000000;
+    color: #ff9900;
+    font-family: var(--font-eva-body);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--color-eva-white);
+    background:
+      radial-gradient(circle at top center, rgba(255, 153, 0, 0.06), transparent 32%),
+      linear-gradient(180deg, #050505 0%, #000000 24%, #000000 100%);
+    letter-spacing: 0.02em;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+    background-image:
+      linear-gradient(rgba(255, 153, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 153, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.04) 2px,
+      rgba(0, 0, 0, 0.04) 4px
+    );
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  ::selection {
+    background: #ff9900;
+    color: #000000;
+  }
 }
 
-html {
-  background: #000000;
-  color: #FF9900;
-  font-family: var(--font-eva-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  background: #000000;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Force all angles to 0 — brutalist industrial */
-*,
-*::before,
-*::after {
-  border-radius: 0 !important;
-}
-
-/* ============================================
-   SCANLINE OVERLAY (Global CRT effect)
-   ============================================ */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.03) 2px,
-    rgba(0, 0, 0, 0.03) 4px
-  );
-}
-
-/* ============================================
-   SELECTION STYLES
-   ============================================ */
-::selection {
-  background: #FF9900;
-  color: #000000;
-}
-
-/* ============================================
-   SCROLLBAR — NERV STYLE
-   ============================================ */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
-  border-left: 1px solid #333333;
+  background: #0a0a0a;
+  border-left: 1px solid rgba(255, 153, 0, 0.08);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FF9900;
-  border: none;
+  background: rgba(255, 153, 0, 0.7);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF0000;
+  background: rgba(255, 43, 29, 0.88);
 }
 
-/* ============================================
-   HAZARD STRIPES — Reusable pattern
-   ============================================ */
 .hazard-stripes {
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
     transparent 10px,
-    #FF0000 10px,
-    #FF0000 20px
+    #ff2b1d 10px,
+    #ff2b1d 20px
   );
-  background-size: 28.28px 28.28px;
-  animation: hazard-scroll 0.5s linear infinite;
+  background-size: 28px 28px;
+  animation: hazard-scroll 0.65s linear infinite;
 }
 
 .hazard-stripes-black {
@@ -140,71 +149,536 @@ body::after {
     -45deg,
     #000000,
     #000000 10px,
-    #FF0000 10px,
-    #FF0000 20px
+    #ff2b1d 10px,
+    #ff2b1d 20px
   );
-  background-size: 28.28px 28.28px;
-  animation: hazard-scroll 0.5s linear infinite;
+  background-size: 28px 28px;
+  animation: hazard-scroll 0.65s linear infinite;
+}
+
+.eva-text-shadow-orange {
+  text-shadow: 0 0 4px rgba(255, 153, 0, 0.4);
+}
+
+.eva-text-shadow-red {
+  text-shadow: 0 0 4px rgba(255, 43, 29, 0.45);
+}
+
+.eva-text-shadow-green {
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.38);
+}
+
+.eva-text-shadow-cyan {
+  text-shadow: 0 0 4px rgba(0, 246, 255, 0.42);
+}
+
+.eva-border-glow-orange {
+  box-shadow: 0 0 0 1px rgba(255, 153, 0, 0.16), inset 0 0 0 1px rgba(255, 153, 0, 0.06);
+}
+
+.eva-border-glow-red {
+  box-shadow: 0 0 0 1px rgba(255, 43, 29, 0.18), inset 0 0 0 1px rgba(255, 43, 29, 0.06);
+}
+
+@layer components {
+  .camera-overlay-plate {
+    position: relative;
+    display: inline-flex;
+    max-width: 100%;
+    padding: 2px;
+    border: 1px solid var(--overlay-main, #ff9900);
+    border-radius: var(--overlay-radius, 0.6rem);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(8, 8, 8, 0.82)),
+      var(--overlay-surface, rgba(255, 153, 0, 0.08));
+    box-shadow:
+      0 0 0 1px var(--overlay-glow, rgba(255, 153, 0, 0.16)),
+      0 0 14px var(--overlay-glow, rgba(255, 153, 0, 0.16));
+  }
+
+  .camera-overlay-plate::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border: 1px solid var(--overlay-main-soft, rgba(255, 153, 0, 0.55));
+    border-radius: calc(var(--overlay-radius, 0.6rem) - 2px);
+    opacity: 0.96;
+    pointer-events: none;
+  }
+
+  .camera-overlay-plate__body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.34rem 0.56rem 0.42rem;
+  }
+
+  .camera-overlay-meta {
+    font-family: var(--font-eva-display);
+    font-size: 0.64rem;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--overlay-main, #ff9900);
+    opacity: 0.92;
+  }
+
+  .camera-overlay-title {
+    font-family: var(--font-eva-display);
+    font-size: clamp(1rem, 1.4vw, 1.6rem);
+    line-height: 0.9;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--overlay-main, #ff9900);
+    text-shadow: 0 0 12px var(--overlay-glow, rgba(255, 153, 0, 0.16));
+  }
+
+  .camera-overlay-detail {
+    font-family: var(--font-eva-mono);
+    font-size: 0.62rem;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--overlay-main, #ff9900);
+    opacity: 0.8;
+  }
+
+  .camera-overlay-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    font-family: var(--font-eva-display);
+    font-size: 0.88rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--overlay-main, #ff9900);
+    text-shadow: 0 0 8px var(--overlay-glow, rgba(255, 153, 0, 0.16));
+  }
+
+  .camera-overlay-live::before {
+    content: "";
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 999px;
+    background: var(--overlay-main, #ff9900);
+    box-shadow: 0 0 8px var(--overlay-glow, rgba(255, 153, 0, 0.16));
+  }
+
+  .camera-overlay-cross {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.6;
+  }
+
+  .camera-overlay-cross::before,
+  .camera-overlay-cross::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--overlay-main, #ff9900);
+    transform-origin: center;
+  }
+
+  .camera-overlay-cross::before {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .camera-overlay-cross::after {
+    transform: translateY(-50%) rotate(-45deg);
+  }
+}
+
+.nerv-page-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.nerv-page-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+  background:
+    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgba(255, 153, 0, 0.04) calc(100% - 1px)),
+    linear-gradient(180deg, transparent 0, transparent calc(100% - 1px), rgba(255, 153, 0, 0.04) calc(100% - 1px));
+  background-size: 96px 96px;
+}
+
+.nerv-page-frame {
+  width: min(100%, 1520px);
+  margin-inline: auto;
+  padding-inline: clamp(0.875rem, 1.6vw, 1.5rem);
+}
+
+.nerv-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  border-bottom: 1px solid var(--line-strong);
+  background:
+    linear-gradient(180deg, rgba(15, 15, 15, 0.96), rgba(6, 6, 6, 0.94)),
+    rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.nerv-panel {
+  position: relative;
+  border: 1px solid rgba(255, 153, 0, 0.14);
+  background:
+    linear-gradient(180deg, rgba(20, 20, 20, 0.9), rgba(4, 4, 4, 0.92)),
+    rgba(10, 10, 10, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.015),
+    0 0 0 1px rgba(255, 153, 0, 0.03);
+}
+
+.nerv-panel::before,
+.nerv-panel::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.18), transparent);
+}
+
+.nerv-panel::before {
+  top: 0;
+}
+
+.nerv-panel::after {
+  bottom: 0;
+}
+
+.nerv-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  border-left: 1px solid rgba(255, 153, 0, 0.4);
+  border-right: 1px solid rgba(255, 153, 0, 0.18);
+  background: rgba(0, 0, 0, 0.92);
+  color: var(--color-eva-orange);
+  font-family: var(--font-eva-display);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.nerv-section-label::before {
+  content: "";
+  width: 0.42rem;
+  height: 0.42rem;
+  background: currentColor;
+}
+
+.nerv-caption {
+  color: rgba(227, 221, 212, 0.44);
+  font-family: var(--font-eva-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nerv-microcopy {
+  color: rgba(227, 221, 212, 0.72);
+  font-family: var(--font-eva-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.nerv-data-label {
+  color: rgba(227, 221, 212, 0.38);
+  font-family: var(--font-eva-display);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.docs-main {
+  padding-top: 3.25rem;
+}
+
+.docs-content {
+  width: min(100%, 78rem);
+  margin-inline: auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.docs-mdx > h1 {
+  margin-bottom: 0.75rem;
+  color: var(--color-eva-orange);
+  font-family: var(--font-eva-display);
+  font-size: clamp(2.8rem, 4.2vw, 4.25rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.docs-mdx > h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-eva-orange);
+  font-family: var(--font-eva-display);
+  font-size: clamp(1.75rem, 2.4vw, 2.45rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.docs-mdx > h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-eva-green);
+  font-family: var(--font-eva-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.docs-mdx > p,
+.docs-mdx > ul,
+.docs-mdx > table {
+  max-width: 88ch;
+}
+
+.docs-mdx > p {
+  color: rgba(227, 221, 212, 0.78);
+  font-size: 0.8125rem;
+  line-height: 1.75rem;
+}
+
+.docs-mdx p code,
+.docs-mdx li code,
+.docs-mdx table code {
+  color: var(--color-eva-cyan);
+  font-family: var(--font-eva-mono);
+}
+
+.docs-mdx > ul {
+  margin-block: 1rem;
+  padding-left: 1.25rem;
+}
+
+.docs-mdx > ul > li {
+  color: rgba(227, 221, 212, 0.74);
+  font-size: 0.8125rem;
+}
+
+.docs-mdx > ul > li + li {
+  margin-top: 0.5rem;
+}
+
+.docs-mdx > table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.docs-mdx > table th {
+  border: 1px solid rgba(78, 78, 78, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.375rem 0.5rem;
+  color: var(--color-eva-orange);
+  font-family: var(--font-eva-display);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.docs-mdx > table td {
+  border: 1px solid rgba(78, 78, 78, 0.6);
+  padding: 0.375rem 0.5rem;
+  vertical-align: top;
+  color: rgba(227, 221, 212, 0.76);
+  font-size: 0.6875rem;
+}
+
+.docs-component-preview :where(h1, h2, h3, p, ul, li, table, th, td, code) {
+  max-width: none;
 }
 
 @keyframes hazard-scroll {
-  0% { background-position: 0 0; }
-  100% { background-position: 28.28px 0; }
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 28px 0;
+  }
 }
 
-/* ============================================
-   FLICKER / BLINK ANIMATIONS
-   ============================================ */
+@keyframes eva-banner-stripe-forward {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 36px 0;
+  }
+}
+
+@keyframes eva-banner-stripe-reverse {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -36px 0;
+  }
+}
+
+.eva-banner-stripe {
+  background-size: 36px 36px;
+  will-change: background-position;
+}
+
+.eva-banner-stripe-forward {
+  animation: eva-banner-stripe-forward 1.08s linear infinite;
+}
+
+.eva-banner-stripe-reverse {
+  animation: eva-banner-stripe-reverse 1.08s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eva-banner-stripe-forward,
+  .eva-banner-stripe-reverse {
+    animation: none;
+  }
+}
+
 @keyframes eva-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
-  52% { opacity: 0.4; }
-  54% { opacity: 0.9; }
-  56% { opacity: 0.3; }
-  58% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.88;
+  }
+
+  52% {
+    opacity: 0.45;
+  }
+
+  54% {
+    opacity: 0.94;
+  }
+
+  58% {
+    opacity: 1;
+  }
 }
 
 @keyframes eva-blink-hard {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes eva-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 @keyframes eva-glow {
-  0%, 100% {
-    text-shadow: 0 0 4px currentColor, 0 0 8px currentColor;
+  0%,
+  100% {
     filter: brightness(1);
   }
+
   50% {
-    text-shadow: 0 0 8px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
-    filter: brightness(1.2);
+    filter: brightness(1.18);
   }
 }
 
 @keyframes cursor-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes typewriter-cursor {
-  0%, 50% { border-color: currentColor; }
-  51%, 100% { border-color: transparent; }
+  0%,
+  50% {
+    border-color: currentColor;
+  }
+
+  51%,
+  100% {
+    border-color: transparent;
+  }
 }
 
 @keyframes data-scroll {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 
-/* ============================================
-   REDUCED MOTION — Accessibility
-   ============================================ */
+@media (min-width: 1024px) {
+  .docs-main {
+    padding-left: calc(var(--docs-sidebar-width, 19rem) + 1px);
+    padding-top: 0;
+  }
+
+  .docs-sidebar-shell {
+    width: var(--docs-sidebar-width, 19rem);
+  }
+
+  .docs-content {
+    padding: 2rem 2rem 4rem;
+  }
+
+  .docs-mdx > table {
+    table-layout: auto;
+  }
+
+  .docs-mdx > table td {
+    font-size: 0.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -212,69 +686,5 @@ body::after {
 
   body::after {
     display: none;
-  }
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-.eva-text-shadow-orange {
-  text-shadow: 0 0 4px #FF9900, 0 0 8px rgba(255, 153, 0, 0.3);
-}
-
-.eva-text-shadow-red {
-  text-shadow: 0 0 4px #FF0000, 0 0 8px rgba(255, 0, 0, 0.3);
-}
-
-.eva-text-shadow-green {
-  text-shadow: 0 0 4px #00FF00, 0 0 8px rgba(0, 255, 0, 0.3);
-}
-
-.eva-text-shadow-cyan {
-  text-shadow: 0 0 4px #00FFFF, 0 0 8px rgba(0, 255, 255, 0.3);
-}
-
-.eva-border-glow-orange {
-  box-shadow: 0 0 4px rgba(255, 153, 0, 0.3), inset 0 0 4px rgba(255, 153, 0, 0.1);
-}
-
-.eva-border-glow-red {
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4), inset 0 0 4px rgba(255, 0, 0, 0.1);
-}
-
-/* ============================================
-   DOCS LAYOUT — Sidebar offset
-   ============================================ */
-.docs-main {
-  padding-top: 3rem; /* h-12 mobile top bar */
-}
-
-.docs-content {
-  max-width: 56rem; /* max-w-4xl = 896px */
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem 1.5rem; /* py-8 px-6 */
-}
-
-@media (min-width: 640px) {
-  .docs-content {
-    padding: 3rem 2rem; /* sm:py-12 sm:px-8 */
-  }
-}
-
-/* Ensure form elements have padding (Tailwind 4 may not generate utilities) */
-input,
-textarea,
-select {
-  padding: 0.625rem 1rem; /* py-2.5 px-4 */
-}
-
-@media (min-width: 1024px) {
-  .docs-main {
-    padding-left: 18rem;
-    padding-top: 1.5rem;
-  }
-  .docs-content {
-    padding: 3rem 2.5rem; /* more breathing room on desktop */
   }
 }

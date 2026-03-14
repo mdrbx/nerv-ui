@@ -60,12 +60,13 @@ function MetadataField({ label, value }: { label: string; value: string }) {
 
 export default function ReportExample() {
   return (
-    <div className="min-h-screen bg-eva-black">
-      <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+    <div className="min-h-screen bg-eva-black nerv-page-shell">
+      <div className="nerv-page-frame max-w-5xl py-6 space-y-6">
         {/* Header */}
-        <div className="border-b border-eva-orange pb-4">
+        <div className="border-b border-eva-orange/24 pb-4">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
+              <span className="nerv-section-label mb-3">After Action</span>
               <h1
                 className="text-2xl uppercase tracking-[0.2em] text-eva-orange font-bold"
                 style={{ fontFamily: "var(--font-eva-display)" }}
@@ -98,14 +99,14 @@ export default function ReportExample() {
         </div>
 
         {/* Report Metadata */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-1">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="nerv-panel space-y-1 px-3 py-3">
             <MetadataField label="Report ID" value="AAR-2015-006" />
             <MetadataField label="Date" value="2015.06.12 — 04:32 JST" />
             <MetadataField label="Classification" value="LEVEL-4 RESTRICTED" />
             <MetadataField label="Authorizing Officer" value="KATSURAGI, M." />
           </div>
-          <div className="space-y-1">
+          <div className="nerv-panel space-y-1 px-3 py-3">
             <MetadataField label="Unit Deployed" value="EVA-01 TEST TYPE" />
             <MetadataField label="Pilot" value="IKARI, SHINJI" />
             <MetadataField label="Duration" value="00:12:47 (ACTIVE)" />
@@ -117,7 +118,7 @@ export default function ReportExample() {
         <Divider label="MISSION SUMMARY" color="cyan" />
 
         <Card title="OPERATION YASHIMA — TACTICAL SUMMARY">
-          <div className="p-4 space-y-4 font-mono text-sm text-eva-white/80 leading-relaxed">
+          <div className="px-1 py-1 space-y-4 font-mono text-sm text-eva-white/80 leading-relaxed">
             <p>
               At 23:45 JST, 5th Angel RAMIEL was confirmed stationary above the
               GeoFront access shaft, deploying a high-energy particle beam to
@@ -157,7 +158,7 @@ export default function ReportExample() {
           showIndex
         />
 
-        <div className="flex justify-end border-t border-eva-orange/40 pt-3">
+        <div className="flex justify-end border-t border-eva-orange/18 pt-3">
           <div className="flex items-baseline gap-4">
             <span
               className="text-[10px] uppercase tracking-[0.2em] text-eva-mid-gray font-bold"
@@ -177,7 +178,7 @@ export default function ReportExample() {
         {/* Damage Assessment */}
         <Divider label="DAMAGE ASSESSMENT" color="cyan" />
 
-        <div className="space-y-6">
+        <div className="space-y-5 nerv-panel px-3 py-4">
           <GradientStatusBar
             label="EVA-01 STRUCTURAL INTEGRITY"
             sublabel="POST-OPERATION STATUS — LEFT PYLON COMPROMISED"
@@ -198,7 +199,7 @@ export default function ReportExample() {
         {/* Authorization */}
         <Divider label="AUTHORIZATION" color="green" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col items-center gap-3">
             <div className="relative h-28 w-full overflow-hidden">
               <StatusStamp

@@ -3,7 +3,7 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Card
 
-Brutalist armour-plate card container with CSS `clip-path` corner cut. Used for grouping status displays, forms, and data readouts. Three variants: default (green tactical), alert (red emergency), and hud (translucent overlay with backdrop blur).
+Structural panel container for dense monitoring surfaces, plus a specialized rounded `video` variant for subject/video overlays. Use the angular variants for control-room chassis and the rounded one only when a surface should read like captured footage annotation.
 
 ```tsx
 import { Card } from "@mattloyed/eva-ui";
@@ -79,6 +79,39 @@ Translucent overlay with backdrop blur, no clip-path corner cut, ideal for HUD-s
   </Card>
 </ComponentPreview>
 
+## Video Variant
+
+Rounded double-line plate for camera feeds, subject callouts, and footage overlays. This is the card-side entry point into the camera-overlay grammar.
+
+<ComponentPreview
+  title="VIDEO"
+  code={`<div className="relative overflow-hidden border border-eva-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,#121212_0%,#000_100%)] p-5">
+  <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.06)_4px_8px)]" />
+  <div className="relative ml-auto max-w-sm">
+    <Card title="KAWORU NAGISA" variant="video" footer="CAMERA NO.012 LEFT">
+      <div className="space-y-1.5 text-[10px] uppercase tracking-[0.12em] text-eva-orange/80" style={{ fontFamily: "var(--font-eva-mono)" }}>
+        <div>Subject: Fifth C.</div>
+        <div>Harmonics Test Proceeding</div>
+        <div>Signal State: Live</div>
+      </div>
+    </Card>
+  </div>
+</div>`}
+>
+  <div className="relative overflow-hidden border border-eva-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,#121212_0%,#000_100%)] p-5">
+    <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.06)_4px_8px)]" />
+    <div className="relative ml-auto max-w-sm">
+      <Card title="KAWORU NAGISA" variant="video" footer="CAMERA NO.012 LEFT">
+        <div className="space-y-1.5 text-[10px] uppercase tracking-[0.12em] text-eva-orange/80" style={{ fontFamily: "var(--font-eva-mono)" }}>
+          <div>Subject: Fifth C.</div>
+          <div>Harmonics Test Proceeding</div>
+          <div>Signal State: Live</div>
+        </div>
+      </Card>
+    </div>
+  </div>
+</ComponentPreview>
+
 ## Without Title
 
 <ComponentPreview
@@ -103,12 +136,16 @@ Translucent overlay with backdrop blur, no clip-path corner cut, ideal for HUD-s
     { name: "title", type: "string", description: "Card header title (displayed uppercase)" },
     { name: "children", type: "ReactNode", description: "Main content", required: true },
     { name: "footer", type: "ReactNode", description: "Footer content" },
-    { name: "variant", type: '"default" | "alert" | "hud"', default: '"default"', description: "Visual variant — green border, red border + glow, or translucent HUD overlay with backdrop blur" },
-    { name: "cutSize", type: "number", default: "20", description: "Corner cut size in pixels" },
+    { name: "variant", type: '"default" | "alert" | "hud" | "video"', default: '"default"', description: "Visual variant — structural panel, alert panel, translucent HUD panel, or rounded video-overlay plate" },
+    { name: "cutSize", type: "number", default: "20", description: "Legacy compatibility prop retained for older usages; not promoted by the current visual system" },
     { name: "className", type: "string", default: '""', description: "Additional CSS classes" },
   ]}
 />
 
-<Callout type="info" title="ARMOUR PLATE DESIGN">
-  The top-right corner cut uses `clip-path: polygon(...)` to break the perfect rectangle, giving each card an armour-plate aesthetic inspired by NERV hardware panels.
+<Callout type="info" title="TWO FAMILIES">
+  `default`, `alert`, and `hud` are structural cards for panels and chassis. `video` is different on purpose: it belongs to the camera-overlay family and should be reserved for footage, subject lockups, and signal annotations.
+</Callout>
+
+<Callout type="warning" title="DO NOT ROUND THE WHOLE SYSTEM">
+  The rounded edges in the anime are localized to camera/video plaques. Keep navigation, shells, and standard monitoring cards angular; use `variant="video"` only where the UI should feel attached to an image feed.
 </Callout>

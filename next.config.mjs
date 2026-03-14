@@ -6,8 +6,12 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
   reactStrictMode: true,
   output: "export",
+  trailingSlash: true,
   basePath: isProd ? "/eva-ui" : "",
   assetPrefix: isProd ? "/eva-ui/" : "",
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
   },

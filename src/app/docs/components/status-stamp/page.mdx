@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 import { StatusStamp } from "@/components/StatusStamp";
 
@@ -9,6 +10,10 @@ Full-screen status stamp overlay inspired by the REFUSED, LOST, and VANISHED dis
   Based on the large rotated text stamps seen throughout the series when systems are rejected, signals are lost, or targets vanish from sensors.
 </Callout>
 
+<Callout type="info" title="CAMERA OVERLAY FAMILY">
+  The bordered variants of `StatusStamp` now use the same camera-overlay plaque language as `PatternAlert` and `PilotCard`. See <Link href="/docs/getting-started/camera-overlays">Camera Overlay Grammar</Link> for the distinction between these rounded alert plates and the base panel system.
+</Callout>
+
 ## Default (Single Stamp)
 
 <ComponentPreview>
@@ -16,6 +21,10 @@ Full-screen status stamp overlay inspired by the REFUSED, LOST, and VANISHED dis
     <StatusStamp text="REFUSED" rotation={-15} />
   </div>
 </ComponentPreview>
+
+## Overlay Intent
+
+The unbordered version still behaves like raw typographic alarm text. The bordered and double-bordered variants move into the camera-overlay family: softer rounded plates, layered outlines, and a more “captured signal” treatment than the rest of the UI.
 
 ## Bordered Variant
 
@@ -36,7 +45,7 @@ Full-screen status stamp overlay inspired by the REFUSED, LOST, and VANISHED dis
 ## Color Variants
 
 <ComponentPreview>
-  <div className="grid grid-cols-3 gap-2">
+  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
     <div className="relative bg-eva-black h-32 flex items-center justify-center overflow-hidden">
       <StatusStamp text="LOST" color="red" bordered rotation={-12} />
     </div>

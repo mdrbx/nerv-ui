@@ -24,11 +24,11 @@ import { Divider } from "@/components/Divider";
 
 // ─── Pilot sync data ───
 const pilots = [
-  { id: "EVA-00", pilot: "AYANAMI REI", sync: 68 },
+  { id: "EVA-00", pilot: "AYANAMI REI", sync: 82 },
   { id: "EVA-01", pilot: "IKARI SHINJI", sync: 41 },
   { id: "EVA-02", pilot: "SORYU ASUKA", sync: 92 },
-  { id: "EVA-03", pilot: "SUZUHARA TOJI", sync: 55 },
-  { id: "EVA-04", pilot: "NAGISA KAWORU", sync: 73 },
+  { id: "EVA-03", pilot: "SUZUHARA TOJI", sync: 46 },
+  { id: "EVA-04", pilot: "NAGISA KAWORU", sync: 86 },
 ];
 
 // ─── Operations log data (15 rows) ───
@@ -175,7 +175,8 @@ export default function NervCommandCenter() {
   }, [triggerMagiVote, randomSeverity]);
 
   // ─── Derived values ───
-  const borderColor = isEmergency ? "border-alert-red" : "border-grid-green";
+  const majorFrameBorder = isEmergency ? "border-alert-red" : "border-eva-orange/45";
+  const sectionDivider = isEmergency ? "border-alert-red/60" : "border-eva-mid-gray/70";
   const avgSync = Math.round(syncValues.reduce((a, b) => a + b, 0) / syncValues.length);
 
   return (
@@ -206,7 +207,7 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           HEADER — Compact command bar
           ═══════════════════════════════════════════ */}
-      <header className={`w-full border-b-2 ${borderColor} bg-bg-base`}>
+      <header className={`w-full border-b-2 ${majorFrameBorder} bg-bg-base`}>
         <div className="px-4 py-3 flex flex-col lg:flex-row items-center justify-between gap-3">
           {/* Left — Title */}
           <div className="text-center lg:text-left shrink-0">
@@ -254,21 +255,21 @@ export default function NervCommandCenter() {
           STATUS BAR — Thin info strip
           ═══════════════════════════════════════════ */}
       <div
-        className={`flex flex-col sm:flex-row items-center justify-between px-4 py-1.5 border-b ${borderColor} gap-2 ${
+        className={`flex flex-col sm:flex-row items-center justify-between px-4 py-1.5 border-b ${sectionDivider} gap-2 ${
           isEmergency ? "bg-eva-red/10" : "bg-eva-dark-gray"
         }`}
       >
         <div className="flex items-center gap-3">
           <div
-            className={`w-2 h-2 ${isEmergency ? "bg-eva-red animate-pulse" : "bg-eva-green"}`}
+            className={`w-2 h-2 ${isEmergency ? "bg-eva-red animate-pulse" : "bg-eva-orange"}`}
           />
           <span
             className={`text-xs uppercase tracking-[0.2em] font-bold ${
-              isEmergency ? "text-eva-red" : "text-eva-green"
+              isEmergency ? "text-eva-red" : "text-eva-orange"
             }`}
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
-            {isEmergency ? "CONDITION RED" : "ALL SYSTEMS NORMAL"}
+            {isEmergency ? "CONDITION RED" : "COMMAND GRID STABLE"}
           </span>
         </div>
         <div className="flex items-center gap-3 flex-wrap justify-center">
@@ -288,11 +289,11 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           ROW 1 — KPI Strip (6 metric cards)
           ═══════════════════════════════════════════ */}
-      <section className={`border-b ${borderColor} px-4 py-4`}>
+      <section className={`border-b ${sectionDivider} px-4 py-4`}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <KpiCard label="ACTIVE UNITS" value="4" color="text-eva-cyan" />
-          <KpiCard label="SYNC RATE" value={`${avgSync}%`} color="text-eva-green" />
-          <KpiCard label="THREAT LEVEL" value={isEmergency ? "HIGH" : "LOW"} color={isEmergency ? "text-eva-red" : "text-eva-green"} />
+          <KpiCard label="SYNC RATE" value={`${avgSync}%`} color="text-eva-orange" />
+          <KpiCard label="THREAT LEVEL" value={isEmergency ? "HIGH" : "LOW"} color={isEmergency ? "text-eva-red" : "text-eva-orange"} />
           <KpiCard label="POWER GRID" value="98%" color="text-eva-orange" />
           <KpiCard label="PERSONNEL" value="847" color="text-eva-cyan" />
           <KpiCard label="MAGI CONSENSUS" value="2/3" color="text-eva-magenta" />
@@ -302,9 +303,9 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           ROW 2 — Main Monitoring (3-column)
           ═══════════════════════════════════════════ */}
-      <main className={`grid grid-cols-1 lg:grid-cols-12 gap-0 border-b ${borderColor}`}>
+      <main className={`grid grid-cols-1 lg:grid-cols-12 gap-0 border-b ${majorFrameBorder}`}>
         {/* ─── LEFT (4 cols): Pilot Sync + Phase Status ─── */}
-        <div className={`col-span-full lg:col-span-4 lg:border-r ${borderColor} p-3 flex flex-col gap-4`}>
+        <div className={`col-span-full lg:col-span-4 lg:border-r ${sectionDivider} p-3 flex flex-col gap-4`}>
           <h3
             className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange"
             style={{ fontFamily: "var(--font-eva-display)" }}
@@ -345,9 +346,9 @@ export default function NervCommandCenter() {
         </div>
 
         {/* ─── CENTER (5 cols): Charts ─── */}
-        <div className={`col-span-full lg:col-span-5 lg:border-r ${borderColor} flex flex-col`}>
+        <div className={`col-span-full lg:col-span-5 lg:border-r ${sectionDivider} flex flex-col`}>
           {/* Sync Ratio Chart */}
-          <div className={`border-b ${borderColor} flex flex-col min-h-[200px] lg:min-h-[280px]`}>
+          <div className={`border-b ${sectionDivider} flex flex-col min-h-[200px] lg:min-h-[280px]`}>
             <div className="flex items-center justify-between px-4 py-1.5 bg-eva-dark-gray border-b border-eva-mid-gray/30">
               <span
                 className="text-xs uppercase tracking-[0.2em] font-bold text-eva-orange"
@@ -372,7 +373,7 @@ export default function NervCommandCenter() {
           </div>
 
           {/* BarChart — Unit Deployment */}
-          <div className={`border-b ${borderColor} p-3 min-h-[200px] lg:min-h-[280px]`}>
+          <div className={`border-b ${sectionDivider} p-3 min-h-[200px] lg:min-h-[280px]`}>
             <BarChart
               bars={[
                 { label: "EVA-00", value: syncValues[0] },
@@ -382,7 +383,7 @@ export default function NervCommandCenter() {
                 { label: "EVA-04", value: syncValues[4] },
               ]}
               maxValue={100}
-              color="green"
+              color="orange"
               title="UNIT DEPLOYMENT STATUS"
               showGrid
               showValues
@@ -423,7 +424,7 @@ export default function NervCommandCenter() {
               value={avgSync}
               label="SYNC"
               unit="%"
-              color="cyan"
+              color="orange"
               size={120}
               showTicks
               threshold={85}
@@ -432,10 +433,9 @@ export default function NervCommandCenter() {
               value={98}
               label="POWER"
               unit="%"
-              color="green"
+              color="cyan"
               size={120}
               showTicks
-              threshold={90}
             />
             <Gauge
               value={isEmergency ? 42 : 95}
@@ -444,7 +444,6 @@ export default function NervCommandCenter() {
               color={isEmergency ? "red" : "orange"}
               size={120}
               showTicks
-              threshold={50}
             />
           </div>
 
@@ -463,7 +462,7 @@ export default function NervCommandCenter() {
             donut
             showLegend
             showLabels
-            color="mixed"
+            color="orange"
           />
         </div>
       </main>
@@ -471,10 +470,10 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           ROW 3 — Extended Display (2 columns)
           ═══════════════════════════════════════════ */}
-      <section className={`border-b ${borderColor}`}>
+      <section className={`border-b ${majorFrameBorder}`}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
           {/* Left — DataGrid with 15 rows */}
-          <div className={`col-span-full lg:col-span-7 lg:border-r ${borderColor}`}>
+          <div className={`col-span-full lg:col-span-7 lg:border-r ${sectionDivider}`}>
             <DataGrid
               columns={[
                 { key: "time", header: "TIMESTAMP", width: "130px", sortable: true },
@@ -496,7 +495,7 @@ export default function NervCommandCenter() {
           <div className="col-span-full lg:col-span-5 flex flex-col">
             <MagiSystemPanel votes={magiVotes} className="flex-1" />
 
-            <div className={`border-t ${borderColor} p-3`}>
+            <div className={`border-t ${sectionDivider} p-3`}>
               <PatternAlert
                 designation="3rd ANGEL"
                 pattern="PATTERN"
@@ -519,7 +518,7 @@ export default function NervCommandCenter() {
       {/* ═══════════════════════════════════════════
           ROW 4 — Component Showcase
           ═══════════════════════════════════════════ */}
-      <section className={`border-b ${borderColor}`}>
+      <section className={`border-b ${majorFrameBorder}`}>
         <TargetingContainer label="COMPONENT SHOWCASE" color="orange">
           <div className="p-4 sm:p-6 space-y-6">
             {/* Category badges */}
@@ -558,7 +557,7 @@ export default function NervCommandCenter() {
           FOOTER
           ═══════════════════════════════════════════ */}
       <footer
-        className={`px-4 py-3 border-t-2 ${borderColor} ${
+        className={`px-4 py-3 border-t-2 ${majorFrameBorder} ${
           isEmergency ? "bg-eva-red/5" : "bg-eva-dark-gray"
         } flex flex-col gap-3 text-xs font-mono text-eva-mid-gray`}
       >
@@ -599,7 +598,7 @@ export default function NervCommandCenter() {
 // ─── KPI Card helper component ───
 function KpiCard({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <Card variant="hud">
+    <Card variant="hud" className="border-eva-mid-gray/70">
       <div className="text-center py-2 px-1">
         <div className={`text-xl sm:text-2xl font-black font-mono ${color}`}>{value}</div>
         <div

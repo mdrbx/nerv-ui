@@ -1,7 +1,8 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, type CSSProperties } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CameraOverlayPlate } from "@/components/_internal/CameraOverlayPlate";
 
 type MotionSafeHTMLAttributes = Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -31,36 +32,46 @@ export interface PatternAlertProps extends MotionSafeHTMLAttributes {
 }
 
 const colorMap = {
-  orange: { main: "#FF9900", glow: "rgba(255, 153, 0, 0.3)", dim: "rgba(255, 153, 0, 0.15)" },
-  red: { main: "#FF0000", glow: "rgba(255, 0, 0, 0.3)", dim: "rgba(255, 0, 0, 0.15)" },
-  cyan: { main: "#00FFFF", glow: "rgba(0, 255, 255, 0.3)", dim: "rgba(0, 255, 255, 0.15)" },
-  green: { main: "#00FF00", glow: "rgba(0, 255, 0, 0.3)", dim: "rgba(0, 255, 0, 0.15)" },
-};
+  orange: { main: "#FF9900", glow: "rgba(255, 153, 0, 0.2)", dim: "rgba(255, 153, 0, 0.14)" },
+  red: { main: "#FF2B1D", glow: "rgba(255, 43, 29, 0.18)", dim: "rgba(255, 43, 29, 0.14)" },
+  cyan: { main: "#00F6FF", glow: "rgba(0, 246, 255, 0.18)", dim: "rgba(0, 246, 255, 0.14)" },
+  green: { main: "#00FF00", glow: "rgba(0, 255, 0, 0.18)", dim: "rgba(0, 255, 0, 0.14)" },
+} as const;
 
 const bloodTypeColors: Record<string, string> = {
-  BLUE: "#4488FF",
+  BLUE: "#5DA2FF",
   ORANGE: "#FF9900",
-  RED: "#FF0000",
+  RED: "#FF2B1D",
   GREEN: "#00FF00",
-  UNKNOWN: "#999999",
+  UNKNOWN: "#9A9A9A",
 };
 
-export const PatternAlert = forwardRef<HTMLDivElement, PatternAlertProps>(function PatternAlert({
-  designation,
-  pattern = "PATTERN",
-  bloodType = "BLUE",
-  visible = true,
-  scaleRange = 3,
-  unit = "10⁻⁶m",
-  subtitle,
-  color = "orange",
-  animated = true,
-  className = "",
-  ...rest
-}, ref) {
-  const colors = colorMap[color];
-  const btColor = bloodTypeColors[bloodType] || bloodTypeColors.UNKNOWN;
-  const scaleMarks = Array.from({ length: scaleRange * 2 + 1 }, (_, i) => i - scaleRange);
+export const PatternAlert = forwardRef<HTMLDivElement, PatternAlertProps>(function PatternAlert(
+  {
+    designation,
+    pattern = "PATTERN",
+    bloodType = "BLUE",
+    visible = true,
+    scaleRange = 3,
+    unit = "MAGNIFICATION : x05",
+    subtitle,
+    color = "orange",
+    animated = true,
+    className = "",
+    ...rest
+  },
+  ref
+) {
+  const theme = colorMap[color];
+  const bloodColor = bloodTypeColors[bloodType] || bloodTypeColors.UNKNOWN;
+  const scaleMarks = Array.from({ length: scaleRange * 2 + 1 }, (_, index) => index - scaleRange);
+  const overlayMainStyle = {
+    "--overlay-main": theme.main,
+  } as CSSProperties;
+  const overlayLiveStyle = {
+    "--overlay-main": theme.main,
+    "--overlay-glow": theme.glow,
+  } as CSSProperties;
 
   return (
     <AnimatePresence>
@@ -68,157 +79,90 @@ export const PatternAlert = forwardRef<HTMLDivElement, PatternAlertProps>(functi
         <motion.div
           ref={ref}
           {...rest}
-          className={`relative bg-eva-black overflow-hidden ${className}`}
-          initial={{ opacity: 0, scaleY: 0.8 }}
-          animate={{ opacity: 1, scaleY: 1 }}
-          exit={{ opacity: 0, scaleY: 0.8 }}
-          transition={{ duration: 0.3 }}
+          className={`relative overflow-hidden bg-black ${className}`}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           style={{
-            border: `1px solid ${colors.dim}`,
-            minHeight: "140px",
+            minHeight: "188px",
+            border: `1px solid ${theme.dim}`,
+            boxShadow: `inset 0 0 0 1px ${theme.dim}, 0 0 20px ${theme.glow}`,
           }}
         >
-          {/* Scanline overlay */}
           {animated && (
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 6px)",
+                  "repeating-linear-gradient(180deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px)",
               }}
             />
           )}
 
-          {/* Top scale bar */}
-          <div
-            className="flex items-end justify-center gap-0 px-4 pt-3"
-            style={{ borderBottom: `1px solid ${colors.dim}` }}
-          >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_45%)]" />
+          <div className="absolute left-4 right-4 top-4 h-px bg-white/12" />
+          <div className="absolute left-4 right-4 bottom-4 h-px bg-white/12" />
+          <div className="absolute left-[24%] top-[34%] h-px w-[52%] bg-white/10" />
+          <div className="absolute top-[24%] bottom-[24%] left-1/2 w-px -translate-x-1/2 bg-white/8" />
+
+          <div className="camera-overlay-cross left-[14%] top-[30%]" style={overlayMainStyle} />
+          <div className="camera-overlay-cross right-[16%] bottom-[28%]" style={overlayMainStyle} />
+
+          <div className="absolute left-3 top-3 max-w-[16rem] sm:left-4 sm:top-4">
+            <CameraOverlayPlate color={color}>
+              <div className="camera-overlay-meta">{pattern}</div>
+              <div
+                className="camera-overlay-title"
+                style={{ fontSize: "clamp(0.92rem, 1.25vw, 1.28rem)" }}
+              >
+                blood type <span style={{ color: bloodColor }}>{bloodType}</span>
+              </div>
+              <div className="camera-overlay-detail">pattern analysis locked</div>
+            </CameraOverlayPlate>
+          </div>
+
+          <div className="absolute right-3 top-3 flex flex-col items-end gap-2 sm:right-4 sm:top-4">
+            <div
+              className="text-[10px] uppercase tracking-[0.16em] text-eva-white/42"
+              style={{ fontFamily: "var(--font-eva-mono)" }}
+            >
+              {unit}
+            </div>
+            <span
+              className="camera-overlay-live"
+              style={overlayLiveStyle}
+            >
+              live
+            </span>
+          </div>
+
+          <div className="absolute left-4 right-4 top-[42%] hidden sm:grid sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
             {scaleMarks.map((mark) => (
-              <div key={mark} className="flex flex-col items-center" style={{ flex: 1 }}>
+              <div key={`top-${mark}`} className="flex flex-col items-center">
+                <div className="h-2 w-px" style={{ backgroundColor: theme.main, opacity: mark === 0 ? 0.9 : 0.36 }} />
                 <span
-                  className="text-[10px] font-mono mb-1"
-                  style={{ color: colors.main, opacity: mark === 0 ? 1 : 0.5 }}
-                >
-                  {mark > 0 ? `+${mark}` : String(mark)}
-                </span>
-                <div
+                  className="mt-1 text-[9px] uppercase tracking-[0.06em]"
                   style={{
-                    width: "1px",
-                    height: mark === 0 ? "12px" : "8px",
-                    backgroundColor: colors.main,
-                    opacity: mark === 0 ? 0.8 : 0.3,
+                    color: theme.main,
+                    opacity: mark === 0 ? 1 : 0.6,
+                    fontFamily: "var(--font-eva-mono)",
                   }}
-                />
+                >
+                  {mark > 0 ? `+${mark}` : `${mark}`}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Main content area */}
-          <div className="px-4 py-4 flex items-start justify-between">
-            {/* Left: Tick marks */}
-            <div className="flex flex-col gap-3 mr-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: "12px",
-                    height: "3px",
-                    backgroundColor: colors.main,
-                    opacity: 0.6,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Center: Designation + Pattern */}
-            <div className="flex-1">
-              <motion.div
-                className="flex items-center gap-3 mb-2"
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.15 }}
-              >
-                {/* Designation badge */}
-                <div
-                  className="px-3 py-1.5"
-                  style={{
-                    border: `2px solid ${colors.main}`,
-                    backgroundColor: colors.dim,
-                  }}
-                >
-                  <span
-                    className="text-lg font-bold uppercase tracking-wider whitespace-nowrap"
-                    style={{
-                      fontFamily: "var(--font-eva-display)",
-                      color: colors.main,
-                      textShadow: `0 0 8px ${colors.glow}`,
-                    }}
-                  >
-                    {designation}
-                  </span>
-                </div>
-
-                {/* Pattern text */}
-                <span
-                  className="text-sm font-bold uppercase tracking-[0.15em]"
-                  style={{
-                    fontFamily: "var(--font-eva-display)",
-                    color: colors.main,
-                  }}
-                >
-                  {pattern} : BLOOD TYPE{" "}
-                  <span style={{ color: btColor }}>{bloodType}</span>
-                </span>
-              </motion.div>
-
-              {subtitle && (
-                <motion.div
-                  className="text-[10px] font-mono uppercase tracking-wider mt-2"
-                  style={{ color: colors.main, opacity: 0.5 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.5 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {subtitle}
-                </motion.div>
-              )}
-            </div>
-
-            {/* Right: Unit label */}
-            <div className="text-right">
-              <span
-                className="text-sm font-mono"
-                style={{ color: colors.main, opacity: 0.6 }}
-              >
-                {unit}
-              </span>
-            </div>
-          </div>
-
-          {/* Bottom scale bar (mirror of top) */}
-          <div
-            className="flex items-start justify-center gap-0 px-4 pb-3"
-            style={{ borderTop: `1px solid ${colors.dim}` }}
-          >
-            {scaleMarks.map((mark) => (
-              <div key={mark} className="flex flex-col items-center" style={{ flex: 1 }}>
-                <div
-                  style={{
-                    width: "1px",
-                    height: mark === 0 ? "12px" : "8px",
-                    backgroundColor: colors.main,
-                    opacity: mark === 0 ? 0.8 : 0.3,
-                  }}
-                />
-                <span
-                  className="text-[10px] font-mono mt-1"
-                  style={{ color: colors.main, opacity: mark === 0 ? 1 : 0.5 }}
-                >
-                  {mark > 0 ? `+${mark}` : String(mark)}
-                </span>
+          <div className="absolute bottom-3 right-3 max-w-[82%] sm:bottom-4 sm:right-4 sm:max-w-[68%]">
+            <CameraOverlayPlate color={color} className="ml-auto">
+              <div className="camera-overlay-meta text-right">subject</div>
+              <div className="camera-overlay-title text-right">{designation}</div>
+              <div className="camera-overlay-detail text-right">
+                {subtitle ?? "camera no.012 left // signal held"}
               </div>
-            ))}
+            </CameraOverlayPlate>
           </div>
         </motion.div>
       )}

@@ -3,7 +3,7 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Title Screen
 
-Cinematic title card with serif typography and staggered motion animation. Three alignment modes for different visual effects. Inspired by the iconic episode title cards from the anime.
+Stark title card component for the EVA side of the visual language. It uses sparse framing, serif-led typography, and restrained motion so it reads like an anime title card rather than a NERV HUD panel.
 
 ```tsx
 import { TitleScreen } from "@mattloyed/eva-ui";
@@ -90,5 +90,9 @@ import { TitleScreen } from "@mattloyed/eva-ui";
 />
 
 <Callout type="info" title="ALIGNMENT MODES">
-  **center** — Title and subtitle stacked vertically, centered. **split** — Title top-left, subtitle bottom-right (cinematic). **random** — Characters scattered with deterministic offsets.
+  **center** — Formal stacked title card. **split** — Episode-card layout with top-left lead and bottom-right dominant title. **random** — Controlled staggered assembly, still typographic rather than HUD-like.
+</Callout>
+
+<Callout type="warning" title="NOT A CONTROL-ROOM PANEL">
+  `TitleScreen` is one of the few EvaUI components that should lean toward EVA’s ceremonial title-card language instead of the stricter NERV monitoring grammar.
 </Callout>

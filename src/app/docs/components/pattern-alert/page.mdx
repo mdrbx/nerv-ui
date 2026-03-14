@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 import { PatternAlert } from "@/components/PatternAlert";
 
@@ -9,6 +10,10 @@ Angel detection alert display inspired by the NERV target classification system.
   Based on the Angel detection displays showing "11th ANGEL", "PATTERN: BLOOD TYPE BLUE" with scale markings used during target analysis sequences.
 </Callout>
 
+<Callout type="info" title="CAMERA OVERLAY FAMILY">
+  `PatternAlert` is one of the clearest camera-overlay components in EvaUI. It combines rounded subject plates, metadata rails, and signal-feed markers documented in <Link href="/docs/getting-started/camera-overlays">Camera Overlay Grammar</Link>.
+</Callout>
+
 ## Default Alert
 
 <ComponentPreview>
@@ -16,6 +21,10 @@ Angel detection alert display inspired by the NERV target classification system.
     <PatternAlert designation="3rd ANGEL" />
   </div>
 </ComponentPreview>
+
+## Overlay Intent
+
+The outer field still reads like a monitoring surface, but the important labels should feel captured from a tactical feed, not placed inside a standard card. The subject plaque, blood-type label, live cue, and crosshair marks all belong to that overlay grammar.
 
 ## Blood Type Classifications
 

@@ -1,0 +1,92 @@
+import Link from "next/link";
+import { Callout, ComponentPreview } from "@/components/docs";
+import { Card } from "@/components/Card";
+import { EmergencyBanner } from "@/components/EmergencyBanner";
+
+# Visual Grammar
+
+This page defines the core visual families of EvaUI so component choices stay coherent. The library should not collapse every screen into one generic “cyber dashboard” language.
+
+<Callout type="info" title="FOUR DISTINCT FAMILIES">
+  EvaUI currently operates across four major families: structural panels, camera overlays, emergency broadcast, and EVA title cards. A screen can mix them, but one family should clearly dominate.
+</Callout>
+
+## 1. Structural Panels
+
+Use angular panels for command rooms, data chassis, navigation, logs, forms, and monitoring surfaces. This is the default NERV control-room language.
+
+- Prefer `<Card />`, `hud`, and other rigid primitives for shells and data grouping.
+- Keep borders thin, segmented, and dry.
+- Avoid rounded edges here.
+
+<ComponentPreview title="STRUCTURAL PANEL">
+  <div className="max-w-sm">
+    <Card title="MAGI STATUS">
+      <div className="space-y-1 text-xs text-eva-white/80" style={{ fontFamily: "var(--font-eva-mono)" }}>
+        <div>MELCHIOR 1 // ONLINE</div>
+        <div>BALTHASAR 2 // ONLINE</div>
+        <div>CASPER 3 // COMPUTING</div>
+      </div>
+    </Card>
+  </div>
+</ComponentPreview>
+
+## 2. Camera Overlays
+
+Use rounded plaques only when a component should feel attached to a signal feed, portrait capture, targeting frame, or live camera overlay.
+
+- Prefer <Link href="/docs/components/card">`<Card variant="video" />`</Link>, <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
+- Rounded corners belong to the plaque, not the page shell.
+- Titles should feel like broadcast annotation, not panel headers.
+
+<ComponentPreview title="CAMERA OVERLAY">
+  <div className="relative overflow-hidden border border-eva-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),transparent_35%),linear-gradient(180deg,#181818_0%,#020202_100%)] p-5">
+    <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.05)_4px_8px)]" />
+    <div className="relative ml-auto max-w-sm">
+      <Card title="TEST PLUG-02" variant="video" footer="HARMONICS TEST PROCEEDING">
+        <div className="space-y-1 text-[10px] uppercase tracking-[0.12em] text-eva-orange/80" style={{ fontFamily: "var(--font-eva-mono)" }}>
+          <div>Subject: Fifth C.</div>
+          <div>Signal State: Live</div>
+        </div>
+      </Card>
+    </div>
+  </div>
+</ComponentPreview>
+
+## 3. Emergency Broadcast
+
+Use the broadcast family for whole-screen interruptions, warnings, launch conditions, and command states that should dominate the display.
+
+- Prefer <Link href="/docs/components/emergency-banner">Emergency Banner</Link>.
+- Let the typography carry the impact.
+- Use hazard chevrons sparingly and symmetrically.
+
+<ComponentPreview title="BROADCAST">
+  <EmergencyBanner text="ALERT" severity="emergency" visible subtext="ALL PERSONNEL TO BATTLE STATIONS" />
+</ComponentPreview>
+
+## 4. EVA Title Cards
+
+Use this family for ceremonial, narrative, chapter-like, or title-card moments. This is not the same thing as a control-room panel.
+
+- Prefer <Link href="/docs/components/title-screen">Title Screen</Link>.
+- Serif display is acceptable here.
+- Keep the chrome almost absent.
+
+## Screen Archetypes
+
+- Command center: mostly structural panels, with emergency broadcast only when needed.
+- Live camera feed: structural shell plus one or two camera overlays.
+- Alert takeover: emergency broadcast dominates and suppresses other languages.
+- Episode/title view: title-card family dominates almost alone.
+
+<Callout type="warning" title="ANTI-PATTERN">
+  Do not round cards, use serif typography, and add chevrons everywhere on the same screen. That creates a synthetic “EVA-inspired” mix instead of a readable system.
+</Callout>
+
+## Quick Rules
+
+- If it belongs to the chassis, keep it angular.
+- If it belongs to the footage, it can round.
+- If it must interrupt everything, use the broadcast family.
+- If it feels ceremonial or narrative, use the title-card family.

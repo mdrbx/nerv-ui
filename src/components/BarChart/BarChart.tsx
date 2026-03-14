@@ -38,188 +38,174 @@ export interface BarChartProps {
 }
 
 const colorMap = {
-  cyan: { bar: "#00FFFF", glow: "rgba(0,255,255,0.3)", text: "text-eva-cyan", grid: "rgba(0,255,255,0.08)" },
-  green: { bar: "#00FF00", glow: "rgba(0,255,0,0.3)", text: "text-eva-green", grid: "rgba(0,255,0,0.08)" },
-  orange: { bar: "#FF9900", glow: "rgba(255,153,0,0.3)", text: "text-eva-orange", grid: "rgba(255,153,0,0.08)" },
-  red: { bar: "#FF0000", glow: "rgba(255,0,0,0.3)", text: "text-eva-red", grid: "rgba(255,0,0,0.08)" },
-  magenta: { bar: "#FF00FF", glow: "rgba(255,0,255,0.3)", text: "text-eva-magenta", grid: "rgba(255,0,255,0.08)" },
-};
+  cyan: { bar: "#00FFFF", text: "text-eva-cyan", grid: "rgba(0,255,255,0.12)", lane: "rgba(0,255,255,0.06)" },
+  green: { bar: "#00FF00", text: "text-eva-green", grid: "rgba(0,255,0,0.12)", lane: "rgba(0,255,0,0.06)" },
+  orange: { bar: "#FF9900", text: "text-eva-orange", grid: "rgba(255,153,0,0.12)", lane: "rgba(255,153,0,0.06)" },
+  red: { bar: "#FF0000", text: "text-eva-red", grid: "rgba(255,0,0,0.12)", lane: "rgba(255,0,0,0.06)" },
+  magenta: { bar: "#FF00FF", text: "text-eva-magenta", grid: "rgba(255,0,255,0.12)", lane: "rgba(255,0,255,0.06)" },
+} as const;
 
 export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
-  function BarChart({
-    bars,
-    maxValue,
-    color = "cyan",
-    title,
-    showGrid = true,
-    showValues = true,
-    direction = "vertical",
-    stagger = 0.08,
-    height = 200,
-    unit = "",
-    segmented = false,
-    className = "",
-  }, ref) {
-  const c = colorMap[color];
-  const max = maxValue ?? Math.max(...bars.map((b) => b.value), 1);
-  const gridLines = 4;
+  function BarChart(
+    {
+      bars,
+      maxValue,
+      color = "cyan",
+      title,
+      showGrid = true,
+      showValues = true,
+      direction = "vertical",
+      stagger = 0.08,
+      height = 200,
+      unit = "",
+      segmented = true,
+      className = "",
+    },
+    ref
+  ) {
+    const c = colorMap[color];
+    const max = maxValue ?? Math.max(1, ...bars.map((bar) => bar.value));
+    const gridLines = 4;
 
-  if (direction === "horizontal") {
+    if (direction === "horizontal") {
+      return (
+        <div ref={ref} className={`font-mono ${className}`}>
+          {title && (
+            <div
+              className={`mb-2 border-b border-current/25 pb-1 text-[10px] uppercase tracking-[0.22em] font-bold ${c.text}`}
+              style={{ fontFamily: "var(--font-eva-display)" }}
+            >
+              {title}
+            </div>
+          )}
+          <div className="space-y-1.5">
+            {bars.map((bar, index) => {
+              const pct = Math.min((bar.value / max) * 100, 100);
+              const barColor = bar.color || c.bar;
+              return (
+                <div key={bar.label} className="grid grid-cols-[78px_minmax(0,1fr)_44px] items-center gap-2">
+                  <div className="truncate text-[9px] uppercase tracking-[0.15em] text-eva-white/58">
+                    {bar.label}
+                  </div>
+                  <div
+                    className="relative h-4 overflow-hidden border border-white/10 bg-black/70"
+                    style={{ borderColor: `${barColor}30` }}
+                  >
+                    <div className="absolute inset-0" style={{ backgroundColor: c.lane }} />
+                    {showGrid &&
+                      Array.from({ length: gridLines }).map((_, gridIndex) => (
+                        <div
+                          key={gridIndex}
+                          className="absolute top-0 bottom-0 w-px"
+                          style={{
+                            left: `${((gridIndex + 1) / (gridLines + 1)) * 100}%`,
+                            backgroundColor: c.grid,
+                          }}
+                        />
+                      ))}
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${pct}%` }}
+                      transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
+                      className="relative h-full"
+                      style={{
+                        ...(segmented
+                          ? {
+                              backgroundColor: "transparent",
+                              background: `repeating-linear-gradient(90deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
+                            }
+                          : { backgroundColor: barColor }),
+                        borderRight: `1px solid ${barColor}`,
+                      }}
+                    />
+                  </div>
+                  {showValues && (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * stagger + 0.4 }}
+                      className={`w-11 text-right text-[9px] ${c.text} tabular-nums`}
+                    >
+                      {bar.value}
+                      {unit}
+                    </motion.span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div ref={ref} className={`font-mono ${className}`}>
         {title && (
           <div
-            className={`text-xs uppercase tracking-[0.2em] font-bold ${c.text} mb-3 border-b border-current/20 pb-1`}
+            className={`mb-2 border-b border-current/25 pb-1 text-[10px] uppercase tracking-[0.22em] font-bold ${c.text}`}
             style={{ fontFamily: "var(--font-eva-display)" }}
           >
-            ■ {title}
+            {title}
           </div>
         )}
-        <div className="space-y-2">
-          {bars.map((bar, i) => {
-            const pct = Math.min((bar.value / max) * 100, 100);
-            const barColor = bar.color || c.bar;
-            return (
-              <div key={bar.label} className="flex items-center gap-3">
-                <div className="w-24 text-[10px] text-eva-white/60 text-right truncate shrink-0">
-                  {bar.label}
+        <div className="relative border border-white/10 bg-black/65 px-2 pb-5 pt-2" style={{ height }}>
+          {showGrid &&
+            Array.from({ length: gridLines }).map((_, gridIndex) => {
+              const y = ((gridIndex + 1) / (gridLines + 1)) * 100;
+              const gridVal = Math.round(max - (max * (gridIndex + 1)) / (gridLines + 1));
+              return (
+                <div key={gridIndex} className="absolute left-0 right-0" style={{ top: `${y}%` }}>
+                  <div className="h-px w-full" style={{ backgroundColor: c.grid }} />
+                  <span className="absolute -left-1 -top-2 -translate-x-full pr-1 text-[8px] text-eva-white/28">
+                    {gridVal}
+                  </span>
                 </div>
-                <div className="flex-1 h-5 bg-eva-dark-gray/50 relative overflow-hidden">
-                  {showGrid &&
-                    Array.from({ length: gridLines }).map((_, gi) => (
-                      <div
-                        key={gi}
-                        className="absolute top-0 bottom-0 w-px"
-                        style={{
-                          left: `${((gi + 1) / (gridLines + 1)) * 100}%`,
-                          backgroundColor: c.grid,
-                        }}
-                      />
-                    ))}
+              );
+            })}
+
+          <div className="flex h-full items-end gap-1.5 pl-6">
+            {bars.map((bar, index) => {
+              const pct = Math.min((bar.value / max) * 100, 100);
+              const barColor = bar.color || c.bar;
+              return (
+                <div key={bar.label} className="flex h-full flex-1 flex-col items-center justify-end">
+                  {showValues && (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * stagger + 0.4 }}
+                      className={`mb-1 text-[8px] ${c.text} tabular-nums`}
+                    >
+                      {bar.value}
+                      {unit}
+                    </motion.span>
+                  )}
                   <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${pct}%` }}
-                    transition={{ duration: 0.6, delay: i * stagger, ease: "easeOut" }}
-                    className="h-full relative"
+                    initial={{ height: 0 }}
+                    animate={{ height: `${pct}%` }}
+                    transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
+                    className="relative min-w-[8px] w-full border border-white/10 bg-black/35"
                     style={{
                       ...(segmented
                         ? {
                             backgroundColor: "transparent",
-                            background: `repeating-linear-gradient(90deg, ${barColor} 0px, ${barColor} 6px, transparent 6px, transparent 8px)`,
+                            background: `repeating-linear-gradient(0deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
                           }
                         : { backgroundColor: barColor }),
-                      boxShadow: `0 0 8px ${bar.color ? barColor + "50" : c.glow}`,
+                      borderColor: `${barColor}40`,
                     }}
-                  >
-                    {/* Scanline overlay */}
-                    {!segmented && (
-                      <div
-                        className="absolute inset-0 opacity-20"
-                        style={{
-                          background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
-                        }}
-                      />
-                    )}
-                  </motion.div>
+                  />
+                  <div className="mt-1 w-full truncate text-center text-[8px] uppercase tracking-[0.1em] text-eva-white/50">
+                    {bar.label}
+                  </div>
                 </div>
-                {showValues && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: i * stagger + 0.4 }}
-                    className={`text-[10px] ${c.text} w-12 tabular-nums`}
-                  >
-                    {bar.value}{unit}
-                  </motion.span>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          <div className="absolute bottom-4 left-6 right-2 h-px" style={{ backgroundColor: `${c.bar}40` }} />
         </div>
       </div>
     );
   }
-
-  // Vertical bars
-  return (
-    <div ref={ref} className={`font-mono ${className}`}>
-      {title && (
-        <div
-          className={`text-xs uppercase tracking-[0.2em] font-bold ${c.text} mb-3 border-b border-current/20 pb-1`}
-          style={{ fontFamily: "var(--font-eva-display)" }}
-        >
-          ■ {title}
-        </div>
-      )}
-      <div className="relative" style={{ height }}>
-        {/* Grid lines */}
-        {showGrid &&
-          Array.from({ length: gridLines }).map((_, gi) => {
-            const y = ((gi + 1) / (gridLines + 1)) * 100;
-            const gridVal = Math.round(max - (max * (gi + 1)) / (gridLines + 1));
-            return (
-              <div key={gi} className="absolute left-0 right-0" style={{ top: `${y}%` }}>
-                <div className="w-full h-px" style={{ backgroundColor: c.grid }} />
-                <span className="absolute -left-1 -top-2 text-[8px] text-eva-white/30 -translate-x-full pr-1">
-                  {gridVal}
-                </span>
-              </div>
-            );
-          })}
-
-        {/* Bars */}
-        <div className="flex items-end h-full gap-1 pl-6">
-          {bars.map((bar, i) => {
-            const pct = Math.min((bar.value / max) * 100, 100);
-            const barColor = bar.color || c.bar;
-            return (
-              <div key={bar.label} className="flex-1 flex flex-col items-center h-full justify-end">
-                {showValues && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: i * stagger + 0.4 }}
-                    className={`text-[9px] ${c.text} mb-1 tabular-nums`}
-                  >
-                    {bar.value}{unit}
-                  </motion.span>
-                )}
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: `${pct}%` }}
-                  transition={{ duration: 0.6, delay: i * stagger, ease: "easeOut" }}
-                  className="w-full relative min-w-[8px]"
-                  style={{
-                    ...(segmented
-                      ? {
-                          backgroundColor: "transparent",
-                          background: `repeating-linear-gradient(0deg, ${barColor} 0px, ${barColor} 6px, transparent 6px, transparent 8px)`,
-                        }
-                      : { backgroundColor: barColor }),
-                    boxShadow: `0 0 8px ${bar.color ? barColor + "50" : c.glow}`,
-                  }}
-                >
-                  {/* Scanline overlay */}
-                  {!segmented && (
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)`,
-                      }}
-                    />
-                  )}
-                </motion.div>
-                <div className="text-[8px] text-eva-white/50 mt-1 text-center truncate w-full">
-                  {bar.label}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Baseline */}
-        <div className="absolute bottom-0 left-6 right-0 h-px" style={{ backgroundColor: c.bar + "40" }} />
-      </div>
-    </div>
-  );
-});
+);

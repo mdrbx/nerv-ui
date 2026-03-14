@@ -1,0 +1,84 @@
+import Link from "next/link";
+import { Callout, ComponentPreview } from "@/components/docs";
+import { PatternAlert } from "@/components/PatternAlert";
+import { PilotCard } from "@/components/PilotCard";
+import { StatusStamp } from "@/components/StatusStamp";
+
+# Camera Overlay Grammar
+
+This guide documents the secondary NERV visual family used for footage annotation, subject identification, and dramatic status overlays. It sits beside the stricter control-room panel system and should be used intentionally rather than as the default frame language.
+
+<Callout type="info" title="INTERNAL VISUAL FAMILY">
+  The underlying rounded plate helper is internal on purpose. Public components expose this grammar through higher-level modules like <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
+</Callout>
+
+## When To Use It
+
+- Use it for camera footage overlays, subject lockups, broadcast-like annotations, and dramatic status plates.
+- Use it when a component should feel attached to a signal feed or tactical frame rather than to a panel chassis.
+- Avoid it for generic cards, buttons, navigation, or standard inspection surfaces.
+
+## Core Markers
+
+- Rounded double contours instead of hard-edged panel frames.
+- Hot orange, red, cyan, or green labels with CRT-like glow.
+- Dense stacked titling: metadata, subject line, then operational detail.
+- Small live/status cues and crosshair marks that read like a captured feed.
+- Localized softness only inside the plaque; the surrounding UI stays rigid.
+
+## Side-By-Side Read
+
+<ComponentPreview title="CAMERA OVERLAY FAMILY">
+  <div className="space-y-4 bg-eva-black p-4">
+    <PatternAlert
+      designation="5th ANGEL"
+      bloodType="BLUE"
+      subtitle="CAMERA NO.012 LEFT // SIGNAL HELD"
+    />
+
+    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <PilotCard
+        designation="THIRD.C"
+        name="SHINJI IKARI"
+        unit="EVA-01"
+        plugNumber="01"
+        checkStatus="SYNC"
+        color="green"
+        fields={[
+          { label: "SYNC RATE", value: "41.3%", status: "warning" },
+          { label: "MENTAL", value: "UNSTABLE", status: "warning" },
+          { label: "NERVE LINK", value: "NOMINAL", status: "ok" },
+        ]}
+      />
+
+      <div className="flex min-h-[14rem] items-center justify-center border border-eva-mid-gray/60 bg-black">
+        <StatusStamp
+          text="REJECTED"
+          color="red"
+          bordered
+          rotation={-10}
+          subtitle="SIGNAL ROUTE DENIED"
+        />
+      </div>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Composition Rules
+
+- Keep the overlay compact. It should annotate the surface, not replace the whole surface.
+- Attach labels to an edge or corner bias when possible; avoid floating centered cards.
+- Prefer one dominant title and one metadata line over long text blocks.
+- If glow is used, keep it local to the plate and let the rest of the screen stay dark and dry.
+- Rounded corners belong to the plate itself, not to the entire surrounding UI.
+
+## Public Components Using This Grammar
+
+- <Link href="/docs/components/card">Card</Link> now exposes a `video` variant for rounded footage plaques and subject/video lockups.
+- <Link href="/docs/components/pattern-alert">Pattern Alert</Link> uses it for target identification and signal metadata.
+- <Link href="/docs/components/pilot-card">Pilot Card</Link> uses it for subject register plates and relay labels.
+- <Link href="/docs/components/status-stamp">Status Stamp</Link> uses it for dramatic bordered alert plaques.
+
+<Callout type="warning" title="DO NOT GENERALIZE">
+  This is a specialized overlay language, not the base visual system of EvaUI. Keep default layout primitives sharp, dense, and structural; reserve this family for signal-feed moments.
+</Callout>

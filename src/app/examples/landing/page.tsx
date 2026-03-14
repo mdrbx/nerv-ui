@@ -1,329 +1,265 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { HexGridBackground } from "@/components/HexGridBackground";
 import { SegmentDisplay } from "@/components/SegmentDisplay";
 import { Card } from "@/components/Card";
 import { TargetingContainer } from "@/components/TargetingContainer";
 import { BarChart } from "@/components/BarChart";
 import { Gauge } from "@/components/Gauge";
-import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
+const briefingCards = [
+  {
+    title: "MISSION PROFILE",
+    lines: [
+      "Industrial React library for alert consoles, monitoring panes and terminal-grade interfaces.",
+      "Built for dense operation screens rather than showroom marketing surfaces.",
+    ],
+  },
+  {
+    title: "VISUAL DISCIPLINE",
+    lines: [
+      "Condensed headings, mono data rails, hairline dividers and hard-edged compartment panels.",
+      "No soft card language, no decorative hero whitespace, no startup gloss.",
+    ],
+  },
+  {
+    title: "DEPLOYMENT INTENT",
+    lines: [
+      "Use EvaUI when the product should read like command software, tactical tooling or incident control.",
+      "Primary use cases: dashboards, help desks, auth gates, file systems and mission logs.",
+    ],
+  },
+];
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.12 } },
-};
+const readinessBars = [
+  { label: "LAYOUT PANELS", value: 100, color: "#FF9900" },
+  { label: "FORM CONTROLS", value: 94, color: "#00FFFF" },
+  { label: "STATUS HUD", value: 96, color: "#00FF00" },
+  { label: "DOCS SYSTEM", value: 88, color: "#FF3300" },
+];
+
+const tacticalNotes = [
+  { label: "COMPONENT SET", value: "42 ACTIVE" },
+  { label: "MOTION POLICY", value: "CONTROLLED" },
+  { label: "RADIUS", value: "0PX" },
+  { label: "STATE", value: "READY" },
+];
 
 export default function LandingPage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-eva-black">
-      {/* ═══════ HERO ═══════ */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        <HexGridBackground color="orange" />
+      <section className="relative overflow-hidden border-b border-eva-orange/30">
+        <HexGridBackground color="orange" className="absolute inset-0 opacity-20" />
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="relative z-10 text-center px-6 max-w-3xl mx-auto"
-        >
-          <motion.h1
-            variants={fadeUp}
-            transition={{ duration: 0.8 }}
-            className="text-6xl sm:text-7xl md:text-8xl text-eva-orange tracking-[0.3em] mb-4"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            EVA-UI
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-xs sm:text-sm uppercase tracking-[0.35em] text-eva-white/50 mb-6"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            NERV-GRADE REACT COMPONENT LIBRARY
-          </motion.p>
-
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-eva-white/60 font-mono text-xs sm:text-sm leading-relaxed max-w-lg mx-auto mb-8"
-          >
-            42 brutalist components inspired by the command interfaces of NERV
-            headquarters
-          </motion.p>
-
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="flex items-center justify-center gap-4 flex-wrap mb-10"
-          >
-            <Link href="/docs">
-              <Button variant="primary">VIEW COMPONENTS</Button>
-            </Link>
-            <Link href="/examples">
-              <Button variant="ghost">EXPLORE EXAMPLES</Button>
-            </Link>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex justify-center"
-          >
-            <SegmentDisplay
-              value={42}
-              format="raw"
-              digits={3}
-              color="orange"
-              label="COMPONENTS"
-              size="lg"
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-px h-8 bg-gradient-to-b from-eva-orange/60 to-transparent"
-          />
-        </motion.div>
-      </section>
-
-      {/* ═══════ FEATURES ═══════ */}
-      <section className="border-t border-eva-orange py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-            className="text-xl uppercase tracking-[0.25em] text-eva-orange font-bold text-center mb-3"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            DESIGN PRINCIPLES
-          </motion.h2>
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-center text-eva-white/40 text-xs font-mono mb-12"
-          >
-            BRUTALIST INTERFACES FOR MISSION-CRITICAL APPLICATIONS
-          </motion.p>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {[
-              {
-                title: "ZERO RADIUS",
-                desc: "Sharp industrial angles, no rounded corners. Every element is cut with precision — brutalist geometry that commands attention.",
-              },
-              {
-                title: "CRT AESTHETIC",
-                desc: "Scanline overlays, LCD segment displays, and terminal typography. Interfaces that feel pulled from a retrofuture control room.",
-              },
-              {
-                title: "MOTION READY",
-                desc: "Framer Motion powered animations baked into every component. Smooth transitions, viewport triggers, and orchestrated sequences.",
-              },
-            ].map((feature) => (
-              <motion.div key={feature.title} variants={fadeUp} transition={{ duration: 0.5 }}>
-                <Card title={feature.title}>
-                  <p className="text-eva-white/70 font-mono text-xs leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════ COMPONENT SHOWCASE ═══════ */}
-      <section className="border-t border-eva-green/40 bg-eva-dark-gray/30 py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-            className="text-xl uppercase tracking-[0.25em] text-eva-green font-bold text-center mb-3"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            LIVE PREVIEW
-          </motion.h2>
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-center text-eva-white/40 text-xs font-mono mb-12"
-          >
-            COMPONENTS RENDERED IN REAL-TIME
-          </motion.p>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-          >
-            <TargetingContainer label="COMPONENT ARRAY" color="green">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-4">
-                {/* Bar Chart */}
-                <div className="col-span-full md:col-span-7">
-                  <BarChart
-                    title="MODULE READINESS"
-                    direction="horizontal"
-                    bars={[
-                      { label: "LAYOUT", value: 100 },
-                      { label: "DATA VIZ", value: 95 },
-                      { label: "FORMS", value: 88 },
-                      { label: "OVERLAYS", value: 92 },
-                    ]}
-                    unit="%"
-                    color="green"
-                  />
-                </div>
-
-                {/* Gauge */}
-                <div className="col-span-full md:col-span-5 flex flex-col items-center justify-center gap-4">
-                  <Gauge
-                    value={96}
-                    label="SYSTEM STATUS"
-                    color="cyan"
-                    size={160}
-                    threshold={90}
-                  />
-                </div>
-
-                {/* Badge row */}
-                <div className="col-span-full flex flex-wrap items-center gap-3 pt-2">
-                  <Badge label="REACT 18+" variant="info" size="sm" />
-                  <Badge label="TYPESCRIPT" variant="success" size="sm" />
-                  <Badge label="TAILWIND CSS" variant="default" size="sm" />
-                  <Badge label="FRAMER MOTION" variant="warning" size="sm" />
-                  <Badge label="ZERO DEPENDENCIES" variant="danger" size="sm" />
-                </div>
-              </div>
-            </TargetingContainer>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════ STATS ═══════ */}
-      <section className="border-y border-eva-orange bg-eva-dark-gray">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4">
-          {[
-            { value: "42", label: "COMPONENTS", color: "text-eva-orange" },
-            { value: "6", label: "COLOR THEMES", color: "text-eva-cyan" },
-            { value: "0px", label: "BORDER RADIUS", color: "text-eva-green" },
-            { value: "MIT", label: "LICENSE", color: "text-eva-orange" },
-          ].map((stat, i) => (
+        <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_20rem]">
             <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="px-6 py-8 md:border-r border-eva-orange/20 last:border-r-0 text-center"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="space-y-5"
             >
-              <div
-                className={`text-4xl md:text-5xl font-bold ${stat.color}`}
-                style={{ fontFamily: "var(--font-eva-mono)" }}
-              >
-                {stat.value}
+              <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono uppercase tracking-[0.28em] text-eva-orange">
+                <span>LIBRARY DOSSIER</span>
+                <span className="text-eva-white/30">/</span>
+                <span className="text-eva-cyan">TACTICAL UI SYSTEM</span>
               </div>
-              <div
-                className="text-[10px] text-eva-white/40 uppercase tracking-[0.2em] mt-2"
-                style={{ fontFamily: "var(--font-eva-display)" }}
-              >
-                {stat.label}
+
+              <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]">
+                <div>
+                  <h1
+                    className="text-4xl font-black uppercase tracking-[0.18em] text-eva-orange sm:text-5xl lg:text-6xl"
+                    style={{ fontFamily: "var(--font-eva-display)" }}
+                  >
+                    EVA-UI SYSTEM BRIEF
+                  </h1>
+                  <p className="mt-3 max-w-3xl text-sm font-mono leading-relaxed text-eva-white/70 sm:text-[15px]">
+                    EvaUI is a NERV-leaning interface library for control rooms,
+                    alert states and mission software. The target is not a glossy
+                    marketing shell; it is a dense operational surface with strict
+                    spacing, strong rails and unmistakable urgency.
+                  </p>
+                </div>
+
+                <div className="border border-eva-orange/25 bg-eva-dark-gray/75 p-3">
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-eva-white/45">
+                    ACTIVE MODULES
+                  </div>
+                  <div className="mt-3 flex justify-center">
+                    <SegmentDisplay
+                      value={42}
+                      format="raw"
+                      digits={3}
+                      color="orange"
+                      size="md"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {tacticalNotes.map((note) => (
+                  <div
+                    key={note.label}
+                    className="border border-eva-mid-gray/40 bg-eva-dark-gray/60 px-3 py-2"
+                  >
+                    <div
+                      className="text-[9px] uppercase tracking-[0.22em] text-eva-white/40"
+                      style={{ fontFamily: "var(--font-eva-display)" }}
+                    >
+                      {note.label}
+                    </div>
+                    <div className="mt-2 font-mono text-sm text-eva-cyan">{note.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <Button variant="primary" onClick={() => router.push("/docs")}>
+                  OPEN DOCUMENTATION
+                </Button>
+                <Button variant="ghost" onClick={() => router.push("/examples")}>
+                  OPEN EXAMPLE INDEX
+                </Button>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </section>
 
-      {/* ═══════ CTA ═══════ */}
-      <section className="py-24 px-6">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="max-w-2xl mx-auto text-center"
-        >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-            className="text-2xl uppercase tracking-[0.25em] text-eva-green font-bold mb-4"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            INITIATE DEPLOYMENT
-          </motion.h2>
-
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="bg-eva-dark-gray border border-eva-green/30 px-6 py-4 mb-8 inline-block"
-          >
-            <code
-              className="text-eva-green text-sm sm:text-base font-mono"
+            <motion.div
+              initial={{ opacity: 0, x: 18 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              className="space-y-4"
             >
-              npm install @mattloyed/eva-ui
-            </code>
-          </motion.div>
+              <Card title="COMMAND DIRECTIVES">
+                <div className="space-y-3">
+                  <div className="border-b border-eva-mid-gray/30 pb-3">
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-eva-white/35">
+                      DIRECTIVE 01
+                    </div>
+                    <p className="mt-1 font-mono text-xs leading-relaxed text-eva-white/75">
+                      Treat the library as a command surface. Default to left-aligned,
+                      panel-based compositions over centered hero blocks.
+                    </p>
+                  </div>
+                  <div className="border-b border-eva-mid-gray/30 pb-3">
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-eva-white/35">
+                      DIRECTIVE 02
+                    </div>
+                    <p className="mt-1 font-mono text-xs leading-relaxed text-eva-white/75">
+                      Prefer stacked status, segmented bars and inspection panels over
+                      generic dashboard widgets.
+                    </p>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-eva-white/35">
+                      DIRECTIVE 03
+                    </div>
+                    <p className="mt-1 font-mono text-xs leading-relaxed text-eva-white/75">
+                      Reserve title-card theatrics for explicit ceremonial screens,
+                      not the base product grammar.
+                    </p>
+                  </div>
+                </div>
+              </Card>
 
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Link href="/docs">
-              <Button variant="primary" size="lg">
-                GET STARTED
-              </Button>
-            </Link>
-          </motion.div>
-        </motion.div>
+              <Card title="DEPLOYMENT CHANNEL">
+                <div className="space-y-2 font-mono text-xs text-eva-white/70">
+                  <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                    <span>PACKAGE</span>
+                    <span className="text-eva-green">@mattloyed/eva-ui</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                    <span>DISTRIBUTION</span>
+                    <span className="text-eva-cyan">NPM / STATIC DOCS</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>EXPORT STATE</span>
+                    <span className="text-eva-orange">UNDER REVIEW</span>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
-      {/* ═══════ FOOTER ═══════ */}
-      <footer className="border-t border-eva-white/10 py-12 px-6">
-        <div className="text-center">
-          <p
-            className="text-[11px] text-eva-white/25 uppercase tracking-[0.3em] font-mono"
-          >
-            GOD&apos;S IN HIS HEAVEN. ALL&apos;S RIGHT WITH THE WORLD.
-          </p>
+      <section className="border-b border-eva-green/20 px-4 py-10 sm:px-6">
+        <div className="mx-auto max-w-6xl space-y-6">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2
+                className="text-xl uppercase tracking-[0.24em] text-eva-green"
+                style={{ fontFamily: "var(--font-eva-display)" }}
+              >
+                OPERATING DOCTRINE
+              </h2>
+              <p className="mt-1 font-mono text-xs uppercase tracking-[0.18em] text-eva-white/35">
+                PANELS, LABEL RAILS, STATUS DENSITY, INCIDENT READABILITY
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            {briefingCards.map((card) => (
+              <Card key={card.title} title={card.title}>
+                <div className="space-y-3">
+                  {card.lines.map((line) => (
+                    <p
+                      key={line}
+                      className="font-mono text-xs leading-relaxed text-eva-white/75"
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
-      </footer>
+      </section>
+
+      <section className="px-4 py-10 sm:px-6">
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.3fr)_20rem]">
+          <TargetingContainer label="READINESS BOARD" color="green">
+            <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_14rem]">
+              <BarChart
+                title="MODULE READINESS"
+                direction="horizontal"
+                bars={readinessBars}
+                unit="%"
+                color="green"
+                segmented
+              />
+              <div className="flex items-center justify-center border-l border-eva-mid-gray/20 pl-4">
+                <Gauge value={96} label="SYSTEM STATUS" color="cyan" size={180} threshold={92} />
+              </div>
+            </div>
+          </TargetingContainer>
+
+          <Card title="ACTIVATION NOTE">
+            <div className="space-y-4">
+              <p className="font-mono text-xs leading-relaxed text-eva-white/75">
+                The library should feel like software already deployed inside a
+                control room. The examples are not decorative landing pages; they
+                are operator briefings, access terminals and monitoring consoles.
+              </p>
+              <div className="border border-eva-orange/30 bg-eva-black px-3 py-3">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-eva-orange">
+                  INSTALL SEQUENCE
+                </div>
+                <code className="mt-2 block font-mono text-xs text-eva-green">
+                  npm install @mattloyed/eva-ui
+                </code>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
     </div>
   );
 }

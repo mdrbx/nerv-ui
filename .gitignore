@@ -14,6 +14,7 @@
 # next.js
 /.next/
 /out/
+/output/
 
 # production
 /build
@@ -43,3 +44,8 @@ next-env.d.ts
 # claude
 .claude/
 .playwright-mcp/
+.playwright-cli/
+
+# local visual audit artifacts
+/apollo-*.png
+/docs-*.png

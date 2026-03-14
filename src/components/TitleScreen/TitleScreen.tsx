@@ -26,109 +26,125 @@ export const TitleScreen = forwardRef<HTMLDivElement, TitleScreenProps>(
     },
     ref
   ) {
-    // "random" mode: generate deterministic offsets from title characters
-    const randomOffsets = title.split("").map((ch, i) => ({
-      x: ((ch.charCodeAt(0) * 7 + i * 31) % 60) - 30,
-      y: ((ch.charCodeAt(0) * 13 + i * 17) % 40) - 20,
+    const randomOffsets = title.split("").map((ch, index) => ({
+      x: ((ch.charCodeAt(0) * 5 + index * 17) % 20) - 10,
+      y: ((ch.charCodeAt(0) * 7 + index * 11) % 18) - 9,
+      rotate: ((ch.charCodeAt(0) * 3 + index * 5) % 8) - 4,
     }));
 
-    // --- SPLIT layout ---
+    const dominantTitle = subtitle ? subtitle : title;
+    const supportTitle = subtitle ? title : undefined;
+    const serifStyle = {
+      fontFamily: "var(--font-eva-title)",
+      fontStyle: "italic" as const,
+      lineHeight: "0.9",
+    };
+    const railClass = "absolute h-px bg-white/10";
+    const titleColor = "#E7E0D2";
+    const metaStyle = {
+      fontFamily: "var(--font-eva-mono)",
+      letterSpacing: "0.3em",
+      textTransform: "uppercase" as const,
+    };
+
     if (align === "split") {
       return (
         <div
           ref={ref}
-          className={`relative w-full min-h-screen bg-bg-base flex flex-col justify-between overflow-hidden select-none ${className}`}
+          className={`relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-bg-base px-6 py-6 select-none md:px-10 md:py-10 ${className}`}
           {...rest}
         >
-          {/* Title -- top left */}
+          <div className={`${railClass} left-6 right-6 top-6 md:left-10 md:right-10 md:top-10`} />
+          <div className={`${railClass} left-6 right-6 bottom-6 md:left-10 md:right-10 md:bottom-10`} />
+          <div className="absolute left-6 top-6 bottom-6 w-px bg-white/6 md:left-10 md:top-10 md:bottom-10" />
+          <div className="absolute right-6 top-6 bottom-6 w-px bg-white/6 md:right-10 md:top-10 md:bottom-10" />
+
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="p-8 md:p-16"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="max-w-[70%]"
           >
+            <div
+              className="mb-4 text-[9px] text-white/34 md:text-[10px]"
+              style={metaStyle}
+            >
+              episode register
+            </div>
             <h1
-              className="text-white text-6xl sm:text-8xl md:text-[10rem] lg:text-[14rem] font-black uppercase"
-              style={{
-                fontFamily: "var(--font-eva-title)",
-                lineHeight: "0.85",
-                letterSpacing: "-0.04em",
-              }}
+              className="text-[clamp(3rem,10vw,7.5rem)] font-black uppercase tracking-[0.06em]"
+              style={{ ...serifStyle, color: titleColor }}
             >
               {title}
             </h1>
+            <div className="mt-4 h-px w-28 bg-white/18" />
           </motion.div>
 
-          {/* Subtitle -- bottom right */}
           {subtitle && (
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-              className="self-end p-8 md:p-16"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+              className="self-end max-w-[72%] text-right"
             >
               <h2
-                className="text-white text-5xl sm:text-7xl md:text-[8rem] lg:text-[12rem] font-black uppercase text-right"
-                style={{
-                  fontFamily: "var(--font-eva-title)",
-                  lineHeight: "0.85",
-                  letterSpacing: "-0.04em",
-                }}
+                className="text-[clamp(2.6rem,8vw,6.9rem)] font-black uppercase tracking-[0.08em]"
+                style={{ ...serifStyle, color: titleColor }}
               >
                 {subtitle}
               </h2>
+              <div
+                className="mt-3 text-[9px] text-white/32 md:text-[10px]"
+                style={metaStyle}
+              >
+                title card split
+              </div>
             </motion.div>
           )}
         </div>
       );
     }
 
-    // --- RANDOM layout ---
     if (align === "random") {
       return (
         <div
           ref={ref}
-          className={`relative w-full min-h-screen bg-bg-base flex items-center justify-center overflow-hidden select-none ${className}`}
+          className={`relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-bg-base px-6 py-6 select-none ${className}`}
           {...rest}
         >
-          <div className="relative">
-            {/* Title characters scattered */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_56%)]" />
+          <div className="absolute left-6 right-6 top-6 h-px bg-white/10" />
+          <div className="absolute left-6 right-6 bottom-6 h-px bg-white/10" />
+
+          <div className="relative text-center">
             <div className="flex flex-wrap justify-center">
-              {title.split("").map((char, i) => (
+              {title.split("").map((char, index) => (
                 <motion.span
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.5 }}
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.85, y: 8 }}
                   animate={{
                     opacity: 1,
                     scale: 1,
-                    x: randomOffsets[i].x,
-                    y: randomOffsets[i].y,
+                    x: randomOffsets[index].x,
+                    y: randomOffsets[index].y,
+                    rotate: randomOffsets[index].rotate,
                   }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="text-white text-6xl sm:text-8xl md:text-[10rem] font-black uppercase inline-block"
-                  style={{
-                    fontFamily: "var(--font-eva-title)",
-                    lineHeight: "0.85",
-                    letterSpacing: "-0.04em",
-                  }}
+                  transition={{ duration: 0.42, delay: index * 0.035 }}
+                  className="inline-block text-[clamp(3.2rem,11vw,7rem)] font-black uppercase tracking-[0.07em]"
+                  style={{ ...serifStyle, color: titleColor }}
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
               ))}
             </div>
 
-            {/* Subtitle below */}
             {subtitle && (
               <motion.h2
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
-                transition={{ delay: title.length * 0.05 + 0.3, duration: 0.5 }}
-                className="text-white text-2xl md:text-5xl font-black uppercase text-center mt-8"
-                style={{
-                  fontFamily: "var(--font-eva-title)",
-                  lineHeight: "0.85",
-                  letterSpacing: "-0.02em",
-                }}
+                animate={{ opacity: 0.62 }}
+                transition={{ delay: title.length * 0.035 + 0.2, duration: 0.4 }}
+                className="mt-6 text-center text-[9px] text-white/42 md:text-[10px]"
+                style={metaStyle}
               >
                 {subtitle}
               </motion.h2>
@@ -138,40 +154,48 @@ export const TitleScreen = forwardRef<HTMLDivElement, TitleScreenProps>(
       );
     }
 
-    // --- CENTER layout (default) ---
     return (
       <div
         ref={ref}
-        className={`relative w-full min-h-screen bg-bg-base flex flex-col items-center justify-center overflow-hidden select-none ${className}`}
+        className={`relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-bg-base px-6 py-10 select-none ${className}`}
         {...rest}
       >
-        {/* Title */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_58%)]" />
+        <div className="absolute left-8 right-8 top-8 h-px bg-white/10" />
+        <div className="absolute left-8 right-8 bottom-8 h-px bg-white/10" />
+        <div
+          className="absolute left-8 top-8 text-[9px] text-white/34"
+          style={metaStyle}
+        >
+          title card
+        </div>
+        {supportTitle && (
+          <div
+            className="mb-4 text-center text-[9px] text-white/42 md:text-[10px]"
+            style={metaStyle}
+          >
+            {supportTitle}
+          </div>
+        )}
+
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-white text-6xl sm:text-8xl md:text-[10rem] lg:text-[14rem] font-black uppercase text-center px-4"
-          style={{
-            fontFamily: "var(--font-eva-title)",
-            lineHeight: "0.85",
-            letterSpacing: "-0.04em",
-          }}
+          className="px-4 text-center text-[clamp(4rem,12vw,8.8rem)] font-black uppercase tracking-[0.06em]"
+          style={{ ...serifStyle, color: titleColor }}
         >
-          {title}
+          {dominantTitle}
         </motion.h1>
+        <div className="mt-4 h-px w-32 bg-white/16" />
 
-        {/* Subtitle */}
-        {subtitle && (
+        {subtitle && !supportTitle && (
           <motion.h2
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-white text-3xl md:text-6xl lg:text-8xl font-black uppercase text-center mt-2 px-4"
-            style={{
-              fontFamily: "var(--font-eva-title)",
-              lineHeight: "0.85",
-              letterSpacing: "-0.02em",
-            }}
+            animate={{ opacity: 0.62 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="mt-4 px-4 text-center text-[9px] text-white/42 md:text-[10px]"
+            style={metaStyle}
           >
             {subtitle}
           </motion.h2>

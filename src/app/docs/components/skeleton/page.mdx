@@ -3,7 +3,7 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Skeleton
 
-Animated placeholder skeleton with a horizontal scanline shimmer effect. Supports text lines, rectangular blocks, and circular shapes for loading states.
+Terminal-first placeholder skeleton. Text renders as fine green CRT scan lines, while block and circular variants switch to a matrix of small white cells for a denser NERV monitor feel.
 
 ```tsx
 import { Skeleton } from "@mattloyed/eva-ui";
@@ -80,6 +80,6 @@ import { Skeleton } from "@mattloyed/eva-ui";
   ]}
 />
 
-<Callout type="info" title="SCANLINE SHIMMER">
-  The skeleton uses a custom `eva-scanline` animation with an orange-tinted gradient sweep, matching the NERV terminal aesthetic.
+<Callout type="info" title="TERMINAL PLACEHOLDER">
+  `text` uses fine green CRT bands to read like a terminal buffer, while `rectangular` and `circular` switch to a white cell matrix closer to tactical monitor placeholders than to a generic UI shimmer.
 </Callout>

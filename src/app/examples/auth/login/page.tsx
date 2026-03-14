@@ -30,11 +30,9 @@ export default function LoginExample() {
   };
 
   return (
-    <div className="relative min-h-screen bg-eva-black flex flex-col items-center justify-center">
-      {/* Hex grid backdrop */}
+    <div className="relative min-h-screen bg-eva-black">
       <HexGridBackground className="absolute inset-0 opacity-20" />
 
-      {/* Classified overlay flash */}
       {showClassified && (
         <ClassifiedOverlay
           text="ACCESS GRANTED"
@@ -43,110 +41,159 @@ export default function LoginExample() {
         />
       )}
 
-      {/* Login card */}
-      <div className="relative z-10 w-full max-w-md mx-auto px-4">
-        {authenticated ? (
-          <div className="border border-eva-green/30 bg-eva-black/80 p-8">
-            <StatusStamp
-              text="ACCESS GRANTED"
-              color="green"
-              bordered
-              rotation={-8}
-              subtitle="CLEARANCE VERIFIED"
-            />
-            <div className="text-center mt-6">
-              <p className="text-eva-green font-mono text-xs uppercase tracking-wider">
-                Welcome, Operator {operatorId || "UNKNOWN"}
-              </p>
-              <p className="text-eva-mid-gray font-mono text-[10px] mt-2">
-                SESSION INITIALIZED — MAGI AUTHENTICATION COMPLETE
-              </p>
-              <Button
-                variant="ghost"
-                className="mt-6"
-                onClick={() => {
-                  setAuthenticated(false);
-                  setOperatorId("");
-                  setAccessCode("");
-                  setRemember(false);
-                }}
-              >
-                DISCONNECT
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="border border-eva-orange/30 bg-eva-black/80">
-            {/* NERV header */}
-            <div className="border-b border-eva-orange/30 px-6 py-6 text-center">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-4 py-8">
+        <div className="grid w-full gap-6 lg:grid-cols-[18rem_minmax(0,1fr)]">
+          <div className="space-y-4">
+            <div className="border border-eva-mid-gray/30 bg-eva-dark-gray/70 p-4">
+              <div className="text-[10px] uppercase tracking-[0.24em] text-eva-orange">
+                ACCESS CHECKPOINT
+              </div>
               <h1
-                className="text-5xl font-black uppercase tracking-[0.3em] text-eva-orange"
+                className="mt-3 text-3xl font-black uppercase tracking-[0.2em] text-eva-white"
                 style={{ fontFamily: "var(--font-eva-display)" }}
               >
-                NERV
+                PERSONNEL GATE
               </h1>
-              <p className="text-[10px] font-mono text-eva-mid-gray mt-2 tracking-[0.25em]">
-                PERSONNEL ACCESS TERMINAL
+              <p className="mt-3 font-mono text-xs leading-relaxed text-eva-white/65">
+                Authentication is handled as a control-room checkpoint: operator ID,
+                access code, session persistence and MAGI confirmation in a single rail.
               </p>
             </div>
 
-            {/* Form body */}
-            <div className="px-6 py-6 space-y-5">
-              <Divider label="AUTHENTICATION REQUIRED" color="orange" />
-
-              <InputField
-                label="OPERATOR ID"
-                placeholder="Enter operator ID..."
-                color="orange"
-                value={operatorId}
-                onChange={(e) => setOperatorId(e.target.value)}
-              />
-
-              <div>
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-eva-orange mb-1.5">
-                  ACCESS CODE
-                </label>
-                <input
-                  type="password"
-                  placeholder="Enter access code..."
-                  value={accessCode}
-                  onChange={(e) => setAccessCode(e.target.value)}
-                  className="w-full bg-transparent border border-eva-orange/40 text-eva-white font-mono text-sm px-3 py-2 placeholder:text-eva-mid-gray/40 focus:border-eva-orange focus:outline-none transition-colors"
-                />
+            <div className="border border-eva-mid-gray/30 bg-eva-black/80 p-4">
+              <div className="text-[10px] uppercase tracking-[0.22em] text-eva-cyan">
+                REQUIREMENTS
               </div>
-
-              <Checkbox
-                label="REMEMBER THIS TERMINAL"
-                checked={remember}
-                onChange={(e) => setRemember(e.target.checked)}
-                color="orange"
-              />
-
-              <Button
-                variant="primary"
-                onClick={handleLogin}
-                loading={loading}
-                className="w-full"
-              >
-                AUTHENTICATE
-              </Button>
-
-              <div className="flex items-center justify-between">
-                <button className="text-[10px] font-mono text-eva-mid-gray hover:text-eva-orange transition-colors uppercase tracking-wider">
-                  Forgot access code?
-                </button>
-                <button className="text-[10px] font-mono text-eva-mid-gray hover:text-eva-orange transition-colors uppercase tracking-wider">
-                  Request clearance
-                </button>
+              <div className="mt-3 space-y-2 font-mono text-xs text-eva-white/70">
+                <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                  <span>TERMINAL STATE</span>
+                  <span className="text-eva-green">ACTIVE</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                  <span>AUTH CHANNEL</span>
+                  <span className="text-eva-cyan">MAGI LINK</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                  <span>CLASSIFICATION</span>
+                  <span className="text-eva-orange">LEVEL 02</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>FAIL MODE</span>
+                  <span className="text-eva-red">LOCKDOWN</span>
+                </div>
               </div>
             </div>
           </div>
-        )}
+
+          <div className="border border-eva-orange/30 bg-eva-black/80">
+            {authenticated ? (
+              <div className="space-y-6 px-6 py-6 sm:px-8">
+                <div className="relative h-28 overflow-hidden border border-eva-green/25 bg-eva-black/80">
+                  <StatusStamp
+                    text="ACCESS GRANTED"
+                    color="green"
+                    bordered
+                    rotation={-6}
+                    subtitle="CLEARANCE VERIFIED"
+                  />
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {[
+                    { label: "OPERATOR", value: operatorId || "UNKNOWN", color: "text-eva-green" },
+                    { label: "SESSION", value: "INITIALIZED", color: "text-eva-cyan" },
+                    { label: "MAGI", value: "CONFIRMED", color: "text-eva-orange" },
+                  ].map((item) => (
+                    <div key={item.label} className="border border-eva-mid-gray/20 bg-eva-dark-gray/60 px-3 py-3">
+                      <div className="text-[9px] uppercase tracking-[0.2em] text-eva-white/35">
+                        {item.label}
+                      </div>
+                      <div className={`mt-2 font-mono text-sm ${item.color}`}>{item.value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <Button
+                  variant="ghost"
+                  className="w-full sm:w-auto"
+                  onClick={() => {
+                    setAuthenticated(false);
+                    setOperatorId("");
+                    setAccessCode("");
+                    setRemember(false);
+                  }}
+                >
+                  DISCONNECT
+                </Button>
+              </div>
+            ) : (
+              <>
+                <div className="border-b border-eva-orange/30 px-6 py-5 sm:px-8">
+                  <div className="text-[10px] uppercase tracking-[0.24em] text-eva-white/35">
+                    NERV HEADQUARTERS / GEOFRONT LEVEL 02
+                  </div>
+                  <h2
+                    className="mt-2 text-4xl font-black uppercase tracking-[0.24em] text-eva-orange"
+                    style={{ fontFamily: "var(--font-eva-display)" }}
+                  >
+                    AUTH TERMINAL
+                  </h2>
+                </div>
+
+                <div className="space-y-5 px-6 py-6 sm:px-8">
+                  <Divider label="AUTHENTICATION REQUIRED" color="orange" />
+
+                  <InputField
+                    label="OPERATOR ID"
+                    placeholder="Enter operator ID..."
+                    color="orange"
+                    value={operatorId}
+                    onChange={(e) => setOperatorId(e.target.value)}
+                  />
+
+                  <InputField
+                    label="ACCESS CODE"
+                    placeholder="Enter access code..."
+                    color="orange"
+                    type="password"
+                    value={accessCode}
+                    onChange={(e) => setAccessCode(e.target.value)}
+                  />
+
+                  <Checkbox
+                    label="PERSIST THIS TERMINAL"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                    color="orange"
+                  />
+
+                  <Button
+                    variant="primary"
+                    onClick={handleLogin}
+                    loading={loading}
+                    className="w-full"
+                  >
+                    AUTHENTICATE
+                  </Button>
+
+                  <div className="flex flex-wrap items-center gap-3 text-[10px] font-mono uppercase tracking-[0.16em] text-eva-white/40">
+                    <button type="button" className="hover:text-eva-orange transition-colors">
+                      Reset access code
+                    </button>
+                    <span className="text-eva-white/20">/</span>
+                    <button type="button" className="hover:text-eva-orange transition-colors">
+                      Request clearance
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Footer text */}
-      <div className="relative z-10 mt-8 text-center">
-        <p className="text-[10px] font-mono text-eva-mid-gray/50 uppercase tracking-[0.2em]">
+      <div className="relative z-10 pb-6 text-center">
+        <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-eva-mid-gray/50">
           NERV HEADQUARTERS — GEOFRONT LEVEL 02
         </p>
       </div>

@@ -112,91 +112,92 @@ export default function OperationsDashboard() {
   const syncColor = syncRate >= 85 ? "text-eva-green" : syncRate >= 70 ? "text-eva-cyan" : "text-eva-orange";
 
   return (
-    <div className="min-h-screen bg-eva-black">
+    <div className="min-h-screen bg-eva-black nerv-page-shell">
       {/* ═══════ HEADER ═══════ */}
-      <div className="border-b border-eva-orange px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <div>
-          <h1
-            className="text-xl sm:text-2xl uppercase tracking-[0.2em] text-eva-orange font-bold"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            NERV OPERATIONS CENTER
-          </h1>
-          <p className="text-[10px] font-mono text-eva-white/50 mt-0.5">
-            CENTRAL DOGMA — COMMAND LEVEL — REAL-TIME TACTICAL OVERVIEW
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-[9px] font-mono text-eva-white/40 uppercase tracking-wider">
-            SYSTEM TIME
-          </span>
-          {currentTime && (
-            <SegmentDisplay
-              value={parseInt(currentTime, 10)}
-              format="raw"
-              digits={6}
-              size="sm"
-              color="orange"
-            />
-          )}
+      <div className="border-b border-eva-orange/20 py-3">
+        <div className="nerv-page-frame flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="nerv-section-label mb-2">Ops Control</span>
+            <h1
+              className="text-2xl uppercase tracking-[0.2em] text-eva-orange font-bold sm:text-3xl"
+              style={{ fontFamily: "var(--font-eva-display)" }}
+            >
+              NERV OPERATIONS CENTER
+            </h1>
+            <p className="nerv-caption mt-1">
+              CENTRAL DOGMA // COMMAND LEVEL // REAL-TIME TACTICAL OVERVIEW
+            </p>
+          </div>
+
+          <div className="nerv-panel flex items-center gap-3 px-3 py-2">
+            <span className="nerv-data-label">System Time</span>
+            {currentTime && (
+              <SegmentDisplay
+                value={parseInt(currentTime, 10)}
+                format="raw"
+                digits={6}
+                size="sm"
+                color="orange"
+              />
+            )}
+          </div>
         </div>
       </div>
 
       {/* ═══════ KPI ROW ═══════ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border-b border-eva-orange/30">
-        {[
-          {
-            label: "ACTIVE UNITS",
-            value: `${activeUnits}/6`,
-            color: activeUnits >= 4 ? "text-eva-green" : "text-eva-orange",
-            sub: "EVANGELION FLEET",
-          },
-          {
-            label: "SYNC RATE",
-            value: `${syncRate.toFixed(1)}%`,
-            color: syncColor,
-            sub: "AVG PILOT RATIO",
-          },
-          {
-            label: "THREAT LEVEL",
-            value: `${threatLevel}`,
-            color: threatColor,
-            sub: "COMPOSITE INDEX",
-          },
-          {
-            label: "PERSONNEL ONLINE",
-            value: `${personnelOnline}`,
-            color: "text-eva-cyan",
-            sub: "NERV GEOFRONT",
-          },
-        ].map((kpi) => (
-          <div
-            key={kpi.label}
-            className="px-4 sm:px-6 py-4 border-r border-eva-orange/10 last:border-r-0"
-          >
-            <div
-              className="text-[10px] uppercase tracking-[0.15em] text-eva-white/40 font-bold mb-1"
-              style={{ fontFamily: "var(--font-eva-display)" }}
-            >
-              {kpi.label}
+      <div className="border-b border-eva-orange/12 py-3">
+        <div className="nerv-page-frame grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {[
+            {
+              label: "ACTIVE UNITS",
+              value: `${activeUnits}/6`,
+              color: activeUnits >= 4 ? "text-eva-green" : "text-eva-orange",
+              sub: "EVANGELION FLEET",
+            },
+            {
+              label: "SYNC RATE",
+              value: `${syncRate.toFixed(1)}%`,
+              color: syncColor,
+              sub: "AVG PILOT RATIO",
+            },
+            {
+              label: "THREAT LEVEL",
+              value: `${threatLevel}`,
+              color: threatColor,
+              sub: "COMPOSITE INDEX",
+            },
+            {
+              label: "PERSONNEL ONLINE",
+              value: `${personnelOnline}`,
+              color: "text-eva-cyan",
+              sub: "NERV GEOFRONT",
+            },
+          ].map((kpi) => (
+            <div key={kpi.label} className="nerv-panel px-3 py-3">
+              <div
+                className="text-[10px] uppercase tracking-[0.15em] text-eva-white/40 font-bold mb-1"
+                style={{ fontFamily: "var(--font-eva-display)" }}
+              >
+                {kpi.label}
+              </div>
+              <div
+                className={`text-2xl sm:text-3xl font-bold tabular-nums ${kpi.color}`}
+                style={{ fontFamily: "var(--font-eva-mono)" }}
+              >
+                {kpi.value}
+              </div>
+              <div className="text-[9px] font-mono text-eva-white/30 mt-0.5">{kpi.sub}</div>
             </div>
-            <div
-              className={`text-2xl sm:text-3xl font-bold tabular-nums ${kpi.color}`}
-              style={{ fontFamily: "var(--font-eva-mono)" }}
-            >
-              {kpi.value}
-            </div>
-            <div className="text-[9px] font-mono text-eva-white/30 mt-0.5">{kpi.sub}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* ═══════ MAIN AREA ═══════ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+      <div className="nerv-page-frame grid grid-cols-1 gap-4 py-4 lg:grid-cols-12">
         {/* ─── Left column (8 cols) ─── */}
-        <div className="col-span-full lg:col-span-8 lg:border-r border-eva-orange/20">
+        <div className="col-span-full lg:col-span-8">
           {/* Unit deployment chart */}
-          <div className="p-4 sm:p-6 border-b border-eva-orange/10">
+          <div className="nerv-panel p-3 sm:p-4">
             <Card title="UNIT DEPLOYMENT STATUS">
               <BarChart
                 title="OPERATIONAL READINESS"
@@ -211,7 +212,7 @@ export default function OperationsDashboard() {
           </div>
 
           {/* Operations log */}
-          <div className="p-4 sm:p-6">
+          <div className="nerv-panel mt-4 p-3 sm:p-4">
             <DataGrid
               columns={[
                 { key: "id", header: "OP ID", width: "90px", sortable: true },
@@ -232,9 +233,9 @@ export default function OperationsDashboard() {
         </div>
 
         {/* ─── Right column (4 cols) ─── */}
-        <div className="col-span-full lg:col-span-4">
+        <div className="col-span-full space-y-4 lg:col-span-4">
           {/* Sync gauge */}
-          <div className="p-4 sm:p-6 border-b border-eva-orange/10 flex flex-col items-center">
+          <div className="nerv-panel flex flex-col items-center p-3 sm:p-4">
             <div
               className="text-[10px] uppercase tracking-[0.2em] text-eva-cyan font-bold mb-3 self-start"
               style={{ fontFamily: "var(--font-eva-display)" }}
@@ -255,7 +256,7 @@ export default function OperationsDashboard() {
           </div>
 
           {/* Resource allocation pie */}
-          <div className="p-4 sm:p-6 border-b border-eva-orange/10">
+          <div className="nerv-panel p-3 sm:p-4">
             <PieChart
               title="RESOURCE ALLOCATION"
               slices={resourceSlices}
@@ -266,7 +267,7 @@ export default function OperationsDashboard() {
           </div>
 
           {/* Phase status stack */}
-          <div className="p-4 sm:p-6">
+          <div className="nerv-panel p-3 sm:p-4">
             <PhaseStatusStack
               title="SYSTEM STATUS"
               phases={systemPhases}
@@ -277,7 +278,8 @@ export default function OperationsDashboard() {
       </div>
 
       {/* ═══════ BOTTOM ROW — THREAT ASSESSMENT ═══════ */}
-      <div className="border-t border-eva-orange/30 p-4 sm:p-6">
+      <div className="border-t border-eva-orange/16 py-4">
+        <div className="nerv-page-frame">
         <div
           className="text-xs uppercase tracking-[0.2em] text-eva-orange font-bold mb-4"
           style={{ fontFamily: "var(--font-eva-display)" }}
@@ -302,16 +304,19 @@ export default function OperationsDashboard() {
             />
           ))}
         </div>
+        </div>
       </div>
 
       {/* ═══════ FOOTER ═══════ */}
-      <div className="border-t border-eva-white/10 px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:justify-between gap-1">
-        <span className="text-[9px] font-mono text-eva-white/30">
-          NERV CENTRAL DOGMA — OPERATIONS DASHBOARD v3.1.0
-        </span>
-        <span className="text-[9px] font-mono text-eva-white/30">
-          MAGI SYSTEM STATUS: NOMINAL — CLEARANCE LEVEL: A-17
-        </span>
+      <div className="border-t border-eva-white/10 py-3">
+        <div className="nerv-page-frame flex flex-col gap-1 sm:flex-row sm:justify-between">
+          <span className="text-[9px] font-mono text-eva-white/30">
+            NERV CENTRAL DOGMA — OPERATIONS DASHBOARD v3.1.0
+          </span>
+          <span className="text-[9px] font-mono text-eva-white/30">
+            MAGI SYSTEM STATUS: NOMINAL — CLEARANCE LEVEL: A-17
+          </span>
+        </div>
       </div>
     </div>
   );

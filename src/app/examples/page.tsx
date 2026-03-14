@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const displayFont = { fontFamily: "var(--font-eva-display)" };
+const monoFont = { fontFamily: "var(--font-eva-mono)" };
 
 const examples = [
   { href: "/examples/dashboard", name: "Dashboard", description: "Operations monitoring center", category: "DASHBOARD" },
@@ -25,38 +26,101 @@ const categoryColors: Record<string, string> = {
   DASHBOARD: "border-eva-orange text-eva-orange",
   MONITORING: "border-eva-cyan text-eva-cyan",
   COMMUNICATION: "border-eva-green text-eva-green",
-  FORMS: "border-eva-yellow text-eva-yellow",
+  FORMS: "border-eva-amber text-eva-amber",
   CONTENT: "border-eva-red text-eva-red",
   CRUD: "border-eva-orange text-eva-orange",
   DATA: "border-eva-cyan text-eva-cyan",
   DOCUMENT: "border-eva-green text-eva-green",
-  FILES: "border-eva-yellow text-eva-yellow",
+  FILES: "border-eva-amber text-eva-amber",
   MARKETING: "border-eva-red text-eva-red",
   SHOWCASE: "border-eva-cyan text-eva-cyan",
   AUTH: "border-eva-orange text-eva-orange",
   SUPPORT: "border-eva-green text-eva-green",
   ERROR: "border-eva-red text-eva-red",
-  UTILITY: "border-eva-yellow text-eva-yellow",
+  UTILITY: "border-eva-amber text-eva-amber",
 };
 
 export default function ExamplesGalleryPage() {
   return (
-    <div className="min-h-screen bg-eva-black px-4 py-16 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-eva-black px-4 py-8 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="mx-auto max-w-7xl text-center mb-16">
-        <h1
-          className="text-eva-orange text-4xl sm:text-5xl lg:text-6xl tracking-[0.3em] uppercase mb-4"
-          style={displayFont}
-        >
-          Example Gallery
-        </h1>
-        <p
-          className="text-eva-white/50 text-xs sm:text-sm tracking-[0.2em] uppercase"
-          style={displayFont}
-        >
-          16 production-ready interface templates
-        </p>
-        <div className="mt-6 mx-auto w-48 h-px bg-gradient-to-r from-transparent via-eva-orange/60 to-transparent" />
+      <div className="mx-auto max-w-7xl border border-eva-mid-gray/80 bg-[linear-gradient(135deg,rgba(255,153,0,0.14),transparent_42%)] mb-8">
+        <div className="border-b border-eva-mid-gray/80 px-4 py-2 sm:px-5">
+          <span
+            className="text-[10px] uppercase tracking-[0.24em] text-eva-green"
+            style={monoFont}
+          >
+            [entry.node] example router
+          </span>
+        </div>
+        <div className="grid gap-6 px-4 py-5 sm:px-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(20rem,0.7fr)]">
+          <div>
+            <h1
+              className="text-eva-orange text-3xl sm:text-4xl lg:text-5xl tracking-[0.26em] uppercase"
+              style={displayFont}
+            >
+              Example Routes
+            </h1>
+            <p
+              className="mt-3 max-w-3xl text-eva-white/62 text-[13px] leading-7"
+              style={monoFont}
+            >
+              Operational pages, support consoles, and NERV-flavoured product
+              scenarios. Use this index as the live route board for shell,
+              density, and interaction checks across the exported site.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link
+                href="/examples/dashboard"
+                className="border border-eva-orange px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-eva-orange hover:bg-eva-orange hover:text-black transition-colors"
+                style={displayFont}
+              >
+                open operations
+              </Link>
+              <Link
+                href="/examples/report"
+                className="border border-eva-cyan px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-eva-cyan hover:bg-eva-cyan hover:text-black transition-colors"
+                style={displayFont}
+              >
+                inspect reports
+              </Link>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="border border-eva-mid-gray/80 px-3 py-2">
+              <div className="text-[8px] uppercase tracking-[0.18em] text-eva-white/35">
+                routes
+              </div>
+              <div className="mt-1 text-2xl uppercase tracking-[0.16em] text-eva-orange" style={displayFont}>
+                {String(examples.length).padStart(2, "0")}
+              </div>
+            </div>
+            <div className="border border-eva-mid-gray/80 px-3 py-2">
+              <div className="text-[8px] uppercase tracking-[0.18em] text-eva-white/35">
+                export
+              </div>
+              <div className="mt-1 text-2xl uppercase tracking-[0.16em] text-eva-green" style={displayFont}>
+                ready
+              </div>
+            </div>
+            <div className="border border-eva-mid-gray/80 px-3 py-2">
+              <div className="text-[8px] uppercase tracking-[0.18em] text-eva-white/35">
+                primary
+              </div>
+              <div className="mt-1 text-sm uppercase tracking-[0.14em] text-eva-cyan" style={displayFont}>
+                dashboard
+              </div>
+            </div>
+            <div className="border border-eva-mid-gray/80 px-3 py-2">
+              <div className="text-[8px] uppercase tracking-[0.18em] text-eva-white/35">
+                mode
+              </div>
+              <div className="mt-1 text-sm uppercase tracking-[0.14em] text-eva-orange" style={displayFont}>
+                live audit
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Grid */}
@@ -65,41 +129,60 @@ export default function ExamplesGalleryPage() {
           <Link
             key={ex.href}
             href={ex.href}
-            className="group relative block rounded border border-eva-mid-gray bg-eva-dark-gray/60 p-5 transition-all duration-200 hover:border-eva-orange hover:scale-[1.02]"
+            className="group relative block border border-eva-mid-gray/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.005))] p-4 transition-colors duration-200 hover:border-eva-orange"
           >
             {/* Category badge */}
-            <span
-              className={`inline-block text-[9px] tracking-[0.2em] uppercase border px-2 py-0.5 mb-3 ${categoryColors[ex.category] ?? "border-eva-white/40 text-eva-white/40"}`}
-              style={displayFont}
-            >
-              {ex.category}
-            </span>
+            <div className="flex items-center justify-between gap-3 border-b border-eva-mid-gray/70 pb-2">
+              <span
+                className={`inline-block text-[9px] tracking-[0.18em] uppercase border px-2 py-0.5 ${categoryColors[ex.category] ?? "border-eva-white/40 text-eva-white/40"}`}
+                style={displayFont}
+              >
+                {ex.category}
+              </span>
+              <span
+                className="text-[9px] uppercase tracking-[0.16em] text-eva-white/28"
+                style={monoFont}
+              >
+                route.live
+              </span>
+            </div>
 
             {/* Name */}
             <h2
-              className="text-eva-orange text-sm tracking-[0.15em] uppercase mb-2 group-hover:text-eva-cyan transition-colors"
+              className="mt-3 text-eva-orange text-sm tracking-[0.16em] uppercase group-hover:text-eva-cyan transition-colors"
               style={displayFont}
             >
               {ex.name}
             </h2>
 
             {/* Description */}
-            <p className="text-eva-white/50 text-xs leading-relaxed">
+            <p className="mt-2 min-h-[3rem] text-eva-white/55 text-xs leading-relaxed" style={monoFont}>
               {ex.description}
             </p>
 
             {/* Arrow indicator */}
-            <span className="absolute bottom-4 right-4 text-eva-mid-gray text-xs group-hover:text-eva-orange transition-colors">
-              &rarr;
-            </span>
+            <div className="mt-4 flex items-center justify-between border-t border-eva-mid-gray/70 pt-2">
+              <span
+                className="text-[9px] uppercase tracking-[0.16em] text-eva-white/28"
+                style={monoFont}
+              >
+                {ex.href}
+              </span>
+              <span className="text-eva-mid-gray text-xs group-hover:text-eva-orange transition-colors">
+                &rarr;
+              </span>
+            </div>
           </Link>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="mx-auto max-w-7xl mt-16">
-        <div className="h-px bg-gradient-to-r from-transparent via-eva-mid-gray to-transparent mb-8" />
-        <div className="flex items-center justify-center gap-6 text-xs tracking-[0.15em] uppercase" style={displayFont}>
+      <div className="mx-auto max-w-7xl mt-8 border-t border-eva-mid-gray/80 pt-5">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-xs tracking-[0.15em] uppercase">
+          <span className="text-eva-white/30 text-[9px]" style={monoFont}>
+            export board // stable
+          </span>
+          <div className="flex items-center gap-6" style={displayFont}>
           <Link
             href="/docs"
             className="text-eva-cyan hover:text-eva-orange transition-colors"
@@ -113,6 +196,7 @@ export default function ExamplesGalleryPage() {
           >
             Command Center
           </Link>
+          </div>
         </div>
       </div>
     </div>

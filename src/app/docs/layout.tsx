@@ -3,11 +3,41 @@ import { DocsSidebar } from "@/components/docs/DocsSidebar";
 
 export default function DocsLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-eva-black">
+    <div className="min-h-screen bg-eva-black text-eva-white">
       <DocsSidebar />
-      <main className="docs-main">
-        <div className="docs-content">
-          {children}
+      <main className="docs-main min-h-screen bg-[radial-gradient(circle_at_top,rgba(255,153,0,0.07),transparent_24%),linear-gradient(180deg,#050505_0%,#020202_100%)] pt-14 lg:pt-0">
+        <div className="border-b border-eva-mid-gray/70 px-4 py-3 sm:px-6 lg:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div
+                className="text-[10px] uppercase tracking-[0.26em] text-eva-green"
+                style={{ fontFamily: "var(--font-eva-mono)" }}
+              >
+                doc.access // online
+              </div>
+              <div
+                className="mt-1 text-lg uppercase tracking-[0.18em] text-eva-orange"
+                style={{ fontFamily: "var(--font-eva-display)" }}
+              >
+                NERV COMPONENT INSPECTION
+              </div>
+            </div>
+            <div
+              className="border border-eva-mid-gray/70 px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] text-eva-white/45"
+              style={{ fontFamily: "var(--font-eva-mono)" }}
+            >
+              route integrity monitored
+            </div>
+          </div>
+        </div>
+        <div
+          className="
+            docs-content
+            mx-auto max-w-[82rem] px-4 py-6 sm:px-6 lg:px-10 lg:py-8
+          "
+          style={{ fontFamily: "var(--font-eva-body)" }}
+        >
+          <article className="docs-mdx">{children}</article>
         </div>
       </main>
     </div>

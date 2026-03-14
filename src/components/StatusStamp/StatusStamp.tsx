@@ -1,7 +1,8 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, type CSSProperties } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CameraOverlayPlate } from "@/components/_internal/CameraOverlayPlate";
 
 type MotionSafeHTMLAttributes = Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -36,34 +37,34 @@ export interface StatusStampProps extends MotionSafeHTMLAttributes {
 
 const colorMap = {
   red: {
-    text: "#FF0000",
-    glow: "rgba(255, 0, 0, 0.3)",
-    border: "#FF0000",
-    bg: "rgba(255, 0, 0, 0.05)",
+    text: "#FF2B1D",
+    glow: "rgba(255, 43, 29, 0.18)",
+    border: "#FF2B1D",
+    bg: "rgba(255, 43, 29, 0.07)",
   },
   green: {
     text: "#00FF00",
-    glow: "rgba(0, 255, 0, 0.3)",
+    glow: "rgba(0, 255, 0, 0.16)",
     border: "#00FF00",
-    bg: "rgba(0, 255, 0, 0.05)",
+    bg: "rgba(0, 255, 0, 0.07)",
   },
   orange: {
     text: "#FF9900",
-    glow: "rgba(255, 153, 0, 0.3)",
+    glow: "rgba(255, 153, 0, 0.16)",
     border: "#FF9900",
-    bg: "rgba(255, 153, 0, 0.05)",
+    bg: "rgba(255, 153, 0, 0.07)",
   },
   cyan: {
-    text: "#00FFFF",
-    glow: "rgba(0, 255, 255, 0.3)",
-    border: "#00FFFF",
-    bg: "rgba(0, 255, 255, 0.05)",
+    text: "#00F6FF",
+    glow: "rgba(0, 246, 255, 0.16)",
+    border: "#00F6FF",
+    bg: "rgba(0, 246, 255, 0.07)",
   },
   magenta: {
     text: "#FF00FF",
-    glow: "rgba(255, 0, 255, 0.3)",
+    glow: "rgba(255, 0, 255, 0.18)",
     border: "#FF00FF",
-    bg: "rgba(255, 0, 255, 0.05)",
+    bg: "rgba(255, 0, 255, 0.07)",
   },
 };
 
@@ -84,6 +85,12 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
 }, ref) {
   const colors = colorMap[color];
   const effectiveBordered = bordered || doubleBordered;
+  const overlayVars = {
+    "--overlay-main": colors.border,
+    "--overlay-main-soft": colors.border,
+    "--overlay-glow": colors.glow,
+    "--overlay-surface": colors.bg,
+  } as CSSProperties;
 
   const containerClass = fullScreen
     ? "fixed inset-0 z-50 flex items-center justify-center bg-eva-black/90"
@@ -116,13 +123,13 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
                   {Array.from({ length: repeatCols }).map((_, col) => (
                     <span
                       key={col}
-                      className="font-bold uppercase tracking-wider whitespace-nowrap"
+                      className="font-bold uppercase tracking-[0.16em] whitespace-nowrap"
                       style={{
                         fontFamily: "var(--font-eva-display)",
-                        fontSize: "clamp(2rem, 6vw, 5rem)",
+                        fontSize: "clamp(1.4rem, 4.6vw, 3.4rem)",
                         color: colors.text,
-                        textShadow: `0 0 20px ${colors.glow}, 0 0 40px ${colors.glow}`,
-                        opacity: 0.9 - row * 0.1,
+                        textShadow: `0 0 8px ${colors.glow}`,
+                        opacity: 0.88 - row * 0.1,
                       }}
                     >
                       {text}
@@ -140,61 +147,47 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             >
               {effectiveBordered ? (
-                (() => {
-                  const innerBox = (
+                <div className="relative" style={overlayVars}>
+                  {doubleBordered && (
                     <div
-                      className="px-8 py-4"
+                      className="pointer-events-none absolute -inset-1.5 rounded-[0.85rem] border border-current opacity-80"
                       style={{
-                        border: `3px solid ${colors.border}`,
-                        backgroundColor: colors.bg,
-                        boxShadow: `0 0 20px ${colors.glow}, inset 0 0 20px ${colors.bg}`,
+                        color: colors.border,
+                        boxShadow: `0 0 0 1px ${colors.glow}`,
+                      }}
+                    />
+                  )}
+                  <CameraOverlayPlate color={color}>
+                    <div className="camera-overlay-meta text-center">
+                      {subtitle ? "status register" : "status"}
+                    </div>
+                    <div
+                      className="camera-overlay-title text-center"
+                      style={{
+                        fontSize: "clamp(1.5rem, 5vw, 4rem)",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      <span
-                        className="font-bold uppercase tracking-[0.15em] whitespace-nowrap"
-                        style={{
-                          fontFamily: "var(--font-eva-display)",
-                          fontSize: "clamp(2rem, 8vw, 6rem)",
-                          color: colors.text,
-                          textShadow: `0 0 10px ${colors.glow}`,
-                        }}
-                      >
-                        {text}
-                      </span>
+                      {text}
                     </div>
-                  );
-
-                  if (doubleBordered) {
-                    return (
-                      <div
-                        style={{
-                          padding: 5,
-                          border: `3px solid ${colors.border}`,
-                          boxShadow: `0 0 20px ${colors.glow}`,
-                        }}
-                      >
-                        {innerBox}
-                      </div>
-                    );
-                  }
-
-                  return innerBox;
-                })()
+                    {subtitle && <div className="camera-overlay-detail text-center">{subtitle}</div>}
+                  </CameraOverlayPlate>
+                </div>
               ) : (
                 <span
-                  className="font-bold uppercase tracking-[0.15em] whitespace-nowrap"
+                  className="font-bold uppercase tracking-[0.18em] whitespace-nowrap"
                   style={{
                     fontFamily: "var(--font-eva-display)",
-                    fontSize: "clamp(3rem, 12vw, 10rem)",
+                    fontSize: "clamp(2rem, 8vw, 6rem)",
                     color: colors.text,
-                    textShadow: `0 0 30px ${colors.glow}, 0 0 60px ${colors.glow}`,
+                    textShadow: `0 0 14px ${colors.glow}`,
                   }}
                 >
                   {text}
                 </span>
               )}
 
-              {subtitle && (
+              {subtitle && !effectiveBordered && (
                 <motion.span
                   className="mt-2 font-mono text-sm uppercase tracking-[0.3em]"
                   style={{ color: colors.text, opacity: 0.6 }}

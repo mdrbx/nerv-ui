@@ -19,6 +19,8 @@ export const docsNavigation: NavSection[] = [
     title: "SYSTEM",
     items: [
       { title: "Installation", href: "/docs/getting-started/installation" },
+      { title: "Visual Grammar", href: "/docs/getting-started/visual-grammar" },
+      { title: "Camera Overlay Grammar", href: "/docs/getting-started/camera-overlays" },
       { title: "Theme Provider", href: "/docs/components/theme-provider" },
     ],
   },

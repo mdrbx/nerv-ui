@@ -75,91 +75,115 @@ export default function HelpPage() {
     : currentFaqs;
 
   return (
-    <div className="min-h-screen bg-eva-black p-4 sm:p-8">
-      {/* Header */}
-      <div className="max-w-5xl mx-auto mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <h1
-            className="text-2xl sm:text-3xl font-black uppercase tracking-[0.2em] text-eva-orange"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            NERV SUPPORT TERMINAL
-          </h1>
-          <Badge label="HELP DESK" variant="info" size="sm" />
-        </div>
-        <p className="text-eva-mid-gray text-xs font-mono uppercase tracking-wider">
-          KNOWLEDGE BASE // SEARCH AND BROWSE DOCUMENTATION
-        </p>
-      </div>
-
-      {/* Search bar */}
-      <div className="max-w-5xl mx-auto mb-8">
-        <InputField
-          label="SEARCH"
-          placeholder="Search knowledge base..."
-          color="orange"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-
-      {/* Two-column layout */}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Left: Navigation */}
-        <div className="md:col-span-4">
-          <NavigationTabs
-            tabs={categories}
-            activeTab={activeCategory}
-            onTabChange={(id) => {
-              setActiveCategory(id);
-              setSearch("");
-            }}
-            direction="vertical"
-            color="orange"
-          />
-        </div>
-
-        {/* Right: FAQ content */}
-        <div className="md:col-span-8">
-          {filteredFaqs.length > 0 ? (
-            <Accordion>
-              {filteredFaqs.map((faq) => (
-                <AccordionItem key={faq.id} id={faq.id} title={faq.question} color="orange">
-                  <Card variant="hud" className="mt-1">
-                    <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </Card>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          ) : (
-            <div className="border border-eva-mid-gray/30 p-8 text-center">
-              <p className="text-eva-mid-gray text-xs font-mono uppercase tracking-wider">
-                NO MATCHING ENTRIES FOUND
-              </p>
+    <div className="min-h-screen bg-eva-black px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
+          <div>
+            <div className="flex flex-wrap items-center gap-3">
+              <h1
+                className="text-2xl font-black uppercase tracking-[0.2em] text-eva-orange sm:text-3xl"
+                style={{ fontFamily: "var(--font-eva-display)" }}
+              >
+                NERV SUPPORT TERMINAL
+              </h1>
+              <Badge label="HELP DESK" variant="info" size="sm" />
             </div>
-          )}
-        </div>
-      </div>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-eva-white/40">
+              KNOWLEDGE BASE / INCIDENT PROCEDURES / AUTHORIZED PERSONNEL
+            </p>
+          </div>
 
-      {/* Bottom section */}
-      <div className="max-w-5xl mx-auto mt-10">
-        <Divider color="orange" variant="dashed" />
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p
-            className="text-eva-mid-gray text-xs uppercase tracking-wider"
-            style={{ fontFamily: "var(--font-eva-display)" }}
-          >
-            Need more help?
-          </p>
-          <div className="flex gap-3">
-            <Button variant="primary" size="md">
-              CONTACT SUPPORT
-            </Button>
-            <Button variant="ghost" size="md">
-              SUBMIT TICKET
-            </Button>
+          <Card title="QUEUE STATUS">
+            <div className="space-y-2 font-mono text-xs text-eva-white/70">
+              <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                <span>ACTIVE SECTION</span>
+                <span className="text-eva-cyan">{activeCategory.toUpperCase()}</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-eva-mid-gray/20 pb-2">
+                <span>MATCHES</span>
+                <span className="text-eva-green">{String(filteredFaqs.length).padStart(2, "0")}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>SEARCH FILTER</span>
+                <span className={search.trim() ? "text-eva-orange" : "text-eva-white/40"}>
+                  {search.trim() ? "ENGAGED" : "CLEAR"}
+                </span>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-[18rem_minmax(0,1fr)]">
+          <div className="space-y-4">
+            <Card title="QUERY TERMINAL">
+              <InputField
+                label="SEARCH"
+                placeholder="Search knowledge base..."
+                color="orange"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </Card>
+
+            <Card title="SECTION INDEX">
+              <NavigationTabs
+                tabs={categories}
+                activeTab={activeCategory}
+                onTabChange={(id) => {
+                  setActiveCategory(id);
+                  setSearch("");
+                }}
+                direction="vertical"
+                color="orange"
+              />
+            </Card>
+          </div>
+
+          <div className="space-y-4">
+            <Card
+              title={`ENTRY SET // ${String(filteredFaqs.length).padStart(2, "0")} MATCHES`}
+            >
+              {filteredFaqs.length > 0 ? (
+                <Accordion>
+                  {filteredFaqs.map((faq) => (
+                    <AccordionItem key={faq.id} id={faq.id} title={faq.question} color="orange">
+                      <Card variant="hud" className="mt-1">
+                        <p className="text-eva-white/80 text-xs font-mono leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </Card>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
+                <div className="border border-eva-mid-gray/30 bg-eva-black/70 p-6 text-center">
+                  <p className="font-mono text-xs uppercase tracking-[0.18em] text-eva-mid-gray">
+                    NO MATCHING ENTRIES FOUND
+                  </p>
+                </div>
+              )}
+            </Card>
+
+            <Divider color="orange" variant="dashed" />
+
+            <Card title="ESCALATION CHANNELS">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <p
+                  className="text-xs uppercase tracking-[0.18em] text-eva-white/45"
+                  style={{ fontFamily: "var(--font-eva-display)" }}
+                >
+                  Need more help?
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary" size="md">
+                    CONTACT SUPPORT
+                  </Button>
+                  <Button variant="ghost" size="md">
+                    SUBMIT TICKET
+                  </Button>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
