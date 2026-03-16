@@ -105,13 +105,13 @@ explicitly enabled.
   </Card>
 </ComponentPreview>
 
-## Rounded Video Plate
+## Video Variant
 
-Use the orange `video` palette with `rounded` when the card should read like a
-captured-feed annotation instead of a rigid chassis element.
+`video` is only a palette. It gives the orange footage-style treatment without
+changing the geometry of the card.
 
 <ComponentPreview
-  title="ROUNDED"
+  title="VIDEO"
   code={`<div className="relative overflow-hidden border border-nerv-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,#121212_0%,#000_100%)] p-5">
   <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.06)_4px_8px)]" />
   <div className="relative ml-auto max-w-sm">
@@ -120,7 +120,6 @@ captured-feed annotation instead of a rigid chassis element.
       title="KAWORU NAGISA"
       subtitle="ENTRY PLUG 03\\nPILOT // FOURTH CHILD"
       variant="video"
-      rounded
       footer="CAMERA NO.012 LEFT // MAGNIFICATION : x05"
     />
   </div>
@@ -134,11 +133,46 @@ captured-feed annotation instead of a rigid chassis element.
         title="KAWORU NAGISA"
         subtitle={"ENTRY PLUG 03\nPILOT // FOURTH CHILD"}
         variant="video"
-        rounded
         footer="CAMERA NO.012 LEFT // MAGNIFICATION : x05"
       />
     </div>
   </div>
+</ComponentPreview>
+
+## Rounded Option
+
+`rounded` is a pure shape option. It can be enabled on any palette, including
+the default structural one.
+
+<ComponentPreview
+  title="ROUNDED"
+  code={`<Card
+  eyebrow="SYSTEM"
+  title="HARMONICS LOCK"
+  subtitle="SUBJECT : FIFTH C.\\nSYNC CHANNEL // CAGE-03"
+  rounded
+  footer="CAMERA NO.012 LEFT // SIGNAL HELD"
+>
+  <div className="space-y-1 text-xs font-mono text-nerv-white/80">
+    <div>Pattern: BLUE</div>
+    <div>Signal integrity: 93%</div>
+    <div>Operator: MAGI-2</div>
+  </div>
+</Card>`}
+>
+  <Card
+    eyebrow="SYSTEM"
+    title="HARMONICS LOCK"
+    subtitle={"SUBJECT : FIFTH C.\nSYNC CHANNEL // CAGE-03"}
+    rounded
+    footer="CAMERA NO.012 LEFT // SIGNAL HELD"
+  >
+    <div className="space-y-1 text-xs font-mono text-nerv-white/80">
+      <div>Pattern: BLUE</div>
+      <div>Signal integrity: 93%</div>
+      <div>Operator: MAGI-2</div>
+    </div>
+  </Card>
 </ComponentPreview>
 
 ## Without Title
@@ -211,8 +245,8 @@ captured-feed annotation instead of a rigid chassis element.
 />
 
 <Callout type="info" title="PALETTE VS SHAPE">
-  `variant="video"` gives the camera-overlay color treatment. `rounded`
-  decides whether the card reads as a rigid frame or a softer plaque.
+  `variant="video"` only changes the palette. `rounded` only changes the outer
+  shape. They can be used independently or together.
 </Callout>
 
 <Callout type="warning" title="USE ROUNDED SPARINGLY">
