@@ -3,7 +3,9 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Card
 
-Structural panel container for dense monitoring surfaces, plus a specialized rounded `video` variant for subject/video overlays. Use the angular variants for control-room chassis and the rounded one only when a surface should read like captured footage annotation.
+Concise NERV frame for structural panels and footage-style plaques. `variant`
+controls the palette, while `rounded` controls whether the frame stays rigid or
+leans into the softer camera-overlay treatment.
 
 ```tsx
 import { Card } from "@mdrbx/nerv-ui";
@@ -13,8 +15,12 @@ import { Card } from "@mdrbx/nerv-ui";
 
 <ComponentPreview
   title="DEFAULT"
-  code={`<Card title="PILOT STATUS">
-  <div className="text-xs font-mono text-nerv-white/80 space-y-1">
+  code={`<Card
+  eyebrow="SYSTEM"
+  title="PILOT STATUS"
+  subtitle="SYNC CHANNEL // CAGE-03"
+>
+  <div className="space-y-1 text-xs font-mono text-nerv-white/80">
     <div>Name: IKARI, SHINJI</div>
     <div>Unit: EVA-01 TEST TYPE</div>
     <div>Sync Rate: 41.3%</div>
@@ -22,8 +28,8 @@ import { Card } from "@mdrbx/nerv-ui";
   </div>
 </Card>`}
 >
-  <Card title="PILOT STATUS">
-    <div className="text-xs font-mono text-nerv-white/80 space-y-1">
+  <Card eyebrow="SYSTEM" title="PILOT STATUS" subtitle="SYNC CHANNEL // CAGE-03">
+    <div className="space-y-1 text-xs font-mono text-nerv-white/80">
       <div>Name: IKARI, SHINJI</div>
       <div>Unit: EVA-01 TEST TYPE</div>
       <div>Sync Rate: 41.3%</div>
@@ -36,46 +42,62 @@ import { Card } from "@mdrbx/nerv-ui";
 
 <ComponentPreview
   title="ALERT"
-  code={`<Card title="CRITICAL ALERT" variant="alert"
-  footer="TIMESTAMP: 2015-06-22T14:22:07Z">
-  <div className="text-xs font-mono text-nerv-red space-y-1">
-    <div>PATTERN BLUE CONFIRMED</div>
-    <div>Target designation: 5th ANGEL</div>
+  code={`<Card
+  eyebrow="PATTERN BLUE"
+  title="CRITICAL ALERT"
+  subtitle="TARGET DESIGNATION // 5TH ANGEL"
+  variant="alert"
+  footer="TIMESTAMP: 2015-06-22T14:22:07Z"
+>
+  <div className="space-y-1 text-xs font-mono text-nerv-red">
     <div>Codename: RAMIEL</div>
     <div>A.T. Field strength: IMMEASURABLE</div>
+    <div>Countermeasure: LONG-RANGE FIRE</div>
   </div>
 </Card>`}
 >
   <Card
+    eyebrow="PATTERN BLUE"
     title="CRITICAL ALERT"
+    subtitle="TARGET DESIGNATION // 5TH ANGEL"
     variant="alert"
     footer="TIMESTAMP: 2015-06-22T14:22:07Z"
   >
-    <div className="text-xs font-mono text-nerv-red space-y-1">
-      <div>PATTERN BLUE CONFIRMED</div>
-      <div>Target designation: 5th ANGEL</div>
+    <div className="space-y-1 text-xs font-mono text-nerv-red">
       <div>Codename: RAMIEL</div>
       <div>A.T. Field strength: IMMEASURABLE</div>
+      <div>Countermeasure: LONG-RANGE FIRE</div>
     </div>
   </Card>
 </ComponentPreview>
 
 ## HUD Variant
 
-Translucent overlay with backdrop blur, no clip-path corner cut, ideal for HUD-style overlays.
+Translucent version for overlays, while staying angular unless `rounded` is
+explicitly enabled.
 
 <ComponentPreview
   title="HUD"
-  code={`<Card title="OVERLAY STATUS" variant="hud">
-  <div className="text-xs font-mono text-white/70 space-y-1">
+  code={`<Card
+  eyebrow="OVERLAY"
+  title="VISUAL STATUS"
+  subtitle="PASSIVE SCAN // OPTICAL LINK"
+  variant="hud"
+>
+  <div className="space-y-1 text-xs font-mono text-white/72">
     <div>Mode: PASSIVE SCAN</div>
     <div>A.T. Field: NOMINAL</div>
     <div>Visibility: 82%</div>
   </div>
 </Card>`}
 >
-  <Card title="OVERLAY STATUS" variant="hud">
-    <div className="text-xs font-mono text-white/70 space-y-1">
+  <Card
+    eyebrow="OVERLAY"
+    title="VISUAL STATUS"
+    subtitle="PASSIVE SCAN // OPTICAL LINK"
+    variant="hud"
+  >
+    <div className="space-y-1 text-xs font-mono text-white/72">
       <div>Mode: PASSIVE SCAN</div>
       <div>A.T. Field: NOMINAL</div>
       <div>Visibility: 82%</div>
@@ -83,38 +105,38 @@ Translucent overlay with backdrop blur, no clip-path corner cut, ideal for HUD-s
   </Card>
 </ComponentPreview>
 
-## Video Variant
+## Rounded Video Plate
 
-Rounded double-line plate for camera feeds, subject callouts, and footage overlays. This is the card-side entry point into the camera-overlay grammar.
+Use the orange `video` palette with `rounded` when the card should read like a
+captured-feed annotation instead of a rigid chassis element.
 
 <ComponentPreview
-  title="VIDEO"
+  title="ROUNDED"
   code={`<div className="relative overflow-hidden border border-nerv-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,#121212_0%,#000_100%)] p-5">
   <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.06)_4px_8px)]" />
   <div className="relative ml-auto max-w-sm">
-    <Card title="KAWORU NAGISA" variant="video" footer="CAMERA NO.012 LEFT">
-      <div className="space-y-1.5 text-[10px] uppercase tracking-[0.12em] text-nerv-orange/80" style={{ fontFamily: "var(--font-nerv-mono)" }}>
-        <div>Subject: Fifth C.</div>
-        <div>Harmonics Test Proceeding</div>
-        <div>Signal State: Live</div>
-      </div>
-    </Card>
+    <Card
+      eyebrow="SUBJECT : FIFTH C."
+      title="KAWORU NAGISA"
+      subtitle="ENTRY PLUG 03\\nPILOT // FOURTH CHILD"
+      variant="video"
+      rounded
+      footer="CAMERA NO.012 LEFT // MAGNIFICATION : x05"
+    />
   </div>
 </div>`}
 >
   <div className="relative overflow-hidden border border-nerv-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_38%),linear-gradient(180deg,#121212_0%,#000_100%)] p-5">
     <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.06)_4px_8px)]" />
     <div className="relative ml-auto max-w-sm">
-      <Card title="KAWORU NAGISA" variant="video" footer="CAMERA NO.012 LEFT">
-        <div
-          className="space-y-1.5 text-[10px] uppercase tracking-[0.12em] text-nerv-orange/80"
-          style={{ fontFamily: "var(--font-nerv-mono)" }}
-        >
-          <div>Subject: Fifth C.</div>
-          <div>Harmonics Test Proceeding</div>
-          <div>Signal State: Live</div>
-        </div>
-      </Card>
+      <Card
+        eyebrow="SUBJECT : FIFTH C."
+        title="KAWORU NAGISA"
+        subtitle={"ENTRY PLUG 03\nPILOT // FOURTH CHILD"}
+        variant="video"
+        rounded
+        footer="CAMERA NO.012 LEFT // MAGNIFICATION : x05"
+      />
     </div>
   </div>
 </ComponentPreview>
@@ -123,15 +145,15 @@ Rounded double-line plate for camera feeds, subject callouts, and footage overla
 
 <ComponentPreview
   title="NO HEADER"
-  code={`<Card>
-  <div className="text-sm text-nerv-cyan font-mono">
-    Minimal card — no header, no footer.
+  code={`<Card footer="AUXILIARY CHANNEL">
+  <div className="text-sm font-mono text-nerv-cyan">
+    Minimal card — no header, just payload and a single footer line.
   </div>
 </Card>`}
 >
-  <Card>
-    <div className="text-sm text-nerv-cyan font-mono">
-      Minimal card — no header, no footer.
+  <Card footer="AUXILIARY CHANNEL">
+    <div className="text-sm font-mono text-nerv-cyan">
+      Minimal card — no header, just payload and a single footer line.
     </div>
   </Card>
 </ComponentPreview>
@@ -142,29 +164,42 @@ Rounded double-line plate for camera feeds, subject callouts, and footage overla
   props={[
     {
       name: "title",
-      type: "string",
-      description: "Card header title (displayed uppercase)",
+      type: "ReactNode",
+      description: "Main header title",
+    },
+    {
+      name: "eyebrow",
+      type: "ReactNode",
+      description: "Small line above the title",
+    },
+    {
+      name: "subtitle",
+      type: "ReactNode",
+      description: "Supporting line below the title",
     },
     {
       name: "children",
       type: "ReactNode",
       description: "Main content",
-      required: true,
     },
     { name: "footer", type: "ReactNode", description: "Footer content" },
     {
       name: "variant",
       type: '"default" | "alert" | "hud" | "video"',
       default: '"default"',
-      description:
-        "Visual variant — structural panel, alert panel, translucent HUD panel, or rounded video-overlay plate",
+      description: "Palette for the frame and typography",
+    },
+    {
+      name: "rounded",
+      type: "boolean",
+      default: "false",
+      description: "Whether the outer frame uses rounded corners",
     },
     {
       name: "cutSize",
       type: "number",
       default: "20",
-      description:
-        "Legacy compatibility prop retained for older usages; not promoted by the current visual system",
+      description: "Legacy compatibility prop retained for older usages",
     },
     {
       name: "className",
@@ -175,14 +210,12 @@ Rounded double-line plate for camera feeds, subject callouts, and footage overla
   ]}
 />
 
-<Callout type="info" title="TWO FAMILIES">
-  `default`, `alert`, and `hud` are structural cards for panels and chassis.
-  `video` is different on purpose: it belongs to the camera-overlay family and
-  should be reserved for footage, subject lockups, and signal annotations.
+<Callout type="info" title="PALETTE VS SHAPE">
+  `variant="video"` gives the camera-overlay color treatment. `rounded`
+  decides whether the card reads as a rigid frame or a softer plaque.
 </Callout>
 
-<Callout type="warning" title="DO NOT ROUND THE WHOLE SYSTEM">
-  The rounded edges in the anime are localized to camera/video plaques. Keep
-  navigation, shells, and standard monitoring cards angular; use
-  `variant="video"` only where the UI should feel attached to an image feed.
+<Callout type="warning" title="USE ROUNDED SPARINGLY">
+  Keep most structural shells angular. Turn on `rounded` when the card should
+  feel attached to footage, tracking, or a subject lockup.
 </Callout>

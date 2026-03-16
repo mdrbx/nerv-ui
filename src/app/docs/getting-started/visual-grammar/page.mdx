@@ -35,7 +35,7 @@ Use angular panels for command rooms, data chassis, navigation, logs, forms, and
 
 Use rounded plaques only when a component should feel attached to a signal feed, portrait capture, targeting frame, or live camera overlay.
 
-- Prefer <Link href="/docs/components/card">`<Card variant="video" />`</Link>, <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
+- Prefer <Link href="/docs/components/card">`<Card variant="video" rounded />`</Link>, <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
 - Rounded corners belong to the plaque, not the page shell.
 - Titles should feel like broadcast annotation, not panel headers.
 
@@ -43,12 +43,14 @@ Use rounded plaques only when a component should feel attached to a signal feed,
   <div className="relative overflow-hidden border border-nerv-mid-gray/50 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),transparent_35%),linear-gradient(180deg,#181818_0%,#020202_100%)] p-5">
     <div className="absolute inset-0 opacity-20 [background:repeating-linear-gradient(0deg,transparent_0_4px,rgba(255,255,255,0.05)_4px_8px)]" />
     <div className="relative ml-auto max-w-sm">
-      <Card title="TEST PLUG-02" variant="video" footer="HARMONICS TEST PROCEEDING">
-        <div className="space-y-1 text-[10px] uppercase tracking-[0.12em] text-nerv-orange/80" style={{ fontFamily: "var(--font-nerv-mono)" }}>
-          <div>Subject: Fifth C.</div>
-          <div>Signal State: Live</div>
-        </div>
-      </Card>
+      <Card
+        eyebrow="TEST PLUG-02"
+        title="KAWORU NAGISA"
+        subtitle={"HARMONICS TEST PROCEEDING\nSUBJECT : FIFTH C."}
+        variant="video"
+        rounded
+        footer="SIGNAL STATE : LIVE"
+      />
     </div>
   </div>
 </ComponentPreview>

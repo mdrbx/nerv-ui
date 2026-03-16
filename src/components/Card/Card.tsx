@@ -1,18 +1,26 @@
 "use client";
 
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, type CSSProperties, type ReactNode } from "react";
 
-export interface CardProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className" | "title"> {
-  /** Card header title (displayed uppercase) */
-  title?: string;
+export interface CardProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "children" | "className" | "title"
+> {
+  /** Card header title */
+  title?: ReactNode;
+  /** Small header line above the title */
+  eyebrow?: ReactNode;
+  /** Supporting line below the title */
+  subtitle?: ReactNode;
   /** Main content */
-  children: ReactNode;
+  children?: ReactNode;
   /** Footer content */
   footer?: ReactNode;
-  /** Visual variant -- structural panel, alert, minimal hud, or rounded video overlay plate */
+  /** Visual palette */
   variant?: "default" | "alert" | "hud" | "video";
-  /** Legacy corner-cut prop retained for API compatibility */
+  /** Whether the outer frame uses rounded corners */
+  rounded?: boolean;
+  /** Legacy prop retained for API compatibility */
   cutSize?: number;
   /** Additional CSS classes */
   className?: string;
@@ -20,192 +28,194 @@ export interface CardProps
 
 const VARIANT_CONFIG = {
   default: {
-    borderColor: "#00FF00",
-    titleColor: "text-nerv-green",
-    panelColor: "rgba(0, 255, 0, 0.08)",
-    lineColor: "rgba(0, 255, 0, 0.35)",
-    surface: "linear-gradient(180deg, rgba(3, 14, 3, 0.98) 0%, rgba(0, 0, 0, 0.98) 100%)",
+    main: "#00FF00",
+    soft: "rgba(126, 255, 126, 0.62)",
+    glow: "rgba(0, 255, 0, 0.14)",
+    surface: "rgba(0, 255, 0, 0.08)",
+    divider: "rgba(126, 255, 126, 0.22)",
+    header: "#00FF00",
+    detail: "rgba(160, 255, 160, 0.82)",
+    body: "rgba(240, 240, 240, 0.84)",
+    background:
+      "linear-gradient(180deg, rgba(4, 12, 4, 0.96) 0%, rgba(0, 0, 0, 0.95) 100%)",
   },
   alert: {
-    borderColor: "#FF0000",
-    titleColor: "text-nerv-red",
-    panelColor: "rgba(255, 0, 0, 0.08)",
-    lineColor: "rgba(255, 0, 0, 0.35)",
-    surface: "linear-gradient(180deg, rgba(18, 1, 1, 0.98) 0%, rgba(0, 0, 0, 0.98) 100%)",
+    main: "#FF2B1D",
+    soft: "rgba(255, 119, 108, 0.62)",
+    glow: "rgba(255, 43, 29, 0.16)",
+    surface: "rgba(255, 43, 29, 0.08)",
+    divider: "rgba(255, 119, 108, 0.24)",
+    header: "#FF2B1D",
+    detail: "rgba(255, 166, 160, 0.84)",
+    body: "rgba(250, 232, 230, 0.9)",
+    background:
+      "linear-gradient(180deg, rgba(20, 4, 3, 0.96) 0%, rgba(0, 0, 0, 0.95) 100%)",
   },
   hud: {
-    borderColor: "rgba(224, 224, 224, 0.22)",
-    titleColor: "text-white/75",
-    panelColor: "rgba(224, 224, 224, 0.08)",
-    lineColor: "rgba(224, 224, 224, 0.2)",
-    surface: "linear-gradient(180deg, rgba(4, 6, 7, 0.82) 0%, rgba(0, 0, 0, 0.68) 100%)",
+    main: "rgba(236, 236, 236, 0.74)",
+    soft: "rgba(255, 255, 255, 0.32)",
+    glow: "rgba(255, 255, 255, 0.08)",
+    surface: "rgba(255, 255, 255, 0.04)",
+    divider: "rgba(255, 255, 255, 0.14)",
+    header: "rgba(255, 255, 255, 0.86)",
+    detail: "rgba(255, 255, 255, 0.62)",
+    body: "rgba(255, 255, 255, 0.8)",
+    background:
+      "linear-gradient(180deg, rgba(12, 14, 16, 0.84) 0%, rgba(0, 0, 0, 0.72) 100%)",
   },
   video: {
-    borderColor: "#FF9900",
-    titleColor: "text-nerv-orange",
-    panelColor: "rgba(255, 153, 0, 0.08)",
-    lineColor: "rgba(255, 184, 90, 0.48)",
-    surface: "linear-gradient(180deg, rgba(7, 7, 7, 0.92) 0%, rgba(0, 0, 0, 0.82) 100%)",
+    main: "#FF9900",
+    soft: "rgba(255, 190, 92, 0.72)",
+    glow: "rgba(255, 153, 0, 0.18)",
+    surface: "rgba(255, 153, 0, 0.08)",
+    divider: "rgba(255, 190, 92, 0.28)",
+    header: "#FF9900",
+    detail: "rgba(255, 199, 120, 0.86)",
+    body: "rgba(255, 236, 208, 0.88)",
+    background:
+      "linear-gradient(180deg, rgba(14, 10, 3, 0.95) 0%, rgba(0, 0, 0, 0.95) 100%)",
   },
 } as const;
 
-/**
- * Segmented NERV-style inspection panel.
- * Used for status displays, forms, and data grouping.
- */
-export const Card = forwardRef<HTMLDivElement, CardProps>(
-  function Card(
-    {
-      title,
-      children,
-      footer,
-      variant = "default",
-      cutSize = 20,
-      className = "",
-      ...rest
-    },
-    ref
-  ) {
-    const config = VARIANT_CONFIG[variant];
-    const isHud = variant === "hud";
-    const isVideo = variant === "video";
-    const videoRadius = 14;
+const TITLE_CLASS_MAP = {
+  default: "text-[0.98rem] leading-[1.02] tracking-[0.16em]",
+  alert: "text-[0.98rem] leading-[1.02] tracking-[0.16em]",
+  hud: "text-[0.98rem] leading-[1.02] tracking-[0.14em]",
+  video:
+    "text-[clamp(1.02rem,1.85vw,1.55rem)] leading-[0.92] tracking-[0.06em]",
+} as const;
 
-    return (
-      <div
-        ref={ref}
-        className={`relative overflow-hidden ${isHud ? "backdrop-blur-sm" : ""} ${className}`}
-        style={{
-          border: `1px solid ${config.borderColor}`,
-          background: config.surface,
-          boxShadow: isVideo
-            ? `0 0 0 1px ${config.panelColor}, 0 0 12px ${config.panelColor}`
-            : isHud
-              ? undefined
-              : `inset 0 0 0 1px ${config.panelColor}`,
-          clipPath: isVideo ? `inset(0 round ${videoRadius}px)` : undefined,
-        }}
-        {...rest}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(180deg, transparent 0%, ${config.panelColor} 100%)`,
-          }}
-        />
-        <div
-          className="absolute left-0 right-0 top-[26px] h-px pointer-events-none"
-          style={{ backgroundColor: config.lineColor }}
-        />
-        <div
-          className="absolute left-0 right-0 bottom-[22px] h-px pointer-events-none"
-          style={{ backgroundColor: config.lineColor }}
-        />
-        {isVideo && (
-          <>
-            <div
-              className="absolute inset-[2px] pointer-events-none"
-              style={{
-                border: `1px solid ${config.lineColor}`,
-                clipPath: `inset(0 round ${videoRadius - 2}px)`,
-              }}
-            />
-            <div
-              className="absolute left-[10px] right-[10px] top-[8px] h-px pointer-events-none"
-              style={{ backgroundColor: config.lineColor }}
-            />
-            <div
-              className="absolute left-[10px] right-[10px] bottom-[8px] h-px pointer-events-none"
-              style={{ backgroundColor: config.lineColor }}
-            />
-          </>
-        )}
-        <div
-          className="absolute top-0 left-0 h-[22px] pointer-events-none"
-          style={{
-            width: "100%",
-            borderBottom: `1px solid ${config.lineColor}`,
-          }}
-        />
-        <div
-          className="absolute top-0 left-[10px] h-[6px] w-[56px] pointer-events-none"
-          style={{ backgroundColor: config.borderColor }}
-        />
-        <div
-          className="absolute bottom-[6px] left-[10px] right-[10px] h-px pointer-events-none"
-          style={{ backgroundColor: config.lineColor }}
-        />
+const PANEL_PADDING = "px-3 py-3 sm:px-4";
 
-        {title && !isVideo && (
-          <div className="relative z-10 flex min-h-[26px] items-center gap-3 px-3 pb-2 pt-1.5">
-            <span
-              className={`text-[9px] uppercase tracking-[0.28em] ${config.titleColor}`}
-              style={{ fontFamily: "var(--font-nerv-display)" }}
+export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
+  {
+    title,
+    eyebrow,
+    subtitle,
+    children,
+    footer,
+    variant = "default",
+    rounded = false,
+    cutSize: _cutSize,
+    className = "",
+    style,
+    ...rest
+  },
+  ref,
+) {
+  const config = VARIANT_CONFIG[variant];
+  const hasHeader = Boolean(eyebrow || title || subtitle);
+  const hasBody = children !== undefined && children !== null;
+  const hasFooter = footer !== undefined && footer !== null;
+
+  const frameStyle = {
+    borderColor: config.main,
+    background: `radial-gradient(circle at top left, ${config.surface} 0%, transparent 56%), ${config.background}`,
+    boxShadow:
+      variant === "hud"
+        ? `0 0 0 1px ${config.glow}, inset 0 0 0 1px ${config.divider}`
+        : `0 0 0 1px ${config.glow}, inset 0 0 0 1px ${config.soft}, 0 0 18px ${config.glow}`,
+    ...(style ?? {}),
+  } satisfies CSSProperties;
+
+  const eyebrowStyle = {
+    color: config.detail,
+    fontFamily: "var(--font-nerv-display)",
+  } satisfies CSSProperties;
+  const titleStyle = {
+    color: config.header,
+    fontFamily: "var(--font-nerv-display)",
+  } satisfies CSSProperties;
+  const railStyle = {
+    backgroundColor: config.soft,
+  } satisfies CSSProperties;
+  const detailStyle = {
+    color: config.detail,
+    fontFamily: "var(--font-nerv-mono)",
+  } satisfies CSSProperties;
+  const bodyStyle = {
+    color: config.body,
+    fontFamily: "var(--font-nerv-body)",
+  } satisfies CSSProperties;
+
+  return (
+    <div
+      ref={ref}
+      data-rounded={rounded ? "true" : "false"}
+      data-variant={variant}
+      className={`relative isolate flex w-full flex-col overflow-hidden border  ${rounded ? "rounded-lg" : ""} ${
+        variant === "hud" ? "backdrop-blur-sm" : ""
+      } ${className}`}
+      style={frameStyle}
+      {...rest}
+    >
+      {hasHeader && (
+        <header
+          className={`relative z-10 flex flex-col gap-1.5 ${PANEL_PADDING}`}
+        >
+          {eyebrow && (
+            <div
+              className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] opacity-90"
+              style={eyebrowStyle}
             >
-              SYS
-            </span>
-            <span
-              className="h-[9px] w-[9px]"
-              style={{ backgroundColor: config.borderColor }}
-            />
-            <span
-              className={`text-[11px] uppercase tracking-[0.24em] font-bold ${config.titleColor}`}
-              style={{ fontFamily: "var(--font-nerv-display)" }}
+              {eyebrow}
+            </div>
+          )}
+
+          {title && (
+            <div
+              className={`font-semibold uppercase ${TITLE_CLASS_MAP[variant]}`}
+              style={titleStyle}
             >
               {title}
-            </span>
-            <span
-              className="ml-auto text-[9px] uppercase tracking-[0.22em] text-nerv-white/35"
-              style={{ fontFamily: "var(--font-nerv-mono)" }}
-            >
-              PANEL
-            </span>
-          </div>
-        )}
-
-        {title && isVideo && (
-          <div className="relative z-10 flex items-start gap-3 px-4 pb-1 pt-3">
-            <div className="flex flex-col gap-0.5">
-              <span
-                className={`text-[9px] uppercase tracking-[0.18em] ${config.titleColor}`}
-                style={{ fontFamily: "var(--font-nerv-display)" }}
-              >
-                SUBJECT // VIDEO RELAY
-              </span>
-              <span
-                className={`text-[clamp(1.05rem,2vw,1.55rem)] uppercase leading-[0.88] tracking-[0.03em] ${config.titleColor}`}
-                style={{
-                  fontFamily: "var(--font-nerv-display)",
-                  textShadow: "0 0 10px rgba(255, 153, 0, 0.16)",
-                }}
-              >
-                {title}
-              </span>
             </div>
-            <span
-              className="ml-auto pt-0.5 text-[9px] uppercase tracking-[0.2em] text-nerv-orange/70"
-              style={{ fontFamily: "var(--font-nerv-mono)" }}
-            >
-              FEED-01
-            </span>
-          </div>
-        )}
+          )}
 
-        <div className={`relative z-10 ${title ? (isVideo ? "px-4 pb-3 pt-1.5" : "px-3 pb-3 pt-1.5") : (isVideo ? "px-4 py-3" : "px-3 py-3")}`}>
+          {subtitle && (
+            <div
+              className="whitespace-pre-line text-[0.66rem] uppercase leading-[1.35] tracking-[0.14em]"
+              style={detailStyle}
+            >
+              {subtitle}
+            </div>
+          )}
+
+          {(hasBody || hasFooter) && (
+            <div
+              aria-hidden="true"
+              data-card-divider="header"
+              className="mx-0.45 mt-2 h-0.5"
+              style={railStyle}
+            />
+          )}
+        </header>
+      )}
+
+      {hasBody && (
+        <div
+          className={`relative z-10 ${PANEL_PADDING} text-sm leading-relaxed`}
+          style={bodyStyle}
+        >
           {children}
         </div>
+      )}
 
-        {footer && (
-          <div
-            className={`relative z-10 flex items-center gap-3 ${isVideo ? "px-4 pb-3" : "px-3 pb-2 pt-1"} text-[9px] uppercase tracking-[0.22em] ${isVideo ? "text-nerv-orange/70" : "text-nerv-white/55"}`}
-            style={{ fontFamily: "var(--font-nerv-mono)" }}
-          >
-            <span className={config.titleColor}>{isVideo ? "CAMERA" : "LOG"}</span>
-            <span className="h-px flex-1 bg-current opacity-20" />
-            {footer}
-          </div>
-        )}
-      </div>
-    );
-  }
-);
+      {hasFooter && (
+        <footer
+          className={`relative z-10 ${PANEL_PADDING} whitespace-pre-line text-[0.64rem] uppercase leading-[1.35] tracking-[0.16em]`}
+          style={detailStyle}
+        >
+          {(hasBody || hasHeader) && (
+            <div
+              aria-hidden="true"
+              data-card-divider="footer"
+              className="mx-0.45 mb-3 h-0.5"
+              style={railStyle}
+            />
+          )}
+          {footer}
+        </footer>
+      )}
+    </div>
+  );
+});

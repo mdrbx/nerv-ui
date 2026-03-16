@@ -9,7 +9,7 @@ import { StatusStamp } from "@/components/StatusStamp";
 This guide documents the secondary NERV visual family used for footage annotation, subject identification, and dramatic status overlays. It sits beside the stricter control-room panel system and should be used intentionally rather than as the default frame language.
 
 <Callout type="info" title="INTERNAL VISUAL FAMILY">
-  The underlying rounded plate helper is internal on purpose. Public components expose this grammar through higher-level modules like <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
+  The underlying rounded plate helper is internal on purpose. Public components expose this grammar through higher-level modules like <Link href="/docs/components/card">Card</Link>, <Link href="/docs/components/pilot-card">Pilot Card</Link>, <Link href="/docs/components/pattern-alert">Pattern Alert</Link>, and <Link href="/docs/components/status-stamp">Status Stamp</Link>.
 </Callout>
 
 ## When To Use It
@@ -74,7 +74,7 @@ This guide documents the secondary NERV visual family used for footage annotatio
 
 ## Public Components Using This Grammar
 
-- <Link href="/docs/components/card">Card</Link> now exposes a `video` variant for rounded footage plaques and subject/video lockups.
+- <Link href="/docs/components/card">Card</Link> can opt into this family with the `video` palette and `rounded`.
 - <Link href="/docs/components/pattern-alert">Pattern Alert</Link> uses it for target identification and signal metadata.
 - <Link href="/docs/components/pilot-card">Pilot Card</Link> uses it for subject register plates and relay labels.
 - <Link href="/docs/components/status-stamp">Status Stamp</Link> uses it for dramatic bordered alert plaques.

@@ -45,7 +45,7 @@
   *,
   *::before,
   *::after {
-    border-radius: 0 !important;
+    border-radius: 0;
   }
 
   html {
@@ -63,7 +63,11 @@
     overflow-x: hidden;
     color: var(--color-nerv-white);
     background:
-      radial-gradient(circle at top center, rgba(255, 153, 0, 0.06), transparent 32%),
+      radial-gradient(
+        circle at top center,
+        rgba(255, 153, 0, 0.06),
+        transparent 32%
+      ),
       linear-gradient(180deg, #050505 0%, #000000 24%, #000000 100%);
     letter-spacing: 0.02em;
   }
@@ -173,11 +177,15 @@
 }
 
 .nerv-border-glow-orange {
-  box-shadow: 0 0 0 1px rgba(255, 153, 0, 0.16), inset 0 0 0 1px rgba(255, 153, 0, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 153, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 153, 0, 0.06);
 }
 
 .nerv-border-glow-red {
-  box-shadow: 0 0 0 1px rgba(255, 43, 29, 0.18), inset 0 0 0 1px rgba(255, 43, 29, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 43, 29, 0.18),
+    inset 0 0 0 1px rgba(255, 43, 29, 0.06);
 }
 
 @layer components {
@@ -307,8 +315,18 @@
   z-index: -1;
   opacity: 0.3;
   background:
-    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgba(255, 153, 0, 0.04) calc(100% - 1px)),
-    linear-gradient(180deg, transparent 0, transparent calc(100% - 1px), rgba(255, 153, 0, 0.04) calc(100% - 1px));
+    linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(100% - 1px),
+      rgba(255, 153, 0, 0.04) calc(100% - 1px)
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0,
+      transparent calc(100% - 1px),
+      rgba(255, 153, 0, 0.04) calc(100% - 1px)
+    );
   background-size: 96px 96px;
 }
 
@@ -347,7 +365,12 @@
   left: 0.75rem;
   right: 0.75rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.18), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 153, 0, 0.18),
+    transparent
+  );
 }
 
 .nerv-panel::before {
