@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { InputField } from "@/components/InputField";
 import { Checkbox } from "@/components/Checkbox";
 import { Button } from "@/components/Button";
@@ -31,7 +31,12 @@ export default function LoginExample() {
 
   return (
     <div className="relative min-h-screen bg-nerv-black">
-      <HexGridBackground className="absolute inset-0 opacity-20" />
+      <MonitorOverlay
+        color="orange"
+        opacity={0.26}
+        density="normal"
+        className="absolute inset-0"
+      />
 
       {showClassified && (
         <ClassifiedOverlay

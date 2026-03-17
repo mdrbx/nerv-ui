@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { SegmentDisplay } from "@/components/SegmentDisplay";
 import { Card } from "@/components/Card";
 import { TargetingContainer } from "@/components/TargetingContainer";
@@ -54,7 +54,14 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-nerv-black">
       <section className="relative overflow-hidden border-b border-nerv-orange/30">
-        <HexGridBackground color="orange" className="absolute inset-0 opacity-20" />
+        <MonitorOverlay
+          color="orange"
+          opacity={0.28}
+          density="sparse"
+          label="MISSION SURFACE"
+          secondaryLabel="TACTICAL BRIEF"
+          className="absolute inset-0"
+        />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_20rem]">

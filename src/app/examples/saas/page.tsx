@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { TargetingContainer } from "@/components/TargetingContainer";
 import { DataGrid } from "@/components/DataGrid";
 import { InputField } from "@/components/InputField";
@@ -39,7 +39,14 @@ export default function SaasLandingPage() {
   return (
     <div className="min-h-screen bg-nerv-black">
       <section className="relative overflow-hidden border-b border-nerv-orange/30">
-        <HexGridBackground color="green" className="absolute inset-0 opacity-20" />
+        <MonitorOverlay
+          color="green"
+          opacity={0.28}
+          density="sparse"
+          label="GENESIS MONITOR"
+          secondaryLabel="SYNC SURFACE"
+          className="absolute inset-0"
+        />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_22rem]">
@@ -148,9 +155,20 @@ export default function SaasLandingPage() {
       <section id="live-systems" className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="grid gap-4 lg:grid-cols-12">
           <div className="col-span-full lg:col-span-8">
-            <TargetingContainer label="LIVE SYSTEM MONITORING" color="cyan">
-              <div style={{ height: "210px" }}>
-                <SyncRatioChart showGrid animated speed={2} frequencyA={0.06} frequencyB={0.09} />
+            <TargetingContainer
+              label="LIVE SYSTEM MONITORING"
+              color="cyan"
+              className="h-full overflow-hidden"
+            >
+              <div className="h-[252px] overflow-hidden">
+                <SyncRatioChart
+                  className="h-full"
+                  showGrid
+                  animated
+                  speed={2}
+                  frequencyA={0.06}
+                  frequencyB={0.09}
+                />
               </div>
             </TargetingContainer>
           </div>
@@ -248,7 +266,7 @@ export default function SaasLandingPage() {
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_20rem]">
             {featureTab === "sync" && (
               <>
-                <Card title="NEURAL SYNC ENGINE">
+                <Card title="NEURAL SYNC ENGINE" className="h-full">
                   <div className="space-y-4">
                     <p className="font-mono text-xs leading-relaxed text-nerv-white/75">
                       Real-time neural pattern synchronization with sub-millisecond
@@ -256,12 +274,19 @@ export default function SaasLandingPage() {
                       showroom animation. The module is tuned for incident response,
                       concurrency and operator trust.
                     </p>
-                    <div style={{ height: "120px" }}>
-                      <SyncRatioChart showGrid animated speed={2} frequencyA={0.06} frequencyB={0.09} />
+                    <div className="h-[176px] overflow-hidden">
+                      <SyncRatioChart
+                        className="h-full"
+                        showGrid
+                        animated
+                        speed={2}
+                        frequencyA={0.06}
+                        frequencyB={0.09}
+                      />
                     </div>
                   </div>
                 </Card>
-                <Card title="SYNC METRICS">
+                <Card title="SYNC METRICS" className="h-full">
                   <div className="space-y-3 font-mono text-xs text-nerv-white/75">
                     <div className="flex items-center justify-between border-b border-nerv-mid-gray/20 pb-2">
                       <span>LATENCY</span>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { InputField } from "@/components/InputField";
 import { SelectMenu } from "@/components/SelectMenu";
 import { Checkbox } from "@/components/Checkbox";
@@ -44,7 +44,12 @@ export default function RegisterPage() {
 
   return (
     <div className="relative min-h-screen bg-nerv-black py-8">
-      <HexGridBackground className="absolute inset-0 opacity-20" />
+      <MonitorOverlay
+        color="orange"
+        opacity={0.24}
+        density="normal"
+        className="absolute inset-0"
+      />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4">
         <div className="grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)]">

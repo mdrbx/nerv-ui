@@ -58,16 +58,12 @@ const colorMap = {
 };
 
 const sizeMap = {
-  sm: "px-3 py-1.5 text-xs",
-  md: "px-4 py-2.5 text-sm",
-  lg: "px-5 py-3 text-base",
-};
-
-const customSizeMap = {
   sm: "min-h-[34px] px-3 py-1.5 text-xs",
   md: "min-h-[42px] px-4 py-2.5 text-sm",
   lg: "min-h-[48px] px-5 py-3 text-base",
 };
+
+const customSizeMap = sizeMap;
 
 const tagBudgetBySize = {
   sm: 18,
@@ -512,7 +508,7 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
     return (
       <div
         ref={rootRef}
-        className={`flex flex-col gap-1.5 ${wrapperClassName}`}
+        className={`flex w-full flex-col gap-1.5 ${wrapperClassName}`}
         onFocusCapture={handleWrapperFocus}
         onBlurCapture={handleWrapperBlur}
       >
@@ -528,9 +524,9 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
         )}
 
         {!isCustomMode && (
-          <div className="relative flex items-center">
+          <div className="relative">
             <span
-              className={`text-lg font-mono mr-1 transition-all duration-100 ${
+              className={`pointer-events-none absolute left-[-0.85rem] top-1/2 -translate-y-1/2 text-lg font-mono transition-all duration-100 ${
                 focused ? `${c.text} opacity-100` : "opacity-0"
               }`}
             >
@@ -597,7 +593,7 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
             </div>
 
             <span
-              className={`text-lg font-mono ml-1 transition-all duration-100 ${
+              className={`pointer-events-none absolute right-[-0.85rem] top-1/2 -translate-y-1/2 text-lg font-mono transition-all duration-100 ${
                 focused ? `${c.text} opacity-100` : "opacity-0"
               }`}
             >
@@ -607,9 +603,9 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
         )}
 
         {isCustomMode && (
-          <div className="relative flex items-center">
+          <div className="relative">
             <span
-              className={`text-lg font-mono mr-1 transition-all duration-100 ${
+              className={`pointer-events-none absolute left-[-0.85rem] top-1/2 -translate-y-1/2 text-lg font-mono transition-all duration-100 ${
                 focused || open ? `${c.text} opacity-100` : "opacity-0"
               }`}
             >
@@ -808,7 +804,7 @@ export const SelectMenu = forwardRef<HTMLSelectElement, SelectMenuProps>(
             </div>
 
             <span
-              className={`text-lg font-mono ml-1 transition-all duration-100 ${
+              className={`pointer-events-none absolute right-[-0.85rem] top-1/2 -translate-y-1/2 text-lg font-mono transition-all duration-100 ${
                 focused || open ? `${c.text} opacity-100` : "opacity-0"
               }`}
             >

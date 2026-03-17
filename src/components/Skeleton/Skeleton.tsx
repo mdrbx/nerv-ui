@@ -18,10 +18,10 @@ export interface SkeletonProps
 
 const animationKeyframes = `
 @keyframes nerv-skeleton-scan {
-  0% { transform: translateX(-135%); opacity: 0; }
+  0% { transform: translateY(-135%); opacity: 0; }
   18% { opacity: 0.18; }
-  46% { opacity: 0.52; }
-  100% { transform: translateX(220%); opacity: 0; }
+  46% { opacity: 0.46; }
+  100% { transform: translateY(220%); opacity: 0; }
 }
 
 @keyframes nerv-skeleton-flicker {
@@ -32,12 +32,10 @@ const animationKeyframes = `
 
 @keyframes nerv-skeleton-line-pulse {
   0%, 100% {
-    opacity: 0.78;
-    box-shadow: inset 0 0 0 1px rgba(0,255,102,0.05), 0 0 10px rgba(0,255,102,0.04);
+    opacity: 0.74;
   }
   50% {
-    opacity: 1;
-    box-shadow: inset 0 0 0 1px rgba(0,255,102,0.12), 0 0 18px rgba(0,255,102,0.12);
+    opacity: 0.88;
   }
 }
 
@@ -76,8 +74,6 @@ function renderCrtLine(width: string, height: string, key?: number) {
       style={{
         width,
         height,
-        boxShadow:
-          "inset 0 0 0 1px rgba(0,255,102,0.05), 0 0 12px rgba(0,255,102,0.05)",
         animation: "nerv-skeleton-line-pulse 1.7s ease-in-out infinite",
       }}
     >
@@ -86,24 +82,22 @@ function renderCrtLine(width: string, height: string, key?: number) {
         aria-hidden="true"
         style={{
           background: `
-            linear-gradient(90deg, rgba(0,255,102,0.08), rgba(0,255,102,0.02) 50%, rgba(0,255,102,0.08)),
             repeating-linear-gradient(
               180deg,
-              transparent 0 2px,
-              rgba(71,255,138,0.9) 2px 3px,
-              rgba(71,255,138,0.22) 3px 4px,
-              transparent 4px 6px
+              rgba(28,64,38,0.85) 0 2px,
+              rgba(56,115,71,0.75) 2px 3px,
+              rgba(16,28,20,0.95) 3px 6px
             )
           `,
-          animation: "nerv-skeleton-flicker 2.2s steps(2, end) infinite",
+          animation: "nerv-skeleton-flicker 2.6s steps(2, end) infinite",
         }}
       />
       <span
-        className="absolute inset-y-[1px] left-[-40%] w-[40%] pointer-events-none"
+        className="absolute inset-x-[1px] top-[-45%] h-[45%] pointer-events-none"
         aria-hidden="true"
         style={{
           background:
-            "linear-gradient(90deg, transparent 0%, rgba(178,255,206,0.02) 22%, rgba(130,255,176,0.34) 58%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, rgba(174,255,202,0.08) 18%, rgba(120,255,162,0.42) 52%, rgba(174,255,202,0.08) 82%, transparent 100%)",
           animation: "nerv-skeleton-scan 2.4s ease-in-out infinite",
         }}
       />

@@ -26,11 +26,21 @@ Full-screen status stamp overlay inspired by the REFUSED, LOST, and VANISHED dis
 
 The unbordered version still behaves like raw typographic alarm text. The bordered and double-bordered variants move into the camera-overlay family: softer rounded plates, layered outlines, and a more “captured signal” treatment than the rest of the UI.
 
+Inline stamps now auto-size to their content instead of reserving a large fixed block. For compact layouts such as reports, drawers, or approval rails, size the parent container instead of compensating for the component itself.
+
 ## Bordered Variant
 
 <ComponentPreview>
   <div className="relative bg-nerv-black h-64 flex items-center justify-center overflow-hidden">
     <StatusStamp text="APPROVED" color="green" bordered rotation={-8} />
+  </div>
+</ComponentPreview>
+
+## Blink Variant
+
+<ComponentPreview>
+  <div className="relative bg-nerv-black h-64 flex items-center justify-center overflow-hidden">
+    <StatusStamp text="LOST" color="red" blink rotation={-12} />
   </div>
 </ComponentPreview>
 
@@ -91,5 +101,6 @@ Anime-accurate double-outline frame for maximum impact.
     { name: "bordered", type: "boolean", default: "false", description: "Whether to show a border frame" },
     { name: "doubleBordered", type: "boolean", default: "false", description: "Creates anime-accurate double-outline frame (implies bordered)" },
     { name: "fullScreen", type: "boolean", default: "false", description: "Full-screen overlay mode" },
+    { name: "blink", type: "boolean", default: "false", description: "Pulses the stamp on and off for alarm-like states" },
   ]}
 />

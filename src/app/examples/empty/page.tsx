@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { WireframeLoader } from "@/components/WireframeLoader";
 import { TargetingContainer } from "@/components/TargetingContainer";
 import { Divider } from "@/components/Divider";
@@ -10,7 +10,12 @@ import { Button } from "@/components/Button";
 export default function EmptyStatePage() {
   return (
     <div className="relative min-h-screen bg-nerv-black flex items-center justify-center overflow-hidden">
-      <HexGridBackground opacity={0.04} animated className="absolute inset-0 z-0" />
+      <MonitorOverlay
+        color="orange"
+        opacity={0.2}
+        density="sparse"
+        className="absolute inset-0 z-0"
+      />
 
       <div className="relative z-10 w-full max-w-md mx-auto px-4">
         <TargetingContainer label="EMPTY STATE" color="orange">

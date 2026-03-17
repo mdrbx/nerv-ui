@@ -1,13 +1,20 @@
+import Link from "next/link";
 import { HexGridBackground } from "@/components";
-import { ComponentPreview, PropsTable } from "@/components/docs";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Hex Grid Background
 
-SVG-based honeycomb hexagon grid pattern. Positioned absolute to fill its parent container. Used to simulate A.T. Field visual patterns.
+SVG-based honeycomb hexagon grid pattern. Positioned absolute to fill its parent container. This is a generic sci-fi surface texture, not a specific Evangelion control-room motif.
 
 ```tsx
 import { HexGridBackground } from "@mdrbx/nerv-ui";
 ```
+
+<Callout type="warning" title="GENERIC TEXTURE">
+  `HexGridBackground` is useful for neutral futuristic surfaces, but if you want
+  a backdrop that reads more directly like NERV / MAGI monitor framing, use{" "}
+  <Link href="/docs/components/monitor-overlay">Monitor Overlay</Link>.
+</Callout>
 
 ## Basic Usage
 
@@ -16,16 +23,14 @@ import { HexGridBackground } from "@mdrbx/nerv-ui";
   code={`<div className="relative h-48 border border-nerv-mid-gray">
   <HexGridBackground color="#FF9900" opacity={0.15} />
   <div className="relative z-10 flex items-center justify-center h-full">
-    <span className="text-nerv-orange font-mono text-sm">A.T. FIELD ACTIVE</span>
+    <span className="text-nerv-orange font-mono text-sm">HONEYCOMB SURFACE</span>
   </div>
 </div>`}
 >
   <div className="relative h-48 border border-nerv-mid-gray">
     <HexGridBackground color="#FF9900" opacity={0.15} />
     <div className="relative z-10 flex items-center justify-center h-full">
-      <span className="text-nerv-orange font-mono text-sm">
-        A.T. FIELD ACTIVE
-      </span>
+      <span className="text-nerv-orange font-mono text-sm">HONEYCOMB SURFACE</span>
     </div>
   </div>
 </ComponentPreview>
@@ -37,35 +42,41 @@ import { HexGridBackground } from "@mdrbx/nerv-ui";
   code={`<div className="grid grid-cols-3 gap-4">
   <div className="relative h-32 border border-nerv-mid-gray">
     <HexGridBackground color="#00FF00" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full text-nerv-green font-mono text-xs">GREEN</div>
+    <div className="relative z-10 flex items-center justify-center h-full">
+      <span className="text-nerv-green font-mono text-xs">GREEN</span>
+    </div>
   </div>
   <div className="relative h-32 border border-nerv-mid-gray">
     <HexGridBackground color="#00FFFF" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full text-nerv-cyan font-mono text-xs">CYAN</div>
+    <div className="relative z-10 flex items-center justify-center h-full">
+      <span className="text-nerv-cyan font-mono text-xs">CYAN</span>
+    </div>
   </div>
   <div className="relative h-32 border border-nerv-mid-gray">
     <HexGridBackground color="#FF0000" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full text-nerv-red font-mono text-xs">RED</div>
+    <div className="relative z-10 flex items-center justify-center h-full">
+      <span className="text-nerv-red font-mono text-xs">RED</span>
+    </div>
   </div>
 </div>`}
 >
   <div className="grid grid-cols-3 gap-4">
     <div className="relative h-32 border border-nerv-mid-gray">
       <HexGridBackground color="#00FF00" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full text-nerv-green font-mono text-xs">
-        GREEN
+      <div className="relative z-10 flex items-center justify-center h-full">
+        <span className="text-nerv-green font-mono text-xs">GREEN</span>
       </div>
     </div>
     <div className="relative h-32 border border-nerv-mid-gray">
       <HexGridBackground color="#00FFFF" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full text-nerv-cyan font-mono text-xs">
-        CYAN
+      <div className="relative z-10 flex items-center justify-center h-full">
+        <span className="text-nerv-cyan font-mono text-xs">CYAN</span>
       </div>
     </div>
     <div className="relative h-32 border border-nerv-mid-gray">
       <HexGridBackground color="#FF0000" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full text-nerv-red font-mono text-xs">
-        RED
+      <div className="relative z-10 flex items-center justify-center h-full">
+        <span className="text-nerv-red font-mono text-xs">RED</span>
       </div>
     </div>
   </div>

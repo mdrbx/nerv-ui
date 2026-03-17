@@ -40,6 +40,10 @@ export const docsNavigation: NavSection[] = [
         href: "/docs/components/targeting-container",
       },
       {
+        title: "Monitor Overlay",
+        href: "/docs/components/monitor-overlay",
+      },
+      {
         title: "Hex Grid Background",
         href: "/docs/components/hex-grid-background",
       },

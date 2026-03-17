@@ -2,7 +2,7 @@
 
 import { forwardRef, type CSSProperties } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CameraOverlayPlate } from "@/components/_internal/CameraOverlayPlate";
+import { CameraOverlayPlate } from "../_internal/CameraOverlayPlate";
 
 type MotionSafeHTMLAttributes = Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -32,6 +32,8 @@ export interface StatusStampProps extends MotionSafeHTMLAttributes {
   doubleBordered?: boolean;
   /** Full-screen overlay mode */
   fullScreen?: boolean;
+  /** Whether the stamp should pulse on and off */
+  blink?: boolean;
   className?: string;
 }
 
@@ -80,6 +82,7 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
   bordered = false,
   doubleBordered = false,
   fullScreen = false,
+  blink = false,
   className = "",
   ...rest
 }, ref) {
@@ -95,6 +98,19 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
   const containerClass = fullScreen
     ? "fixed inset-0 z-50 flex items-center justify-center bg-nerv-black/90"
     : "relative flex items-center justify-center";
+  const stampEase = [0.22, 1, 0.36, 1] as const;
+  const singleStampTransition = blink
+    ? {
+        scale: { duration: 0.25, ease: stampEase },
+        rotate: { duration: 0.25, ease: stampEase },
+        opacity: {
+          duration: 1.15,
+          repeat: Number.POSITIVE_INFINITY,
+          repeatType: "loop" as const,
+          ease: "easeInOut",
+        },
+      }
+    : { duration: 0.25, ease: stampEase };
 
   return (
     <AnimatePresence>
@@ -107,7 +123,6 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          style={{ minHeight: fullScreen ? undefined : "200px" }}
         >
           {repeat ? (
             /* ── Repeating grid pattern ── */
@@ -143,8 +158,13 @@ export const StatusStamp = forwardRef<HTMLDivElement, StatusStampProps>(function
             <motion.div
               className="flex flex-col items-center justify-center"
               initial={{ scale: 2, opacity: 0, rotate: rotation - 5 }}
-              animate={{ scale: 1, opacity: 1, rotate: rotation }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              animate={{
+                scale: 1,
+                rotate: rotation,
+                opacity: blink ? [1, 0.38, 1] : 1,
+              }}
+              transition={singleStampTransition}
+              data-blink={blink ? "true" : "false"}
             >
               {effectiveBordered ? (
                 <div className="relative" style={overlayVars}>

@@ -2,6 +2,7 @@
 
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
+import { Tooltip } from "../Tooltip";
 
 export interface BarChartBar {
   label: string;
@@ -64,6 +65,7 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
     ref
   ) {
     const c = colorMap[color];
+    const tooltipColor = color === "magenta" ? "magenta" : color;
     const max = maxValue ?? Math.max(1, ...bars.map((bar) => bar.value));
     const gridLines = 4;
 
@@ -82,43 +84,59 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
             {bars.map((bar, index) => {
               const pct = Math.min((bar.value / max) * 100, 100);
               const barColor = bar.color || c.bar;
+              const tooltip = `${bar.label}: ${bar.value}${unit}`;
               return (
                 <div key={bar.label} className="grid grid-cols-[78px_minmax(0,1fr)_44px] items-center gap-2">
                   <div className="truncate text-[9px] uppercase tracking-[0.15em] text-nerv-white/58">
                     {bar.label}
                   </div>
-                  <div
-                    className="relative h-4 overflow-hidden border border-white/10 bg-black/70"
-                    style={{ borderColor: `${barColor}30` }}
+                  <Tooltip
+                    content={tooltip}
+                    color={tooltipColor}
+                    delay={120}
+                    className="block w-full"
+                    tabIndex={0}
+                    aria-label={tooltip}
                   >
-                    <div className="absolute inset-0" style={{ backgroundColor: c.lane }} />
-                    {showGrid &&
-                      Array.from({ length: gridLines }).map((_, gridIndex) => (
-                        <div
-                          key={gridIndex}
-                          className="absolute top-0 bottom-0 w-px"
-                          style={{
-                            left: `${((gridIndex + 1) / (gridLines + 1)) * 100}%`,
-                            backgroundColor: c.grid,
-                          }}
-                        />
-                      ))}
                     <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${pct}%` }}
-                      transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
-                      className="relative h-full"
-                      style={{
-                        ...(segmented
-                          ? {
-                              backgroundColor: "transparent",
-                              background: `repeating-linear-gradient(90deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
-                            }
-                          : { backgroundColor: barColor }),
-                        borderRight: `1px solid ${barColor}`,
+                      whileHover={{
+                        scaleX: 1.015,
+                        boxShadow: `0 0 0 1px ${barColor}55, 0 0 12px ${barColor}33`,
                       }}
-                    />
-                  </div>
+                      transition={{ duration: 0.16, ease: "easeOut" }}
+                      className="relative h-4 cursor-pointer overflow-hidden border border-white/10 bg-black/70"
+                      style={{ borderColor: `${barColor}30` }}
+                    >
+                      <div className="absolute inset-0" style={{ backgroundColor: c.lane }} />
+                      {showGrid &&
+                        Array.from({ length: gridLines }).map((_, gridIndex) => (
+                          <div
+                            key={gridIndex}
+                            className="absolute top-0 bottom-0 w-px"
+                            style={{
+                              left: `${((gridIndex + 1) / (gridLines + 1)) * 100}%`,
+                              backgroundColor: c.grid,
+                            }}
+                          />
+                        ))}
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pct}%` }}
+                        whileHover={{ filter: "brightness(1.18)" }}
+                        transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
+                        className="relative h-full"
+                        style={{
+                          ...(segmented
+                            ? {
+                                backgroundColor: "transparent",
+                                background: `repeating-linear-gradient(90deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
+                              }
+                            : { backgroundColor: barColor }),
+                          borderRight: `1px solid ${barColor}`,
+                        }}
+                      />
+                    </motion.div>
+                  </Tooltip>
                   {showValues && (
                     <motion.span
                       initial={{ opacity: 0 }}
@@ -167,8 +185,9 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
             {bars.map((bar, index) => {
               const pct = Math.min((bar.value / max) * 100, 100);
               const barColor = bar.color || c.bar;
+              const tooltip = `${bar.label}: ${bar.value}${unit}`;
               return (
-                <div key={bar.label} className="flex h-full flex-1 flex-col items-center justify-end">
+                <div key={bar.label} className="flex h-full min-h-0 flex-1 flex-col items-center">
                   {showValues && (
                     <motion.span
                       initial={{ opacity: 0 }}
@@ -180,21 +199,45 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
                       {unit}
                     </motion.span>
                   )}
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: `${pct}%` }}
-                    transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
-                    className="relative min-w-[8px] w-full border border-white/10 bg-black/35"
-                    style={{
-                      ...(segmented
-                        ? {
-                            backgroundColor: "transparent",
-                            background: `repeating-linear-gradient(0deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
-                          }
-                        : { backgroundColor: barColor }),
-                      borderColor: `${barColor}40`,
-                    }}
-                  />
+                  <div className="flex w-full flex-1 min-h-0 items-end">
+                    <Tooltip
+                      content={tooltip}
+                      color={tooltipColor}
+                      delay={120}
+                      className="block h-full w-full"
+                      tabIndex={0}
+                      aria-label={tooltip}
+                    >
+                      <motion.div
+                        whileHover={{
+                          scaleX: 1.05,
+                          boxShadow: `0 0 0 1px ${barColor}55, 0 0 12px ${barColor}33`,
+                        }}
+                        transition={{ duration: 0.16, ease: "easeOut" }}
+                        className="flex h-full items-end overflow-hidden border border-white/10 bg-black/70"
+                        style={{ borderColor: `${barColor}30` }}
+                      >
+                        <motion.div
+                          initial={{ height: 0 }}
+                          animate={{ height: `${pct}%` }}
+                          whileHover={{
+                            filter: "brightness(1.14)",
+                          }}
+                          transition={{ duration: 0.6, delay: index * stagger, ease: "easeOut" }}
+                          className="relative min-w-[8px] w-full origin-bottom cursor-pointer border border-white/10 bg-black/35"
+                          style={{
+                            ...(segmented
+                              ? {
+                                  backgroundColor: "transparent",
+                                  background: `repeating-linear-gradient(0deg, ${barColor} 0px, ${barColor} 7px, transparent 7px, transparent 9px)`,
+                                }
+                              : { backgroundColor: barColor }),
+                            borderColor: `${barColor}40`,
+                          }}
+                        />
+                      </motion.div>
+                    </Tooltip>
+                  </div>
                   <div className="mt-1 w-full truncate text-center text-[8px] uppercase tracking-[0.1em] text-nerv-white/50">
                     {bar.label}
                   </div>

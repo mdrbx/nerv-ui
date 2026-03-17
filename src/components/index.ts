@@ -13,6 +13,9 @@ export type { TargetingContainerProps } from "./TargetingContainer";
 export { HexGridBackground } from "./HexGridBackground";
 export type { HexGridBackgroundProps } from "./HexGridBackground";
 
+export { MonitorOverlay } from "./MonitorOverlay";
+export type { MonitorOverlayProps } from "./MonitorOverlay";
+
 export { Button } from "./Button";
 export type { ButtonProps } from "./Button";
 

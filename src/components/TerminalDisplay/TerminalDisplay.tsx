@@ -43,6 +43,13 @@ const glowMap = {
   red: "nerv-text-shadow-red",
 };
 
+const lineNumberMap = {
+  green: "text-nerv-green/72 border-nerv-green/18 bg-nerv-green/[0.05]",
+  orange: "text-nerv-orange/75 border-nerv-orange/22 bg-nerv-orange/[0.05]",
+  cyan: "text-nerv-cyan/75 border-nerv-cyan/22 bg-nerv-cyan/[0.05]",
+  red: "text-nerv-red/78 border-nerv-red/22 bg-nerv-red/[0.05]",
+};
+
 export const TerminalDisplay = forwardRef<HTMLDivElement, TerminalDisplayProps>(
   function TerminalDisplay(
     {
@@ -68,6 +75,13 @@ export const TerminalDisplay = forwardRef<HTMLDivElement, TerminalDisplayProps>(
     const [currentChar, setCurrentChar] = useState(0);
     const [isTyping, setIsTyping] = useState(typewriter);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      setDisplayedLines(typewriter ? [] : lines);
+      setCurrentLine(0);
+      setCurrentChar(0);
+      setIsTyping(typewriter);
+    }, [lines, typewriter, typeSpeed, lineDelay]);
 
     // Typewriter effect
     useEffect(() => {
@@ -112,6 +126,7 @@ export const TerminalDisplay = forwardRef<HTMLDivElement, TerminalDisplayProps>(
 
     const textColor = colorMap[color];
     const glowClass = glowMap[color];
+    const lineNumberClass = lineNumberMap[color];
 
     return (
       <div ref={ref} className={`relative bg-nerv-black border border-nerv-mid-gray ${className}`} {...rest}>
@@ -150,8 +165,12 @@ export const TerminalDisplay = forwardRef<HTMLDivElement, TerminalDisplayProps>(
             >
               {showLineNumbers && (
                 <span
-                  className="inline-block w-10 text-right mr-3 text-nerv-mid-gray select-none text-xs tabular-nums"
-                  style={{ fontFamily: "var(--font-nerv-mono)" }}
+                  data-slot="line-number"
+                  className={`inline-flex w-12 shrink-0 items-center justify-end mr-3 border-r pr-2 text-[11px] font-semibold tabular-nums select-none ${lineNumberClass}`}
+                  style={{
+                    fontFamily: "var(--font-nerv-mono)",
+                    textShadow: "none",
+                  }}
                 >
                   {String(i + 1).padStart(3, "0")}
                 </span>

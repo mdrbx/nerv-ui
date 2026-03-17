@@ -22,6 +22,30 @@ interface FileEntry {
 type SortKey = "name" | "date" | "size" | "type";
 type ViewMode = "grid" | "list";
 
+function GridViewIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="4" height="4" stroke="currentColor" strokeWidth="1.2" />
+      <rect x="10" y="2" width="4" height="4" stroke="currentColor" strokeWidth="1.2" />
+      <rect x="2" y="10" width="4" height="4" stroke="currentColor" strokeWidth="1.2" />
+      <rect x="10" y="10" width="4" height="4" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function ListViewIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 4H13" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M3 8H13" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M3 12H13" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="1.75" cy="4" r="0.75" fill="currentColor" />
+      <circle cx="1.75" cy="8" r="0.75" fill="currentColor" />
+      <circle cx="1.75" cy="12" r="0.75" fill="currentColor" />
+    </svg>
+  );
+}
+
 // ─── Folder tree structure ───
 
 interface FolderNode {
@@ -241,24 +265,30 @@ export default function FileManager() {
             <button
               type="button"
               onClick={() => setViewMode("grid")}
+              aria-label="Grid view"
               className={`flex-1 px-3 py-1.5 border text-sm font-mono cursor-pointer transition-colors duration-75 ${
                 viewMode === "grid"
                   ? "border-nerv-orange bg-nerv-orange text-nerv-black font-bold"
                   : "border-nerv-mid-gray text-nerv-mid-gray hover:border-nerv-orange hover:text-nerv-orange"
               }`}
             >
-              \u25EB
+              <span className="flex items-center justify-center">
+                <GridViewIcon />
+              </span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode("list")}
+              aria-label="List view"
               className={`flex-1 px-3 py-1.5 border text-sm font-mono cursor-pointer transition-colors duration-75 ${
                 viewMode === "list"
                   ? "border-nerv-orange bg-nerv-orange text-nerv-black font-bold"
                   : "border-nerv-mid-gray text-nerv-mid-gray hover:border-nerv-orange hover:text-nerv-orange"
               }`}
             >
-              \u2261
+              <span className="flex items-center justify-center">
+                <ListViewIcon />
+              </span>
             </button>
           </div>
         </div>

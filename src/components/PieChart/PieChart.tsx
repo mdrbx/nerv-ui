@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 export interface PieSlice {
@@ -49,6 +49,16 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
     },
     ref
   ) {
+    const surfaceRef = useRef<HTMLDivElement>(null);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [tooltip, setTooltip] = useState<{
+      x: number;
+      y: number;
+      label: string;
+      value: number;
+      pct: number;
+      color: string;
+    } | null>(null);
     const total = slices.reduce((sum, slice) => sum + slice.value, 0);
     if (total === 0) return null;
 
@@ -90,6 +100,44 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
       return `M ${cx} ${cy} L ${start.x} ${start.y} A ${outerR} ${outerR} 0 ${largeArc} 1 ${end.x} ${end.y} Z`;
     };
 
+    const showTooltip = (
+      target: { getBoundingClientRect: () => DOMRect },
+      arc: (typeof arcData)[number],
+      index: number,
+      point?: { clientX: number; clientY: number }
+    ) => {
+      const surfaceRect = surfaceRef.current?.getBoundingClientRect();
+      if (!surfaceRect) return;
+
+      const targetRect = target.getBoundingClientRect();
+      const x = point
+        ? point.clientX - surfaceRect.left
+        : targetRect.left - surfaceRect.left + targetRect.width / 2;
+      const y = point
+        ? point.clientY - surfaceRect.top
+        : targetRect.top - surfaceRect.top + targetRect.height / 2;
+
+      setHoveredIndex(index);
+      setTooltip({
+        x,
+        y,
+        label: arc.label,
+        value: arc.value,
+        pct: Math.round(arc.pct * 100),
+        color: arc.sliceColor,
+      });
+    };
+
+    const hideTooltip = () => {
+      setHoveredIndex(null);
+      setTooltip(null);
+    };
+
+    const tooltipLeft = tooltip
+      ? Math.max(56, Math.min((surfaceRef.current?.clientWidth ?? size) - 56, tooltip.x))
+      : 0;
+    const tooltipTop = tooltip ? Math.max(24, tooltip.y - 16) : 0;
+
     return (
       <div ref={ref} className={`inline-flex flex-col items-center font-mono ${className}`}>
         {title && (
@@ -101,7 +149,10 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
           </div>
         )}
 
-        <div className="flex items-center gap-4 border border-white/10 bg-black/65 px-3 py-3">
+        <div
+          ref={surfaceRef}
+          className="relative flex items-center gap-4 border border-white/10 bg-black/65 px-3 py-3"
+        >
           <svg viewBox="0 0 100 100" width={size} height={size}>
             <rect x="6" y="6" width="88" height="88" fill="none" stroke="rgba(224,224,224,0.08)" strokeWidth="0.6" />
             {[18, 28, 38, 42].map((radius) => (
@@ -130,9 +181,21 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
                     stroke={donut ? arc.sliceColor : "none"}
                     strokeWidth={donut ? outerR - innerR : 0}
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 0.88, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                  />
+                    animate={{
+                      opacity: hoveredIndex === null || hoveredIndex === index ? 0.94 : 0.5,
+                      scale: hoveredIndex === index ? 1.05 : 1,
+                    }}
+                    transition={{ duration: 0.24, delay: index * 0.06 }}
+                    style={{ cursor: "pointer" }}
+                    tabIndex={0}
+                    onMouseEnter={(event) => showTooltip(event.currentTarget, arc, index, event)}
+                    onMouseMove={(event) => showTooltip(event.currentTarget, arc, index, event)}
+                    onMouseLeave={hideTooltip}
+                    onFocus={(event) => showTooltip(event.currentTarget, arc, index)}
+                    onBlur={hideTooltip}
+                  >
+                    <title>{`${arc.label}: ${arc.value} (${Math.round(arc.pct * 100)}%)`}</title>
+                  </motion.circle>
                 );
               }
 
@@ -144,10 +207,21 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
                   stroke="#000"
                   strokeWidth={0.8}
                   initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 0.88, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  style={{ transformOrigin: `${cx}px ${cy}px` }}
-                />
+                  animate={{
+                    opacity: hoveredIndex === null || hoveredIndex === index ? 0.94 : 0.5,
+                    scale: hoveredIndex === index ? 1.05 : 1,
+                  }}
+                  transition={{ duration: 0.24, delay: index * 0.06 }}
+                  style={{ transformOrigin: `${cx}px ${cy}px`, cursor: "pointer" }}
+                  tabIndex={0}
+                  onMouseEnter={(event) => showTooltip(event.currentTarget, arc, index, event)}
+                  onMouseMove={(event) => showTooltip(event.currentTarget, arc, index, event)}
+                  onMouseLeave={hideTooltip}
+                  onFocus={(event) => showTooltip(event.currentTarget, arc, index)}
+                  onBlur={hideTooltip}
+                >
+                  <title>{`${arc.label}: ${arc.value} (${Math.round(arc.pct * 100)}%)`}</title>
+                </motion.path>
               );
             })}
 
@@ -193,10 +267,15 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
 
           {showLegend && (
             <div className="space-y-1">
-              {arcData.map((arc) => (
+              {arcData.map((arc, index) => (
                 <div
                   key={arc.label}
-                  className="grid grid-cols-[8px_minmax(0,1fr)_34px] items-center gap-2 border-b border-white/8 pb-1"
+                  className="grid cursor-pointer grid-cols-[8px_minmax(0,1fr)_34px] items-center gap-2 border-b border-white/8 pb-1 transition-colors hover:bg-white/[0.03]"
+                  onMouseEnter={(event) => showTooltip(event.currentTarget, arc, index)}
+                  onMouseLeave={hideTooltip}
+                  onFocus={(event) => showTooltip(event.currentTarget, arc, index)}
+                  onBlur={hideTooltip}
+                  tabIndex={0}
                 >
                   <div className="h-2 w-2 shrink-0" style={{ backgroundColor: arc.sliceColor }} />
                   <span className="truncate text-[9px] uppercase tracking-[0.12em] text-nerv-white/70">
@@ -208,6 +287,25 @@ export const PieChart = forwardRef<HTMLDivElement, PieChartProps>(
                 </div>
               ))}
             </div>
+          )}
+
+          {tooltip && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full border bg-black/95 px-2 py-1 text-[9px] uppercase tracking-[0.16em]"
+              style={{
+                left: tooltipLeft,
+                top: tooltipTop,
+                color: tooltip.color,
+                borderColor: tooltip.color,
+                boxShadow: `0 0 0 1px ${tooltip.color}22 inset, 0 6px 20px rgba(0,0,0,0.32)`,
+                fontFamily: "var(--font-nerv-mono)",
+              }}
+            >
+              {tooltip.label}: {tooltip.value} ({tooltip.pct}%)
+            </motion.div>
           )}
         </div>
       </div>

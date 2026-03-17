@@ -4,7 +4,7 @@ import { forwardRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../Button";
-import { HexGridBackground } from "../HexGridBackground";
+import { MonitorOverlay } from "../MonitorOverlay";
 
 export interface SystemDialogProps {
   /** Whether the dialog is open */
@@ -75,12 +75,14 @@ export const SystemDialog = forwardRef<HTMLDivElement, SystemDialogProps>(
           aria-modal="true"
           aria-label={title}
         >
-          {/* Overlay with hex grid */}
+          {/* Overlay with command monitor rails */}
           <div className="absolute inset-0 bg-black/80" onClick={onClose}>
-            <HexGridBackground
-              color={severity === "critical" ? "#FF0000" : "#FF9900"}
-              opacity={0.04}
-              animated={false}
+            <MonitorOverlay
+              color={severity === "critical" ? "red" : severity === "warning" ? "orange" : "green"}
+              opacity={0.28}
+              density="normal"
+              animated={severity !== "normal"}
+              variant={severity === "critical" ? "alert" : "monitor"}
             />
           </div>
 

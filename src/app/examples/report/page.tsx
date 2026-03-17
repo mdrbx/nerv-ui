@@ -83,15 +83,14 @@ export default function ReportExample() {
                 NERV TACTICAL OPERATIONS DIVISION — DOCUMENT REF: AAR-2015-006
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <Badge label="CLASSIFIED" variant="danger" size="lg" />
-              <div className="relative h-24 w-32 overflow-hidden">
+              <div className="relative flex min-h-[5.5rem] min-w-[11rem] items-center justify-center px-2 py-2">
                 <StatusStamp
                   text="APPROVED"
                   color="green"
                   bordered
                   rotation={-8}
-                  className="!min-h-0"
                 />
               </div>
             </div>
@@ -201,13 +200,12 @@ export default function ReportExample() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col items-center gap-3">
-            <div className="relative h-28 w-full overflow-hidden">
+            <div className="relative flex min-h-[7rem] w-full items-center justify-center px-2 py-2">
               <StatusStamp
                 text="REVIEWED"
                 color="orange"
                 bordered
                 rotation={-5}
-                className="!min-h-0"
               />
             </div>
             <div className="text-center">
@@ -224,13 +222,12 @@ export default function ReportExample() {
           </div>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="relative h-28 w-full overflow-hidden">
+            <div className="relative flex min-h-[7rem] w-full items-center justify-center px-2 py-2">
               <StatusStamp
                 text="APPROVED"
                 color="green"
                 bordered
                 rotation={3}
-                className="!min-h-0"
               />
             </div>
             <div className="text-center">

@@ -21,6 +21,14 @@ import { GradientStatusBar } from "@/components/GradientStatusBar";
 import { PatternAlert } from "@/components/PatternAlert";
 import { Stepper } from "@/components/Stepper";
 import { Divider } from "@/components/Divider";
+import { NavigationTabs } from "@/components/NavigationTabs";
+import { InputField } from "@/components/InputField";
+import { SelectMenu } from "@/components/SelectMenu";
+import { Textarea } from "@/components/Textarea";
+import { Toggle } from "@/components/Toggle";
+import { Checkbox } from "@/components/Checkbox";
+import { TerminalDisplay } from "@/components/TerminalDisplay";
+import { StatusStamp } from "@/components/StatusStamp";
 
 // ─── Pilot sync data ───
 const pilots = [
@@ -50,6 +58,32 @@ const operationsLog = [
   { time: "14:32:24.667", operation: "DUMMY PLUG SYSTEM CHECK — FAILED", priority: "WARNING", operator: "CAGE-3", status: "ERROR" },
 ];
 
+const showcaseTabs = [
+  { id: "mission", label: "MAGI ROUTE" },
+  { id: "access", label: "DOGMA ACCESS" },
+  { id: "containment", label: "CAGE LOCK" },
+];
+
+const missionModeOptions = [
+  { value: "synced", label: "SYNCED DEPLOYMENT" },
+  { value: "manual", label: "MANUAL ROUTE" },
+  { value: "dummy", label: "DUMMY PLUG FALLBACK" },
+];
+
+const clearanceBandOptions = [
+  { value: "lattice", label: "LATTICE-3 / ACTIVE" },
+  { value: "sealed", label: "SEALED-5 / EYES ONLY" },
+  { value: "relay", label: "RELAY-1 / REMOTE" },
+];
+
+const showcaseLog = [
+  "GEOFRONT ROUTER ONLINE",
+  "> Operation packet checksum verified",
+  "> MAGI routing authority: dual consensus",
+  "> Entry plug telemetry uplink established",
+  "> Cage launch deck ready for operator input",
+];
+
 export default function NervCommandCenter() {
   // ─── State ───
   const [systemStatus, setSystemStatus] = useState<"NORMAL" | "EMERGENCY">("NORMAL");
@@ -65,6 +99,11 @@ export default function NervCommandCenter() {
   const [emergencySeverity, setEmergencySeverity] = useState<
     "emergency" | "warning" | "info" | "success" | "critical" | "contrast"
   >("emergency");
+  const [showcaseTab, setShowcaseTab] = useState("mission");
+  const [autoRouteEnabled, setAutoRouteEnabled] = useState(true);
+  const [magiAutovoteEnabled, setMagiAutovoteEnabled] = useState(false);
+  const [classificationLockEnabled, setClassificationLockEnabled] = useState(true);
+  const [dualAuthorizationEnabled, setDualAuthorizationEnabled] = useState(true);
 
   const isEmergency = systemStatus === "EMERGENCY";
   const autoTriggeredRef = useRef(false);
@@ -273,9 +312,6 @@ export default function NervCommandCenter() {
           </span>
         </div>
         <div className="flex items-center gap-3 flex-wrap justify-center">
-          <span className="text-xs font-mono text-nerv-mid-gray">47 COMPONENTS</span>
-          <span className="text-nerv-mid-gray/30">|</span>
-          <span className="text-xs font-mono text-nerv-mid-gray">v0.7.0</span>
           <Button
             variant={isEmergency ? "primary" : "danger"}
             size="sm"
@@ -519,36 +555,268 @@ export default function NervCommandCenter() {
           ROW 4 — Component Showcase
           ═══════════════════════════════════════════ */}
       <section className={`border-b ${majorFrameBorder}`}>
-        <TargetingContainer label="COMPONENT SHOWCASE" color="orange">
+        <TargetingContainer label="NERV HOMAGE DECK" color="orange">
           <div className="p-4 sm:p-6 space-y-6">
-            {/* Category badges */}
-            <div className="flex flex-wrap gap-2">
-              <Badge label="FORMS" variant="info" size="sm" />
-              <Badge label="CHARTS" variant="success" size="sm" />
-              <Badge label="OVERLAYS" variant="danger" size="sm" />
-              <Badge label="HUD" variant="warning" size="sm" />
-              <Badge label="DATA" variant="default" size="sm" />
-              <Badge label="LAYOUT" variant="info" size="sm" />
-              <Badge label="NAVIGATION" variant="success" size="sm" />
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+              <div className="max-w-3xl">
+                <h2
+                  className="text-2xl uppercase tracking-[0.16em] text-nerv-orange"
+                  style={{ fontFamily: "var(--font-nerv-display)" }}
+                >
+                  GEOFRONT DEPLOYMENT DECK
+                </h2>
+                <p className="mt-2 font-mono text-xs leading-relaxed text-nerv-white/65">
+                  A denser showcase built as a small homage to the NERV control
+                  rooms: MAGI routing, Dogma access rails, launch telemetry,
+                  containment states, and operator tooling living on the same
+                  command surface.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <Badge label="MAGI TEXT" variant="default" size="sm" />
+                <Badge label="LAUNCH RAILS" variant="warning" size="sm" />
+                <Badge label="DOGMA ACCESS" variant="danger" size="sm" />
+                <Badge label="BATTLE WORKFLOWS" variant="info" size="sm" />
+                <Badge label="LIVE TELEMETRY" variant="success" size="sm" />
+                <Badge label="AUTH LAYERS" variant="info" size="sm" />
+              </div>
             </div>
 
-            <Divider color="orange" variant="dashed" />
+            <NavigationTabs
+              tabs={showcaseTabs}
+              activeTab={showcaseTab}
+              onTabChange={setShowcaseTab}
+              color="cyan"
+              className="overflow-x-auto"
+            />
 
-            {/* Stepper: INSTALL -> IMPORT -> BUILD */}
-            <div className="max-w-lg mx-auto">
-              <Stepper
-                steps={[
-                  { label: "INSTALL", description: "npm install @mdrbx/nerv-ui" },
-                  { label: "IMPORT", description: "import { Button } from '@mdrbx/nerv-ui'" },
-                  { label: "BUILD", description: "Create your command center" },
-                ]}
-                activeStep={1}
-                color="cyan"
-                direction="horizontal"
-              />
-            </div>
+            {showcaseTab === "mission" && (
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.95fr)_20rem]">
+                <Card title="MAGI ROUTER" eyebrow="GEOFRONT CONTROL RAIL" className="h-full">
+                  <div className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <InputField
+                        label="OPERATOR ID"
+                        defaultValue="NERV-HQ / CAGE-07"
+                        color="orange"
+                        hint="Launch relay bound to the primary MAGI deck"
+                      />
+                      <SelectMenu
+                        label="DEPLOYMENT MODE"
+                        options={missionModeOptions}
+                        defaultValue="synced"
+                        color="orange"
+                      />
+                    </div>
 
-            <Divider color="cyan" variant="dashed" />
+                    <Textarea
+                      label="BRIEFING PACKET"
+                      color="orange"
+                      defaultValue="Deploy EVA-01 to Sector 7G, maintain shield parity, and stream all telemetry to the MAGI routing lattice."
+                      hint="Mission text can be staged inline with the rest of the command surface."
+                    />
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <Checkbox
+                        label="LOCK CLASSIFICATION"
+                        checked={classificationLockEnabled}
+                        onChange={(event) => setClassificationLockEnabled(event.target.checked)}
+                        color="orange"
+                      />
+                      <Toggle
+                        label="AUTO-ROUTE"
+                        checked={autoRouteEnabled}
+                        onChange={setAutoRouteEnabled}
+                        color="cyan"
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <Button variant="primary">TRANSMIT TO CAGE</Button>
+                      <Button variant="ghost">SAVE DRAFT</Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card title="OPERATIONS TERMINAL" eyebrow="LIVE MAGI TEXT" className="h-full">
+                  <TerminalDisplay
+                    lines={showcaseLog}
+                    title="BATTLE STATIONS // MAGI STREAM"
+                    color="green"
+                    typewriter
+                    typeSpeed={18}
+                    lineDelay={80}
+                    maxHeight="360px"
+                    showLineNumbers
+                  />
+                </Card>
+
+                <div className="flex flex-col gap-4">
+                  <Card title="CLEARANCE MARKER" variant="video" rounded>
+                    <div className="flex min-h-[12.5rem] items-center justify-center overflow-visible py-3">
+                      <StatusStamp
+                        text={autoRouteEnabled ? "LAUNCH READY" : "STAND BY"}
+                        color={autoRouteEnabled ? "green" : "orange"}
+                        bordered
+                        rotation={-7}
+                      />
+                    </div>
+                  </Card>
+
+                  <Card title="DEPLOYMENT TRACK" eyebrow="INSTALL TO LAUNCH" className="h-full">
+                    <Stepper
+                      steps={[
+                        { label: "BOOT", description: "Install the command surface package" },
+                        { label: "SYNC", description: "Compose MAGI forms, telemetry, and alerts" },
+                        { label: "LAUNCH", description: "Deploy a NERV-grade interface" },
+                      ]}
+                      activeStep={2}
+                      color="cyan"
+                      direction="vertical"
+                    />
+                  </Card>
+                </div>
+              </div>
+            )}
+
+            {showcaseTab === "access" && (
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+                <Card title="DOGMA ACCESS RAIL" eyebrow="NAVIGATION / INPUT / ACTIONS" className="h-full">
+                  <div className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <SelectMenu
+                        label="CLEARANCE BAND"
+                        options={clearanceBandOptions}
+                        defaultValue="lattice"
+                        color="cyan"
+                      />
+                      <InputField
+                        label="SIGNATURE HASH"
+                        defaultValue="B7-22 / MELCHIOR"
+                        color="cyan"
+                      />
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <Checkbox
+                        label="DUAL AUTHORIZATION"
+                        checked={dualAuthorizationEnabled}
+                        onChange={(event) => setDualAuthorizationEnabled(event.target.checked)}
+                        color="cyan"
+                      />
+                      <Toggle
+                        label="MAGI AUTOVOTE"
+                        checked={magiAutovoteEnabled}
+                        onChange={setMagiAutovoteEnabled}
+                        color="green"
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <Badge label="TERMINAL DOGMA" variant="danger" size="sm" />
+                      <Badge label="CHAIN OF CUSTODY" variant="warning" size="sm" />
+                      <Badge label="MAGI VERIFIED" variant="success" size="sm" />
+                    </div>
+
+                    <Divider color="cyan" variant="dashed" />
+
+                    <div className="flex flex-wrap gap-3">
+                      <Button variant="primary">REQUEST CONSENSUS</Button>
+                      <Button variant="terminal">OPEN RELAY</Button>
+                      <Button variant="ghost">ARCHIVE TRACE</Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <div className="grid gap-4">
+                  <PatternAlert
+                    designation="TERMINAL DOGMA"
+                    pattern="ACCESS"
+                    bloodType="ORANGE"
+                    visible
+                    color="orange"
+                    animated
+                    subtitle="CLEARANCE ESCALATION REQUIRES MAGI CONSENSUS"
+                  />
+
+                  <PhaseStatusStack
+                    title="DOGMA AUTH STATES"
+                    color="cyan"
+                    phases={[
+                      { label: "PRIMARY KEY", status: "ok", value: "VALID" },
+                      { label: "SECONDARY SIGN", status: "warning", value: "PENDING" },
+                      { label: "MAGI ROUTE", status: magiAutovoteEnabled ? "ok" : "inactive", value: magiAutovoteEnabled ? "AUTO" : "MANUAL" },
+                      { label: "CHAIN LOCK", status: "ok", value: "TRACKED" },
+                    ]}
+                  />
+                </div>
+              </div>
+            )}
+
+            {showcaseTab === "containment" && (
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem]">
+                <Card title="CAGE CONTAINMENT WATCH" eyebrow="STATUS BARS / BADGES" className="h-full">
+                  <div className="space-y-5">
+                    <GradientStatusBar
+                      label="A.T. FIELD STABILITY"
+                      sublabel="NOMINAL DURING RAPID DEPLOYMENT"
+                      value={82}
+                      color="cyan"
+                      zones={[
+                        { start: 0, end: 30, color: "#FF0000", label: "CRIT" },
+                        { start: 30, end: 55, color: "#FF9900", label: "WARN" },
+                        { start: 55, end: 80, color: "#FFFF00", label: "SYNC" },
+                        { start: 80, end: 100, color: "#00FF00", label: "STABLE" },
+                      ]}
+                    />
+
+                    <GradientStatusBar
+                      label="CAGE PRESSURE"
+                      sublabel="HARD LIMITS HOLDING ACROSS ALL LOCKS"
+                      value={68}
+                      color="orange"
+                      zones={[
+                        { start: 0, end: 20, color: "#00FF00", label: "LOW" },
+                        { start: 20, end: 50, color: "#FFFF00", label: "MED" },
+                        { start: 50, end: 75, color: "#FF9900", label: "HIGH" },
+                        { start: 75, end: 100, color: "#FF0000", label: "CRIT" },
+                      ]}
+                    />
+
+                    <div className="flex flex-wrap gap-2">
+                      <Badge label="A.T. FIELD" variant="warning" size="sm" />
+                      <Badge label="CAGE LOCKS" variant="success" size="sm" />
+                      <Badge label="MANUAL OVERRIDE" variant="default" size="sm" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card title="ESCALATION READY" variant="alert" rounded className="h-full">
+                  <div className="flex h-full flex-col justify-between gap-4">
+                    <div className="flex min-h-[10rem] items-center justify-center overflow-visible">
+                      <StatusStamp
+                        text={magiAutovoteEnabled ? "DOGMA LOCK" : "STANDBY"}
+                        color={magiAutovoteEnabled ? "red" : "orange"}
+                        bordered
+                        rotation={-6}
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <p className="text-xs font-mono leading-relaxed text-nerv-white/72">
+                        The stamps, cards, and gauge rails stay compact enough to
+                        feel like a command panel homage rather than a detached
+                        marketing block, even when containment flips into alert.
+                      </p>
+                      <Button variant="danger" fullWidth>
+                        ENGAGE DOGMA LOCK
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            )}
           </div>
         </TargetingContainer>
       </section>

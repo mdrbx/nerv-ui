@@ -256,7 +256,7 @@ export default function EquipmentRequisition() {
                 {filteredData.map((item, i) => (
                   <tr
                     key={item.id}
-                    className="text-nerv-orange hover:bg-nerv-orange hover:text-nerv-black border-b border-nerv-mid-gray/30 transition-colors duration-75 cursor-default text-xs"
+                    className="group text-nerv-orange hover:bg-nerv-orange hover:text-nerv-black border-b border-nerv-mid-gray/30 transition-colors duration-75 cursor-default text-xs"
                   >
                     <td className="px-3 py-1.5 text-nerv-mid-gray border-r border-nerv-mid-gray/20">
                       {String(i + 1).padStart(3, "0")}
@@ -292,7 +292,7 @@ export default function EquipmentRequisition() {
                       <button
                         type="button"
                         onClick={() => handleRowAction(i)}
-                        className="text-nerv-cyan hover:text-nerv-orange transition-colors text-[10px] uppercase tracking-wider font-bold cursor-pointer"
+                        className="text-nerv-cyan transition-colors text-[10px] uppercase tracking-wider font-bold cursor-pointer group-hover:text-nerv-black hover:text-nerv-black"
                         style={{ fontFamily: "var(--font-nerv-display)" }}
                       >
                         [INSPECT]

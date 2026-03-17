@@ -16,3 +16,17 @@ export function PaginationCyanDemo() {
   const [page, setPage] = useState(1);
   return <Pagination total={50} pageSize={10} currentPage={page} onPageChange={setPage} color="cyan" />;
 }
+
+export function PaginationExplicitDemo() {
+  const [page, setPage] = useState(37);
+  return (
+    <Pagination
+      total={1000}
+      pageSize={10}
+      currentPage={page}
+      onPageChange={setPage}
+      variant="explicit"
+      siblingCount={1}
+    />
+  );
+}

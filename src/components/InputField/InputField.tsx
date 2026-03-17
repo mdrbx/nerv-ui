@@ -40,9 +40,9 @@ const colorMap = {
 };
 
 const sizeMap = {
-  sm: "px-3 py-1.5 text-xs",
-  md: "px-4 py-2.5 text-sm",
-  lg: "px-5 py-3 text-base",
+  sm: "min-h-[34px] px-3 py-1.5 text-xs",
+  md: "min-h-[42px] px-4 py-2.5 text-sm",
+  lg: "min-h-[48px] px-5 py-3 text-base",
 };
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -66,7 +66,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     const c = colorMap[color];
 
     return (
-      <div className={`flex flex-col gap-1.5 ${wrapperClassName}`}>
+      <div className={`flex w-full flex-col gap-1.5 ${wrapperClassName}`}>
         {/* Label */}
         {label && (
           <label
@@ -80,11 +80,12 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         )}
 
         {/* Input wrapper with brackets */}
-        <div className="relative flex items-center">
+        <div className="relative">
           {/* Left bracket — appears on focus */}
           <span
             className={`
-              text-lg font-mono mr-1 transition-all duration-100
+              pointer-events-none absolute left-[-0.85rem] top-1/2 -translate-y-1/2
+              text-lg font-mono transition-all duration-100
               ${focused ? `${c.text} opacity-100 translate-x-0` : "opacity-0 -translate-x-2"}
             `}
           >
@@ -104,7 +105,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               props.onBlur?.(e);
             }}
             className={`
-              flex-1 bg-nerv-black font-mono
+              w-full bg-nerv-black font-mono
               border ${focused ? `border-2 ${c.border}` : "border border-nerv-mid-gray"}
               ${error ? "border-nerv-red" : ""}
               ${c.text} placeholder:text-nerv-mid-gray
@@ -119,7 +120,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {/* Right bracket — appears on focus */}
           <span
             className={`
-              text-lg font-mono ml-1 transition-all duration-100
+              pointer-events-none absolute right-[-0.85rem] top-1/2 -translate-y-1/2
+              text-lg font-mono transition-all duration-100
               ${focused ? `${c.text} opacity-100 translate-x-0` : "opacity-0 translate-x-2"}
             `}
           >

@@ -1,0 +1,162 @@
+import { MonitorOverlay } from "@/components";
+import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
+
+# Monitor Overlay
+
+Absolute background overlay for NERV/MAGI-style monitor surfaces. Instead of a neutral sci-fi pattern, it builds the kind of framing seen around control screens: scan rails, registration brackets, guide lines, readout plaques, and optional alert bands.
+
+```tsx
+import { MonitorOverlay } from "@mdrbx/nerv-ui";
+```
+
+<Callout type="info" title="NERV / MAGI INTENT">
+  This is the preferred backdrop primitive for command screens, auth gates,
+  incident terminals, and modal overlays that should feel closer to the control
+  room language of Evangelion.
+</Callout>
+
+## Basic Usage
+
+<ComponentPreview
+  title="DEFAULT"
+  code={`<div className="relative h-52 overflow-hidden border border-nerv-mid-gray bg-black">
+  <MonitorOverlay
+    color="orange"
+    label="MELCHIOR CHANNEL"
+    secondaryLabel="SURFACE LOCK"
+  />
+  <div className="relative z-10 flex h-full items-center justify-center">
+    <span className="text-sm font-mono text-nerv-orange">COMMAND SURFACE READY</span>
+  </div>
+</div>`}
+>
+  <div className="relative h-52 overflow-hidden border border-nerv-mid-gray bg-black">
+    <MonitorOverlay
+      color="orange"
+      label="MELCHIOR CHANNEL"
+      secondaryLabel="SURFACE LOCK"
+    />
+    <div className="relative z-10 flex h-full items-center justify-center">
+      <span className="text-sm font-mono text-nerv-orange">
+        COMMAND SURFACE READY
+      </span>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Alert Variant
+
+<ComponentPreview
+  title="ALERT"
+  code={`<div className="relative h-48 overflow-hidden border border-nerv-red/40 bg-black">
+  <MonitorOverlay
+    color="red"
+    variant="alert"
+    density="dense"
+    label="DOGMA LOCK"
+    secondaryLabel="PATTERN RED"
+  />
+  <div className="relative z-10 flex h-full items-center justify-center">
+    <span className="text-sm font-mono text-nerv-red">CONTAINMENT BREACH</span>
+  </div>
+</div>`}
+>
+  <div className="relative h-48 overflow-hidden border border-nerv-red/40 bg-black">
+    <MonitorOverlay
+      color="red"
+      variant="alert"
+      density="dense"
+      label="DOGMA LOCK"
+      secondaryLabel="PATTERN RED"
+    />
+    <div className="relative z-10 flex h-full items-center justify-center">
+      <span className="text-sm font-mono text-nerv-red">
+        CONTAINMENT BREACH
+      </span>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Subtle Full-Surface Usage
+
+<ComponentPreview
+  title="SUBTLE"
+  code={`<div className="relative h-56 overflow-hidden border border-nerv-mid-gray/60 bg-black">
+  <MonitorOverlay color="green" opacity={0.2} density="sparse" animated={false} />
+  <div className="relative z-10 grid h-full place-items-center">
+    <span className="text-sm font-mono text-nerv-green">BACKGROUND MONITOR RAILS</span>
+  </div>
+</div>`}
+>
+  <div className="relative h-56 overflow-hidden border border-nerv-mid-gray/60 bg-black">
+    <MonitorOverlay
+      color="green"
+      opacity={0.2}
+      density="sparse"
+      animated={false}
+    />
+    <div className="relative z-10 grid h-full place-items-center">
+      <span className="text-sm font-mono text-nerv-green">
+        BACKGROUND MONITOR RAILS
+      </span>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: "color",
+      type: '"orange" | "green" | "cyan" | "red"',
+      default: '"orange"',
+      description: "Guide and frame color theme",
+    },
+    {
+      name: "opacity",
+      type: "number",
+      default: "0.34",
+      description: "Overall overlay opacity",
+    },
+    {
+      name: "density",
+      type: '"sparse" | "normal" | "dense"',
+      default: '"normal"',
+      description: "Spacing of the monitor scan rails",
+    },
+    {
+      name: "variant",
+      type: '"monitor" | "alert"',
+      default: '"monitor"',
+      description: "Standard monitor treatment or alert bands",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Upper-left readout plaque",
+    },
+    {
+      name: "secondaryLabel",
+      type: "string",
+      description: "Lower-right readout plaque",
+    },
+    {
+      name: "animated",
+      type: "boolean",
+      default: "true",
+      description: "Enable the vertical scan sweep",
+    },
+    {
+      name: "className",
+      type: "string",
+      default: '""',
+      description: "Additional CSS classes",
+    },
+  ]}
+/>
+
+<Callout type="warning" title="ABSOLUTE FILL">
+  `MonitorOverlay` fills its parent with `absolute inset-0`. Wrap it inside a
+  `relative` container and place your actual UI above it with a higher `z-index`.
+</Callout>

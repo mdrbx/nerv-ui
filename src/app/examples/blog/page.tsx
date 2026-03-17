@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { NavigationTabs } from "@/components/NavigationTabs";
 import { TerminalDisplay } from "@/components/TerminalDisplay";
-import { ClassifiedOverlay } from "@/components/ClassifiedOverlay";
 import { EmergencyBanner } from "@/components/EmergencyBanner";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
@@ -383,20 +382,53 @@ export default function BlogExample() {
               </div>
 
               {selectedPost.classified && !unlockedPosts.has(selectedPost.id) ? (
-                <div className="relative" style={{ minHeight: "400px" }}>
-                  <ClassifiedOverlay text="CLASSIFIED" isUnlocked={false} className="min-h-[400px]">
-                    <TerminalDisplay
-                      lines={selectedPost.content}
-                      color="green"
-                      title={selectedPost.title}
-                      maxHeight="460px"
-                      showLineNumbers
-                    />
-                  </ClassifiedOverlay>
-                  <div className="relative mt-4">
-                    <StatusStamp text="CLASSIFIED" color="red" rotation={-8} bordered />
-                  </div>
-                  <div className="mt-4">
+                <Card title="SEALED DOSSIER" variant="alert" rounded>
+                  <div className="space-y-5">
+                    <div className="flex justify-center pt-1">
+                      <StatusStamp text="CLASSIFIED" color="red" rotation={-8} bordered />
+                    </div>
+
+                    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
+                      <div className="space-y-3 font-mono text-xs leading-relaxed text-nerv-white/75">
+                        <p>
+                          This bulletin remains held behind SEELE/NERV clearance
+                          gates. The headline stays visible, but the live dossier
+                          body is sealed until an explicit operator override is
+                          approved.
+                        </p>
+                        <div className="space-y-2 border border-nerv-red/25 bg-nerv-black/70 px-3 py-3">
+                          <div className="flex items-center justify-between border-b border-nerv-red/15 pb-2">
+                            <span>ACCESS ROUTE</span>
+                            <span className="text-nerv-red">SEALED</span>
+                          </div>
+                          <div className="flex items-center justify-between border-b border-nerv-red/15 pb-2">
+                            <span>CLASSIFICATION</span>
+                            <span className="text-nerv-orange">EYES ONLY</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span>UNLOCK METHOD</span>
+                            <span className="text-nerv-cyan">MANUAL OVERRIDE</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <TerminalDisplay
+                        lines={[
+                          `SUBJECT: ${selectedPost.title}`,
+                          `CATEGORY: ${selectedPost.category}`,
+                          `DATE: ${selectedPost.date}`,
+                          "",
+                          "[DECRYPTION REQUIRED]",
+                          "MAGI ROUTE: HOLD",
+                          "AUTHORIZATION: SEELE / COMMAND",
+                        ]}
+                        color="red"
+                        title="ACCESS GATE"
+                        maxHeight="220px"
+                        showCursor={false}
+                      />
+                    </div>
+
                     <Button
                       variant="danger"
                       fullWidth
@@ -407,13 +439,16 @@ export default function BlogExample() {
                       OVERRIDE CLEARANCE — DECRYPT
                     </Button>
                   </div>
-                </div>
+                </Card>
               ) : (
                 <TerminalDisplay
+                  key={selectedPost.id}
                   lines={selectedPost.content}
                   color={selectedPost.classified ? "red" : "green"}
                   title={selectedPost.title}
                   typewriter
+                  typeSpeed={15}
+                  lineDelay={100}
                   maxHeight="500px"
                   showLineNumbers
                 />

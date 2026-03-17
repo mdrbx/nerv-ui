@@ -124,7 +124,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                     className={`
                       text-xs font-bold ${c.text} bg-transparent border border-nerv-mid-gray
                       px-2 py-1 cursor-pointer transition-colors duration-100
-                      hover:border-current hover:bg-current hover:text-nerv-black
+                      hover:border-current hover:bg-nerv-dark-gray
                     `}
                     style={{ fontFamily: "var(--font-nerv-mono)" }}
                   >

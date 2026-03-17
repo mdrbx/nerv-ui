@@ -21,7 +21,7 @@ export interface TooltipProps
   /** Trigger element */
   children: ReactNode;
   /** Color theme */
-  color?: "orange" | "green" | "cyan";
+  color?: "orange" | "green" | "cyan" | "red" | "magenta";
   /** Additional class names */
   className?: string;
 }
@@ -30,6 +30,8 @@ const colorMap = {
   orange: { border: "border-nerv-orange", text: "text-nerv-orange" },
   green: { border: "border-nerv-green", text: "text-nerv-green" },
   cyan: { border: "border-nerv-cyan", text: "text-nerv-cyan" },
+  red: { border: "border-nerv-red", text: "text-nerv-red" },
+  magenta: { border: "border-nerv-magenta", text: "text-nerv-magenta" },
 };
 
 const sideStyles: Record<string, string> = {

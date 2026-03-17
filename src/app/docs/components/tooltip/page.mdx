@@ -105,6 +105,25 @@ import { Tooltip, Button } from "@mdrbx/nerv-ui";
   </Tooltip>
 </ComponentPreview>
 
+<ComponentPreview
+  title="RED / MAGENTA"
+  code={`<Tooltip content="BREACH CONFIRMED" color="red">
+  <Button variant="danger">Red</Button>
+</Tooltip>
+<Tooltip content="WAVE PATTERN LOCKED" color="magenta">
+  <Button>Magenta</Button>
+</Tooltip>`}
+>
+  <div className="flex flex-wrap gap-3">
+    <Tooltip content="BREACH CONFIRMED" color="red">
+      <Button variant="danger">Red</Button>
+    </Tooltip>
+    <Tooltip content="WAVE PATTERN LOCKED" color="magenta">
+      <Button>Magenta</Button>
+    </Tooltip>
+  </div>
+</ComponentPreview>
+
 ## Props
 
 <PropsTable
@@ -129,7 +148,7 @@ import { Tooltip, Button } from "@mdrbx/nerv-ui";
     },
     {
       name: "color",
-      type: '"orange" | "green" | "cyan"',
+      type: '"orange" | "green" | "cyan" | "red" | "magenta"',
       default: '"orange"',
       description: "Color theme for border and text",
     },

@@ -2,18 +2,22 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { HexGridBackground } from "@/components/HexGridBackground";
+import { MonitorOverlay } from "@/components/MonitorOverlay";
 import { SegmentDisplay } from "@/components/SegmentDisplay";
 import { StatusStamp } from "@/components/StatusStamp";
-import { EmergencyBanner } from "@/components/EmergencyBanner";
 import { Button } from "@/components/Button";
 import { Divider } from "@/components/Divider";
 
 export default function Error404Page() {
   return (
     <div className="relative min-h-screen flex flex-col bg-nerv-black overflow-hidden">
-      {/* Hex grid backdrop */}
-      <HexGridBackground opacity={0.06} animated className="absolute inset-0 z-0" />
+      <MonitorOverlay
+        color="red"
+        opacity={0.22}
+        density="normal"
+        variant="alert"
+        className="absolute inset-0 z-0"
+      />
 
       {/* Main centered content */}
       <div className="flex-1 flex items-center justify-center z-10 px-4">
@@ -23,6 +27,15 @@ export default function Error404Page() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col items-center gap-8 max-w-lg w-full"
         >
+          {/* Status stamp */}
+          <StatusStamp
+            text="SIGNAL LOST"
+            color="red"
+            bordered
+            rotation={-8}
+            visible
+          />
+
           {/* 404 segment display */}
           <SegmentDisplay
             value={404}
@@ -31,15 +44,6 @@ export default function Error404Page() {
             color="red"
             size="xl"
             label="ERROR CODE"
-          />
-
-          {/* Status stamp */}
-          <StatusStamp
-            text="SIGNAL LOST"
-            color="red"
-            bordered
-            rotation={-8}
-            visible
           />
 
           {/* Description text */}
@@ -70,16 +74,6 @@ export default function Error404Page() {
             </Button>
           </div>
         </motion.div>
-      </div>
-
-      {/* Bottom emergency banner */}
-      <div className="z-10">
-        <EmergencyBanner
-          severity="info"
-          text="ROUTE ERROR"
-          subtext="NAVIGATION SYSTEM OFFLINE"
-          visible
-        />
       </div>
     </div>
   );

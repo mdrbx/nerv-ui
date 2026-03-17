@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
+import { Tooltip } from "../Tooltip";
 
 export interface PhaseItem {
   label: string;
@@ -39,6 +40,13 @@ const titleColorMap: Record<NonNullable<PhaseStatusStackProps["color"]>, string>
   cyan: "text-nerv-cyan",
 };
 
+const tooltipColorMap: Record<PhaseItem["status"], "green" | "orange" | "red" | "cyan"> = {
+  ok: "green",
+  warning: "orange",
+  danger: "red",
+  inactive: "cyan",
+};
+
 export const PhaseStatusStack = forwardRef<HTMLDivElement, PhaseStatusStackProps>(
   function PhaseStatusStack(
     {
@@ -73,24 +81,33 @@ export const PhaseStatusStack = forwardRef<HTMLDivElement, PhaseStatusStackProps
               >
                 {phase.label}
               </span>
-              <div className="relative h-3 overflow-hidden border border-white/10 bg-black/60">
-                <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-nerv-orange/60" />
-                <div
-                  className={`absolute left-0 top-0 bottom-0 ${statusColorMap[phase.status]}`}
-                  style={{
-                    width:
-                      phase.status === "ok"
-                        ? "100%"
-                        : phase.status === "warning"
-                          ? "68%"
-                          : phase.status === "danger"
-                            ? "48%"
-                            : "24%",
-                    backgroundImage:
-                      "repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0,0,0,0.38) 6px, rgba(0,0,0,0.38) 7px)",
-                  }}
-                />
-              </div>
+              <Tooltip
+                content={phase.value ? `${phase.label} — ${phase.value}` : phase.label}
+                color={tooltipColorMap[phase.status]}
+                delay={120}
+                className="block w-full"
+                tabIndex={0}
+                aria-label={phase.value ? `${phase.label} — ${phase.value}` : phase.label}
+              >
+                <div className="relative h-3 cursor-pointer overflow-hidden border border-white/10 bg-black/60 transition-transform duration-150 hover:scale-x-[1.01]">
+                  <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-nerv-orange/60" />
+                  <div
+                    className={`absolute left-0 top-0 bottom-0 ${statusColorMap[phase.status]}`}
+                    style={{
+                      width:
+                        phase.status === "ok"
+                          ? "100%"
+                          : phase.status === "warning"
+                            ? "68%"
+                            : phase.status === "danger"
+                              ? "48%"
+                              : "24%",
+                      backgroundImage:
+                        "repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0,0,0,0.38) 6px, rgba(0,0,0,0.38) 7px)",
+                    }}
+                  />
+                </div>
+              </Tooltip>
               <span
                 className={`text-right text-[9px] font-bold uppercase ${statusTextMap[phase.status]}`}
                 style={{ fontFamily: "var(--font-nerv-mono)" }}

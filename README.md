@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@mdrbx/nerv-ui"><img src="https://img.shields.io/npm/v/@mdrbx/nerv-ui?style=flat-square&color=FF9900&labelColor=000000" alt="npm version" /></a>
-  <img src="https://img.shields.io/badge/components-47-00FF00?style=flat-square&labelColor=000000" />
+  <img src="https://img.shields.io/badge/components-48-00FF00?style=flat-square&labelColor=000000" />
   <img src="https://img.shields.io/badge/examples-17_pages-00FFFF?style=flat-square&labelColor=000000" />
   <img src="https://img.shields.io/badge/border--radius-0px-FF0000?style=flat-square&labelColor=000000" />
   <img src="https://img.shields.io/badge/license-MIT-FF9900?style=flat-square&labelColor=000000" />
@@ -80,7 +80,7 @@ export default {
 
 ## `> WHAT_IS_NERV_UI`
 
-NERV-UI is a **47-component React design system** published on npm, built to replicate the iconic CRT-era military interfaces of NERV headquarters. Every pixel follows strict brutalist design rules:
+NERV-UI is a **48-component React design system** published on npm, built to replicate the iconic CRT-era military interfaces of NERV headquarters. Every pixel follows strict brutalist design rules:
 
 - **`border-radius: 0`** everywhere — sharp industrial angles only
 - **NERV color palette** — black void, alert red, text orange, grid green, data cyan, magenta wave
@@ -88,18 +88,20 @@ NERV-UI is a **47-component React design system** published on npm, built to rep
 - **Monospace terminal text** — Fira Code for all data readouts
 - **EVA title-card compositions** — staged 4:3 layouts for ceremonial episode/finale screens
 - **CRT scanline overlay** — persistent retro phosphor effect
+- **Monitor overlays and targeting rails** — MAGI/NERV-inspired screen framing for dashboards, dialogs, and launch decks
 - **Animated hazard chevrons** — V-shaped stripe patterns for danger states
+- **Interactive chart surfaces** — hover-reactive bars, slices, gauges, and status bands with tactical tooltip overlays
 - **`prefers-reduced-motion`** — all animations respect accessibility settings
 
 ---
 
 ## `> COMPONENTS`
 
-**47 components** across 7 categories. Full API reference in the [documentation](https://mdrbx.github.io/nerv-ui/docs).
+**48 components** across 7 categories. Full API reference in the [documentation](https://mdrbx.github.io/nerv-ui/docs).
 
 | Category           | Components                                                                                                                                       |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Layout**         | `TargetingContainer`, `HexGridBackground`, `Card`, `Accordion`, `Divider`, `Drawer`, `Breadcrumb`                                                |
+| **Layout**         | `TargetingContainer`, `HexGridBackground`, `MonitorOverlay`, `Card`, `Accordion`, `Divider`, `Drawer`, `Breadcrumb`                               |
 | **Forms**          | `Button`, `InputField`, `SelectMenu`, `Checkbox`, `Toggle`, `Textarea`, `RadioGroup`, `FileUpload`                                               |
 | **Data Display**   | `TerminalDisplay`, `DataGrid`, `SyncProgressBar`, `SegmentDisplay`, `Badge`, `Skeleton`, `PilotCard`, `Pagination`                               |
 | **Charts**         | `BarChart`, `Gauge`, `PieChart`, `SyncRatioChart`, `PhaseStatusStack`, `GradientStatusBar`                                                       |

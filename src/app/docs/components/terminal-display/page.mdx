@@ -67,7 +67,8 @@ import { TerminalDisplay } from "@mdrbx/nerv-ui";
   code={`<TerminalDisplay
   lines={["Connecting to MAGI...", "Authentication verified.", "Welcome, Commander."]}
   typewriter
-  typeSpeed={40}
+  typeSpeed={20}
+  lineDelay={90}
   color="cyan"
 />`}
 >
@@ -78,10 +79,13 @@ import { TerminalDisplay } from "@mdrbx/nerv-ui";
       "Welcome, Commander.",
     ]}
     typewriter
-    typeSpeed={40}
+    typeSpeed={20}
+    lineDelay={90}
     color="cyan"
   />
 </ComponentPreview>
+
+Use `typeSpeed` and `lineDelay` together when a feed needs to feel more reactive, for example on bulletin or incident-log views. Lower values make the reveal faster, and changing the `lines` prop resets the typewriter sequence cleanly.
 
 ## With Line Numbers
 
@@ -127,13 +131,13 @@ import { TerminalDisplay } from "@mdrbx/nerv-ui";
       name: "typeSpeed",
       type: "number",
       default: "30",
-      description: "Milliseconds per character in typewriter mode",
+      description: "Milliseconds per character in typewriter mode; lower is faster",
     },
     {
       name: "lineDelay",
       type: "number",
       default: "200",
-      description: "Milliseconds between lines in typewriter mode",
+      description: "Milliseconds between lines in typewriter mode; lower is faster",
     },
     {
       name: "color",

@@ -277,7 +277,7 @@ const templatePlacements: Record<
   finale: {
     masthead: { anchor: "top-left", top: "7%", left: "5.5%", width: "narrow" },
     lead: { anchor: "top-left", top: "20%", left: "5.5%", width: "medium" },
-    hero: { anchor: "middle-left", top: "48%", left: "5%", width: "full" },
+    hero: { anchor: "middle-left", top: "48%", left: "0.5%", width: "full" },
     label: { anchor: "bottom-left", bottom: "24%", left: "5.5%", width: "content" },
     quote: {
       anchor: "bottom-right",

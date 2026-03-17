@@ -67,6 +67,39 @@ import { GradientStatusBar } from "@mdrbx/nerv-ui";
   />
 </ComponentPreview>
 
+## Progressive Gradient
+
+<ComponentPreview
+  title="PROGRESSIVE"
+  code={`<GradientStatusBar
+  value={72}
+  label="PRESSURE ENVELOPE"
+  sublabel="HOVER ZONES TO READ LABELS"
+  color="cyan"
+  fillMode="gradient"
+  zones={[
+    { start: 0, end: 25, color: "#ff3b30", label: "CRITICAL" },
+    { start: 25, end: 55, color: "#ff9f0a", label: "UNSTABLE" },
+    { start: 55, end: 80, color: "#ffd60a", label: "BUFFER" },
+    { start: 80, end: 100, color: "#34c759", label: "STABLE" },
+  ]}
+/>\n`}
+>
+  <GradientStatusBar
+    value={72}
+    label="PRESSURE ENVELOPE"
+    sublabel="HOVER ZONES TO READ LABELS"
+    color="cyan"
+    fillMode="gradient"
+    zones={[
+      { start: 0, end: 25, color: "#ff3b30", label: "CRITICAL" },
+      { start: 25, end: 55, color: "#ff9f0a", label: "UNSTABLE" },
+      { start: 55, end: 80, color: "#ffd60a", label: "BUFFER" },
+      { start: 80, end: 100, color: "#34c759", label: "STABLE" },
+    ]}
+  />
+</ComponentPreview>
+
 ## Custom Range
 
 <ComponentPreview
@@ -188,6 +221,12 @@ import { GradientStatusBar } from "@mdrbx/nerv-ui";
       description: "Color theme for the label text",
     },
     {
+      name: "fillMode",
+      type: '"stepped" | "gradient"',
+      default: '"stepped"',
+      description: "Stepped zone fill or progressive blended gradient",
+    },
+    {
       name: "className",
       type: "string",
       default: '""',
@@ -229,4 +268,10 @@ import { GradientStatusBar } from "@mdrbx/nerv-ui";
 <Callout type="info" title="ACCESSIBILITY">
   The bar renders with `role="meter"` and proper `aria-valuenow`,
   `aria-valuemin`, and `aria-valuemax` attributes for screen reader support.
+</Callout>
+
+<Callout type="info" title="HOVER LABELS">
+  Each zone is hoverable and focusable. When a zone includes `label`, the bar
+  switches to a pointer cursor and opens the NERV tooltip overlay with that
+  label and its range.
 </Callout>

@@ -2,8 +2,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { SystemDialog } from "../SystemDialog";
 
-vi.mock("../../HexGridBackground", () => ({
-  HexGridBackground: () => null,
+vi.mock("../../MonitorOverlay", () => ({
+  MonitorOverlay: () => null,
 }));
 
 describe("SystemDialog", () => {

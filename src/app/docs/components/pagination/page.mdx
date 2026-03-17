@@ -4,6 +4,7 @@ import {
   PaginationBasicDemo,
   PaginationGreenDemo,
   PaginationCyanDemo,
+  PaginationExplicitDemo,
 } from "@/components/docs/PaginationDemo";
 
 # Pagination
@@ -69,6 +70,22 @@ const [page, setPage] = useState(1);
   <PaginationCyanDemo />
 </ComponentPreview>
 
+## Explicit Pagination
+
+<ComponentPreview
+  title="EXPLICIT"
+  code={`<Pagination
+  total={1000}
+  pageSize={10}
+  currentPage={page}
+  onPageChange={setPage}
+  variant="explicit"
+  siblingCount={1}
+/>\n`}
+>
+  <PaginationExplicitDemo />
+</ComponentPreview>
+
 ## Props
 
 <PropsTable
@@ -102,6 +119,18 @@ const [page, setPage] = useState(1);
       type: '"orange" | "green" | "cyan"',
       default: '"orange"',
       description: "Color theme",
+    },
+    {
+      name: "variant",
+      type: '"compact" | "explicit"',
+      default: '"compact"',
+      description: "Compact LCD counter or explicit page list with ellipses",
+    },
+    {
+      name: "siblingCount",
+      type: "number",
+      default: "1",
+      description: "Visible pages on each side of the active page in explicit mode",
     },
     {
       name: "className",
