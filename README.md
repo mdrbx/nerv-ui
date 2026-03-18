@@ -5,16 +5,16 @@
 </p>
 
 <p align="center">
+  <strong>Brutalist. Industrial. Maximum impact.</strong><br/>
+  <sub>A React component library that faithfully recreates the NERV headquarters interfaces from Neon Genesis Evangelion.</sub>
+</p>
+
+<p align="center">
   <img src="banner.png" alt="NERV-UI — Neon Genesis Evangelion Design System" width="100%" />
 </p>
 
 <p align="center">
   <img src="docs/references/readme-surveillance-preview.gif" alt="NERV-UI live surveillance preview" width="100%" />
-</p>
-
-<p align="center">
-  <strong>Brutalist. Industrial. Zero border-radius. Maximum impact.</strong><br/>
-  <sub>A React component library that faithfully recreates the NERV headquarters interfaces from Neon Genesis Evangelion.</sub>
 </p>
 
 <p align="center">
@@ -102,7 +102,7 @@ export default {
 
 NERV-UI is a **48-component React design system** published on npm, built to replicate the iconic CRT-era military interfaces of NERV headquarters. Every pixel follows strict brutalist design rules:
 
-- **`border-radius: 0`** everywhere — sharp industrial angles only
+- **`border-radius: 0`** nearly everywhere — sharp industrial angles only
 - **NERV color palette** — black void, alert red, text orange, grid green, data cyan, magenta wave
 - **Condensed uppercase typography** — Oswald, Barlow Condensed, Noto Serif JP
 - **Monospace terminal text** — Fira Code for all data readouts
@@ -214,24 +214,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for component patterns and design rules.
 
 ---
 
+
+## `> CREDITS AND INPIRATION`
+
+<p>I made this project because I thought it would be fun. A huge thanks to all the people who created and inspired the great Evangelion anime over the years. This is a tribute, and I hope it will be perceived as a good one.</p>
+
+<p>MADE WITH [REDACTED] BY <a href="https://github.com/mdrbx">mdrbx</a></p>
+
+
+---
+
+
 ## `> LICENSE`
 
 MIT License. See [LICENSE](./LICENSE).
 
----
-
-<p align="center">
-
-```
-┌──────────────────────────────────────────────────┐
-│                                                    │
-│   GOD'S IN HIS HEAVEN. ALL'S RIGHT WITH THE WORLD │
-│                                                    │
-└──────────────────────────────────────────────────┘
-```
-
-</p>
-
-<p align="center">
-  <sub>MADE WITH [REDACTED] BY <a href="https://github.com/mdrbx">mdrbx</a></sub>
-</p>
