@@ -4,7 +4,7 @@ import { ComponentPreview, PropsTable, Callout } from "@/components/docs";
 
 # Hex Grid Background
 
-SVG-based honeycomb hexagon grid pattern. Positioned absolute to fill its parent container. This is a generic sci-fi surface texture, not a specific Evangelion control-room motif.
+SVG-based honeycomb hexagon grid pattern. Positioned absolute to fill its parent container. Use it to keep panels, dashboards, and empty surfaces from feeling flat without introducing a heavier monitor frame.
 
 ```tsx
 import { HexGridBackground } from "@mdrbx/nerv-ui";
@@ -16,67 +16,293 @@ import { HexGridBackground } from "@mdrbx/nerv-ui";
   <Link href="/docs/components/monitor-overlay">Monitor Overlay</Link>.
 </Callout>
 
-## Basic Usage
+<Callout type="info" title="BEST WHEN LAYERED">
+  On pure black with the default low opacity, this pattern is intentionally
+  subtle. It starts to read much more clearly when it sits over a lightly tinted
+  surface, under labels, progress bars, or data blocks.
+</Callout>
+
+## What It Adds
+
+The grid is not meant to be a full visual treatment by itself. Its job is to
+add material texture and depth to a surface that would otherwise read as a flat
+black rectangle.
 
 <ComponentPreview
-  title="DEFAULT"
-  code={`<div className="relative h-48 border border-nerv-mid-gray">
-  <HexGridBackground color="#FF9900" opacity={0.15} />
-  <div className="relative z-10 flex items-center justify-center h-full">
-    <span className="text-nerv-orange font-mono text-sm">HONEYCOMB SURFACE</span>
+  title="PLAIN VS GRID"
+  code={`<div className="grid gap-4 lg:grid-cols-2">
+  <div className="relative h-52 overflow-hidden border border-nerv-mid-gray/70 bg-[radial-gradient(circle_at_top,rgba(255,153,0,0.08),transparent_56%),linear-gradient(180deg,#15110B_0%,#050505_100%)] p-5">
+    <div className="absolute inset-x-0 top-0 h-px bg-nerv-orange/25" />
+    <div className="relative z-10 grid h-full content-between">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-orange/65">Base panel</div>
+          <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">TACTICAL BRIEFING</div>
+        </div>
+        <div className="border border-nerv-mid-gray/70 px-2 py-1 text-[10px] uppercase tracking-[0.22em] text-nerv-white/60">
+          sync 87.4%
+        </div>
+      </div>
+      <div className="space-y-3">
+        <div className="h-2 border border-nerv-mid-gray/70 bg-black/40">
+          <div className="h-full w-[72%] bg-nerv-orange/55" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-[0.22em] text-nerv-white/55">
+          <span>surface feels flat</span>
+          <span className="text-right">minimal depth</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div className="relative h-52 overflow-hidden border border-nerv-orange/45 bg-[radial-gradient(circle_at_top,rgba(255,153,0,0.18),transparent_56%),linear-gradient(180deg,#15110B_0%,#050505_100%)] p-5">
+    <HexGridBackground color="#FF9900" opacity={0.22} hexSize={26} animated={false} />
+    <div className="absolute inset-x-0 top-0 h-px bg-nerv-orange/35" />
+    <div className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.68))]" />
+    <div className="relative z-10 grid h-full content-between">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-orange">With grid layer</div>
+          <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">TACTICAL BRIEFING</div>
+        </div>
+        <div className="border border-nerv-orange/40 px-2 py-1 text-[10px] uppercase tracking-[0.22em] text-nerv-orange">
+          sync 87.4%
+        </div>
+      </div>
+      <div className="space-y-3">
+        <div className="h-2 border border-nerv-orange/35 bg-black/30">
+          <div className="h-full w-[72%] bg-nerv-orange/75" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-[0.22em] text-nerv-white/65">
+          <span>same layout, more depth</span>
+          <span className="text-right text-nerv-orange">surface texture online</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>`}
 >
-  <div className="relative h-48 border border-nerv-mid-gray">
-    <HexGridBackground color="#FF9900" opacity={0.15} />
-    <div className="relative z-10 flex items-center justify-center h-full">
-      <span className="text-nerv-orange font-mono text-sm">HONEYCOMB SURFACE</span>
+  <div className="grid gap-4 lg:grid-cols-2">
+    <div className="relative h-52 overflow-hidden border border-nerv-mid-gray/70 bg-[radial-gradient(circle_at_top,rgba(255,153,0,0.08),transparent_56%),linear-gradient(180deg,#15110B_0%,#050505_100%)] p-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-nerv-orange/25" />
+      <div className="relative z-10 grid h-full content-between">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-orange/65">
+              Base panel
+            </div>
+            <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">
+              TACTICAL BRIEFING
+            </div>
+          </div>
+          <div className="border border-nerv-mid-gray/70 px-2 py-1 text-[10px] uppercase tracking-[0.22em] text-nerv-white/60">
+            sync 87.4%
+          </div>
+        </div>
+        <div className="space-y-3">
+          <div className="h-2 border border-nerv-mid-gray/70 bg-black/40">
+            <div className="h-full w-[72%] bg-nerv-orange/55" />
+          </div>
+          <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-[0.22em] text-nerv-white/55">
+            <span>surface feels flat</span>
+            <span className="text-right">minimal depth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="relative h-52 overflow-hidden border border-nerv-orange/45 bg-[radial-gradient(circle_at_top,rgba(255,153,0,0.18),transparent_56%),linear-gradient(180deg,#15110B_0%,#050505_100%)] p-5">
+      <HexGridBackground
+        color="#FF9900"
+        opacity={0.22}
+        hexSize={26}
+        animated={false}
+      />
+      <div className="absolute inset-x-0 top-0 h-px bg-nerv-orange/35" />
+      <div className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.68))]" />
+      <div className="relative z-10 grid h-full content-between">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-orange">
+              With grid layer
+            </div>
+            <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">
+              TACTICAL BRIEFING
+            </div>
+          </div>
+          <div className="border border-nerv-orange/40 px-2 py-1 text-[10px] uppercase tracking-[0.22em] text-nerv-orange">
+            sync 87.4%
+          </div>
+        </div>
+        <div className="space-y-3">
+          <div className="h-2 border border-nerv-orange/35 bg-black/30">
+            <div className="h-full w-[72%] bg-nerv-orange/75" />
+          </div>
+          <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-[0.22em] text-nerv-white/65">
+            <span>same layout, more depth</span>
+            <span className="text-right text-nerv-orange">
+              surface texture online
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Layered Usage
+
+This component reads best as a secondary layer underneath real interface
+content. A slight tint, a brighter border, and one or two UI elements are
+usually enough to make the texture feel intentional.
+
+<ComponentPreview
+  title="SURFACE PANEL"
+  code={`<div className="relative h-56 overflow-hidden border border-nerv-cyan/40 bg-[radial-gradient(circle_at_top_right,rgba(0,255,255,0.16),transparent_36%),linear-gradient(180deg,#071215_0%,#020304_100%)] p-5">
+  <HexGridBackground color="#00FFFF" opacity={0.18} hexSize={24} />
+  <div className="absolute inset-x-0 top-0 h-px bg-nerv-cyan/35" />
+  <div className="absolute right-5 top-5 h-20 w-20 rounded-full border border-nerv-cyan/20 bg-nerv-cyan/5 blur-2xl" />
+  <div className="relative z-10 grid h-full content-between">
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">Auxiliary mesh</div>
+        <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">REMOTE SENSOR ARRAY</div>
+      </div>
+      <div className="text-right text-[10px] uppercase tracking-[0.22em] text-nerv-cyan">
+        <div>depth layer</div>
+        <div className="mt-1 text-nerv-white/55">grid opacity 0.18</div>
+      </div>
+    </div>
+    <div className="grid gap-3 sm:grid-cols-[1.3fr_0.7fr]">
+      <div className="space-y-2 border border-white/10 bg-black/30 p-3">
+        <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-white/55">Feed summary</div>
+        <div className="text-sm uppercase tracking-[0.18em] text-nerv-white">Signal coherence stable across 12 channels.</div>
+      </div>
+      <div className="space-y-2 border border-nerv-cyan/25 bg-nerv-cyan/5 p-3">
+        <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">Coverage</div>
+        <div className="text-2xl font-bold uppercase tracking-[0.16em] text-nerv-cyan">94%</div>
+      </div>
+    </div>
+  </div>
+</div>`}
+>
+  <div className="relative h-56 overflow-hidden border border-nerv-cyan/40 bg-[radial-gradient(circle_at_top_right,rgba(0,255,255,0.16),transparent_36%),linear-gradient(180deg,#071215_0%,#020304_100%)] p-5">
+    <HexGridBackground color="#00FFFF" opacity={0.18} hexSize={24} />
+    <div className="absolute inset-x-0 top-0 h-px bg-nerv-cyan/35" />
+    <div className="absolute right-5 top-5 h-20 w-20 rounded-full border border-nerv-cyan/20 bg-nerv-cyan/5 blur-2xl" />
+    <div className="relative z-10 grid h-full content-between">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">
+            Auxiliary mesh
+          </div>
+          <div className="mt-2 text-lg font-bold uppercase tracking-[0.18em] text-nerv-white">
+            REMOTE SENSOR ARRAY
+          </div>
+        </div>
+        <div className="text-right text-[10px] uppercase tracking-[0.22em] text-nerv-cyan">
+          <div>depth layer</div>
+          <div className="mt-1 text-nerv-white/55">grid opacity 0.18</div>
+        </div>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-[1.3fr_0.7fr]">
+        <div className="space-y-2 border border-white/10 bg-black/30 p-3">
+          <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-white/55">
+            Feed summary
+          </div>
+          <div className="text-sm uppercase tracking-[0.18em] text-nerv-white">
+            Signal coherence stable across 12 channels.
+          </div>
+        </div>
+        <div className="space-y-2 border border-nerv-cyan/25 bg-nerv-cyan/5 p-3">
+          <div className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">
+            Coverage
+          </div>
+          <div className="text-2xl font-bold uppercase tracking-[0.16em] text-nerv-cyan">
+            94%
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ComponentPreview>
 
 ## Color Variants
 
+Once the surface has a tint behind it, different grid colors become easier to
+evaluate as mood or state cues.
+
 <ComponentPreview
   title="COLORS"
-  code={`<div className="grid grid-cols-3 gap-4">
-  <div className="relative h-32 border border-nerv-mid-gray">
-    <HexGridBackground color="#00FF00" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full">
-      <span className="text-nerv-green font-mono text-xs">GREEN</span>
+  code={`<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+  <div className="relative h-36 overflow-hidden border border-nerv-green/35 bg-[radial-gradient(circle_at_top,rgba(0,255,0,0.16),transparent_48%),linear-gradient(180deg,#081408_0%,#020302_100%)] p-4">
+    <HexGridBackground color="#00FF00" opacity={0.18} hexSize={24} animated={false} />
+    <div className="relative z-10 flex h-full flex-col justify-between">
+      <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-green">Green / stable</span>
+      <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">SYSTEM CALM</span>
     </div>
   </div>
-  <div className="relative h-32 border border-nerv-mid-gray">
-    <HexGridBackground color="#00FFFF" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full">
-      <span className="text-nerv-cyan font-mono text-xs">CYAN</span>
+  <div className="relative h-36 overflow-hidden border border-nerv-cyan/35 bg-[radial-gradient(circle_at_top,rgba(0,255,255,0.16),transparent_48%),linear-gradient(180deg,#071215_0%,#020304_100%)] p-4">
+    <HexGridBackground color="#00FFFF" opacity={0.18} hexSize={24} animated={false} />
+    <div className="relative z-10 flex h-full flex-col justify-between">
+      <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">Cyan / analysis</span>
+      <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">SCAN ACTIVE</span>
     </div>
   </div>
-  <div className="relative h-32 border border-nerv-mid-gray">
-    <HexGridBackground color="#FF0000" opacity={0.12} />
-    <div className="relative z-10 flex items-center justify-center h-full">
-      <span className="text-nerv-red font-mono text-xs">RED</span>
+  <div className="relative h-36 overflow-hidden border border-nerv-red/35 bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.16),transparent_48%),linear-gradient(180deg,#170607_0%,#040202_100%)] p-4">
+    <HexGridBackground color="#FF0000" opacity={0.2} hexSize={24} animated={false} />
+    <div className="relative z-10 flex h-full flex-col justify-between">
+      <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-red">Red / alert</span>
+      <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">BREACH STATE</span>
     </div>
   </div>
 </div>`}
 >
-  <div className="grid grid-cols-3 gap-4">
-    <div className="relative h-32 border border-nerv-mid-gray">
-      <HexGridBackground color="#00FF00" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <span className="text-nerv-green font-mono text-xs">GREEN</span>
+  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="relative h-36 overflow-hidden border border-nerv-green/35 bg-[radial-gradient(circle_at_top,rgba(0,255,0,0.16),transparent_48%),linear-gradient(180deg,#081408_0%,#020302_100%)] p-4">
+      <HexGridBackground
+        color="#00FF00"
+        opacity={0.18}
+        hexSize={24}
+        animated={false}
+      />
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-green">
+          Green / stable
+        </span>
+        <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">
+          SYSTEM CALM
+        </span>
       </div>
     </div>
-    <div className="relative h-32 border border-nerv-mid-gray">
-      <HexGridBackground color="#00FFFF" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <span className="text-nerv-cyan font-mono text-xs">CYAN</span>
+    <div className="relative h-36 overflow-hidden border border-nerv-cyan/35 bg-[radial-gradient(circle_at_top,rgba(0,255,255,0.16),transparent_48%),linear-gradient(180deg,#071215_0%,#020304_100%)] p-4">
+      <HexGridBackground
+        color="#00FFFF"
+        opacity={0.18}
+        hexSize={24}
+        animated={false}
+      />
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-cyan">
+          Cyan / analysis
+        </span>
+        <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">
+          SCAN ACTIVE
+        </span>
       </div>
     </div>
-    <div className="relative h-32 border border-nerv-mid-gray">
-      <HexGridBackground color="#FF0000" opacity={0.12} />
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <span className="text-nerv-red font-mono text-xs">RED</span>
+    <div className="relative h-36 overflow-hidden border border-nerv-red/35 bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.16),transparent_48%),linear-gradient(180deg,#170607_0%,#040202_100%)] p-4">
+      <HexGridBackground
+        color="#FF0000"
+        opacity={0.2}
+        hexSize={24}
+        animated={false}
+      />
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <span className="text-[10px] uppercase tracking-[0.24em] text-nerv-red">
+          Red / alert
+        </span>
+        <span className="text-sm uppercase tracking-[0.18em] text-nerv-white">
+          BREACH STATE
+        </span>
       </div>
     </div>
   </div>

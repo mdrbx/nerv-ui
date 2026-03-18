@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { DocsCommandPalette } from "@/components/docs/DocsCommandPalette";
 import { DocsSidebar } from "@/components/docs/DocsSidebar";
 
 export default function DocsLayout({ children }: { children: ReactNode }) {
@@ -22,11 +23,14 @@ export default function DocsLayout({ children }: { children: ReactNode }) {
                 NERV COMPONENT INSPECTION
               </div>
             </div>
-            <div
-              className="border border-nerv-mid-gray/70 px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] text-nerv-white/45"
-              style={{ fontFamily: "var(--font-nerv-mono)" }}
-            >
-              route integrity monitored
+            <div className="flex flex-wrap items-center gap-2">
+              <DocsCommandPalette />
+              <div
+                className="border border-nerv-mid-gray/70 px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] text-nerv-white/45"
+                style={{ fontFamily: "var(--font-nerv-mono)" }}
+              >
+                route integrity monitored
+              </div>
             </div>
           </div>
         </div>

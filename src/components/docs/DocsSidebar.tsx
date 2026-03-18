@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import packageMetadata from "../../../package.json";
 import { docsNavigation, docsQuickLinks } from "@/docs/navigation";
 
 function getActiveSectionIndex(pathname: string): number {
@@ -208,7 +209,7 @@ function SidebarContent({
       {/* Footer */}
       <div className="border-t border-nerv-mid-gray/80 px-4 py-3 shrink-0">
         <div className="space-y-1 text-[9px] font-mono text-nerv-white/60">
-          <div>NERV-UI v0.7.0</div>
+          <div>NERV-UI v{packageMetadata.version}</div>
           <div>INSPECTION ROUTER // READY</div>
         </div>
       </div>

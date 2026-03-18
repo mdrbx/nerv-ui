@@ -63,6 +63,22 @@ export default function App() {
 **Peer dependencies:** `react`, `react-dom`, `framer-motion`. Tailwind CSS is optional.
 
 <details>
+<summary>Install from GitHub Packages</summary>
+
+```bash
+# .npmrc
+@mdrbx:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+
+npm install @mdrbx/nerv-ui
+```
+
+The repository now ships a release workflow that publishes the package to both
+the public npm registry and GitHub Packages.
+
+</details>
+
+<details>
 <summary>Tailwind CSS preset (optional)</summary>
 
 ```js

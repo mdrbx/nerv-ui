@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 import { motion } from "framer-motion";
 
 type MotionSafeHTMLAttributes = Omit<
@@ -29,6 +29,8 @@ export const HexGridBackground = forwardRef<HTMLDivElement, HexGridBackgroundPro
   className = "",
   ...rest
 }, ref) {
+  const patternId = `hex-grid-${useId().replace(/:/g, "")}`;
+
   // Calculate hex dimensions
   const w = hexSize * 2;
   const h = hexSize * Math.sqrt(3);
@@ -49,7 +51,7 @@ export const HexGridBackground = forwardRef<HTMLDivElement, HexGridBackgroundPro
     >
       <defs>
         <pattern
-          id="hex-grid"
+          id={patternId}
           x="0"
           y="0"
           width={patternW}
@@ -74,7 +76,7 @@ export const HexGridBackground = forwardRef<HTMLDivElement, HexGridBackgroundPro
           />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="url(#hex-grid)" />
+      <rect width="100%" height="100%" fill={`url(#${patternId})`} />
     </svg>
   );
 

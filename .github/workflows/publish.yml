@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish package registries
 
 on:
   release:
@@ -6,9 +6,10 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,3 +39,35 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@mdrbx"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Verify dist output
+        run: |
+          ls -la dist/
+          test -f dist/index.js || (echo "ERROR: CJS output missing" && exit 1)
+          test -f dist/index.mjs || (echo "ERROR: ESM output missing" && exit 1)
+          test -f dist/index.d.ts || (echo "ERROR: DTS output missing" && exit 1)
+
+      - name: Publish to GitHub Packages
+        run: npm publish --registry https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

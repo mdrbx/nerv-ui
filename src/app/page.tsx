@@ -653,8 +653,13 @@ export default function NervCommandCenter() {
                 </Card>
 
                 <div className="flex flex-col gap-4">
-                  <Card title="CLEARANCE MARKER" variant="video" rounded>
-                    <div className="flex min-h-[12.5rem] items-center justify-center overflow-visible py-3">
+                  <Card
+                    title="CLEARANCE MARKER"
+                    variant="video"
+                    rounded
+                    className="shrink-0"
+                  >
+                    <div className="flex min-h-[22.5rem] items-center justify-center overflow-visible py-3">
                       <StatusStamp
                         text={autoRouteEnabled ? "LAUNCH READY" : "STAND BY"}
                         color={autoRouteEnabled ? "green" : "orange"}

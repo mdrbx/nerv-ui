@@ -14,6 +14,13 @@ export interface NavLink {
   href: string;
 }
 
+export interface DocsCommandItem {
+  title: string;
+  href: string;
+  section: string;
+  external?: boolean;
+}
+
 export const docsNavigation: NavSection[] = [
   {
     title: "SYSTEM",
@@ -140,4 +147,22 @@ export const docsNavigation: NavSection[] = [
 export const docsQuickLinks: NavLink[] = [
   { title: "EXAMPLES", href: "/examples" },
   { title: "GITHUB", href: "https://github.com/mdrbx/nerv-ui" },
+];
+
+export const docsCommandItems: DocsCommandItem[] = [
+  { title: "Documentation Home", href: "/docs", section: "SYSTEM" },
+  { title: "Command Center", href: "/", section: "SYSTEM" },
+  ...docsNavigation.flatMap((section) =>
+    section.items.map((item) => ({
+      title: item.title,
+      href: item.href,
+      section: section.title,
+    }))
+  ),
+  ...docsQuickLinks.map((link) => ({
+    title: link.title,
+    href: link.href,
+    section: "EXTERNAL RELAYS",
+    external: link.href.startsWith("http"),
+  })),
 ];
