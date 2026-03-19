@@ -1,13 +1,12 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/NERV-HEADQUARTERS-FF0000?style=for-the-badge&labelColor=000000" alt="NERV HQ" />
-  <img src="https://img.shields.io/badge/MAGI_SYSTEM-ONLINE-00FF00?style=for-the-badge&labelColor=000000" alt="MAGI Online" />
-  <img src="https://img.shields.io/badge/A.T._FIELD-DEPLOYED-00FFFF?style=for-the-badge&labelColor=000000" alt="A.T. Field" />
-</p>
-
-<p align="center">
-  <strong>Brutalist. Industrial. Maximum impact.</strong><br/>
-  <sub>A React component library that faithfully recreates the NERV headquarters interfaces from Neon Genesis Evangelion.</sub>
-</p>
+<div id="user-content-toc">
+  <ul align="center" style="list-style: none;">
+    <summary>
+      <h1>NERV-UI</h1><br>
+      <h2>Brutalist. Industrial. Maximum impact.</h2>
+      <p>A React component UI library that recreates the NERV headquarters interfaces from Evangelion.</p>
+    </summary>
+  </ul>
+</div>
 
 <p align="center">
   <img src="banner.png" alt="NERV-UI — Neon Genesis Evangelion Design System" width="100%" />
@@ -65,22 +64,6 @@ export default function App() {
 ```
 
 **Peer dependencies:** `react`, `react-dom`, `framer-motion`. Tailwind CSS is optional.
-
-<details>
-<summary>Install from GitHub Packages</summary>
-
-```bash
-# .npmrc
-@mdrbx:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-
-npm install @mdrbx/nerv-ui
-```
-
-The repository now ships a release workflow that publishes the package to both
-the public npm registry and GitHub Packages.
-
-</details>
 
 <details>
 <summary>Tailwind CSS preset (optional)</summary>
@@ -217,7 +200,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for component patterns and design rules.
 
 ## `> CREDITS AND INPIRATION`
 
-<p>I made this project because I thought it would be fun. A huge thanks to all the people who created and inspired the great Evangelion anime over the years. This is a tribute, and I hope it will be perceived as a good one.</p>
+<p>I made this project because I thought it would be fun. A huge thanks to all the people who created and inspired the great Neon Genesis Evangelion anime over the years. This is a tribute, and I hope it will be perceived as a good one.</p>
 
 <p>MADE WITH [REDACTED] BY <a href="https://github.com/mdrbx">mdrbx</a></p>
 
