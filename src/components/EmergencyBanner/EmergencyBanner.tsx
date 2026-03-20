@@ -196,7 +196,7 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
             />
           </div>
 
-          <div className="relative w-full overflow-hidden">
+          <div className="relative w-full overflow-hidden [container-type:inline-size]">
             <div className="relative h-5 overflow-hidden md:h-7">
               <div
                 className={`nerv-banner-stripe absolute inset-y-0 left-0 ${animateStripes ? "nerv-banner-stripe-forward" : ""}`}
@@ -233,7 +233,7 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
                     : {}
                 }
                 className={`
-                  text-center text-[clamp(5rem,18vw,12rem)]
+                  text-center text-[clamp(2rem,12cqw,12rem)]
                   font-black uppercase leading-[0.9] tracking-[0.02em]
                   select-none
                 `}
@@ -254,7 +254,7 @@ export const EmergencyBanner = forwardRef<HTMLDivElement, EmergencyBannerProps>(
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
-                  className={`mx-auto mt-2.5 max-w-[72ch] px-3 text-center text-[8px] leading-[1.36] md:mt-3 md:text-[11px] md:leading-[1.42] uppercase tracking-[0.18em] md:tracking-[0.24em] ${config.subtextColor}`}
+                  className={`mx-auto mt-2.5 max-w-[72ch] px-3 text-center text-[clamp(8px,2.4cqw,11px)] leading-[1.36] md:mt-3 md:leading-[1.42] uppercase tracking-[clamp(0.18em,0.5cqw,0.24em)] ${config.subtextColor}`}
                   style={{ fontFamily: "var(--font-nerv-display)" }}
                 >
                   {subtext}
